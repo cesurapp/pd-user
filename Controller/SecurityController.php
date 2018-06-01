@@ -1,15 +1,15 @@
 <?php
 
 /**
- * This file is part of the pdAdmin package.
+ * This file is part of the pdAdmin pdUser package.
  *
- * @package     pdAdmin
+ * @package     pdUser
  *
  * @author      Ramazan APAYDIN <iletisim@ramazanapaydin.com>
- * @copyright   Copyright (c) 2018 pdAdmin
+ * @copyright   Copyright (c) 2018 Ramazan APAYDIN
  * @license     LICENSE
  *
- * @link        http://pdadmin.ramazanapaydin.com
+ * @link        https://github.com/rmznpydn/pd-user
  */
 
 namespace Pd\UserBundle\Controller;
@@ -42,7 +42,7 @@ class SecurityController extends Controller
         $authenticationUtils = $this->get('security.authentication_utils');
 
         // Render
-        return $this->render('@PdUser/Security/login.html.twig', [
+        return $this->render($this->getParameter('pd_user.template_path') . '/Security/login.html.twig', [
             'last_username' => $authenticationUtils->getLastUsername(),
             'error' => $authenticationUtils->getLastAuthenticationError(),
         ]);
@@ -74,12 +74,12 @@ class SecurityController extends Controller
         // Build Form
         $user = $this->getParameter('pd_user.user_class');
         $user = new $user();
-        if (!$user instanceof UserInterface)
+        if (!$user instanceof UserInterface) {
             throw new InvalidArgumentException();
-
+        }
         $form = $this->createForm(RegisterType::class, $user, [
             'data_class' => $this->getParameter('pd_user.user_class'),
-            'profile_class' => $this->getParameter('pd_user.profile_class')
+            'profile_class' => $this->getParameter('pd_user.profile_class'),
         ]);
 
         // Handle Form Submit
@@ -113,15 +113,17 @@ class SecurityController extends Controller
                 $this->sendEmail($user, 'Account Confirmation', $emailBody, 'Register');
             } else {
                 // Send Welcome
-                if ($this->getParameter('pd_user.welcome_email'))
+                if ($this->getParameter('pd_user.welcome_email')) {
                     $this->sendEmail($user, 'Registration', 'Welcome', 'Welcome');
+                }
             }
 
             // User Add Default Group
             if ($group = $this->getParameter('pd_user.default_group')) {
                 $getGroup = $em->getRepository($this->getParameter('pd_user.group_class'))->findOneBy($group);
-                if ((null !== $getGroup ) and $getGroup instanceof GroupInterface)
+                if ((null !== $getGroup) and $getGroup instanceof GroupInterface) {
                     $user->addGroup($getGroup);
+                }
             }
 
             // Save User
@@ -129,13 +131,13 @@ class SecurityController extends Controller
             $em->flush();
 
             // Register Success
-            return $this->render($this->getParameter('pd_user.template_path') . '/Registration/registerSuccess.html.twig', [
+            return $this->render($this->getParameter('pd_user.template_path').'/Registration/registerSuccess.html.twig', [
                 'user' => $user,
             ]);
         }
 
         // Render
-        return $this->render($this->getParameter('pd_user.template_path') . '/Registration/register.html.twig', [
+        return $this->render($this->getParameter('pd_user.template_path').'/Registration/register.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -163,15 +165,16 @@ class SecurityController extends Controller
         $user->setEnabled(true);
 
         // Send Welcome
-        if ($this->getParameter('pd_user.welcome_email'))
+        if ($this->getParameter('pd_user.welcome_email')) {
             $this->sendEmail($user, 'Registration', 'Welcome', 'Welcome');
+        }
 
         // Update User
         $em->persist($user);
         $em->flush();
 
         // Register Success
-        return $this->render( $this->getParameter('pd_user.template_path') . '/Registration/registerSuccess.html.twig', [
+        return $this->render($this->getParameter('pd_user.template_path').'/Registration/registerSuccess.html.twig', [
             'user' => $user,
         ]);
     }
@@ -230,7 +233,7 @@ class SecurityController extends Controller
                     $em->flush();
 
                     // Render
-                    return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resettingSuccess.html.twig', [
+                    return $this->render($this->getParameter('pd_user.template_path').'/Resetting/resettingSuccess.html.twig', [
                         'sendEmail' => true,
                     ]);
                 }
@@ -238,7 +241,7 @@ class SecurityController extends Controller
         }
 
         // Render
-        return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resetting.html.twig', [
+        return $this->render($this->getParameter('pd_user.template_path').'/Resetting/resetting.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -284,13 +287,13 @@ class SecurityController extends Controller
             $this->sendEmail($user, 'Account Password Resetting', 'Password resetting completed.', 'Resetting_Completed');
 
             // Render Success
-            return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resettingSuccess.html.twig', [
+            return $this->render($this->getParameter('pd_user.template_path').'/Resetting/resettingSuccess.html.twig', [
                 'sendEmail' => false,
             ]);
         }
 
         // Render
-        return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resettingPassword.html.twig', [
+        return $this->render($this->getParameter('pd_user.template_path').'/Resetting/resettingPassword.html.twig', [
             'token' => $token,
             'form' => $form->createView(),
         ]);
@@ -310,9 +313,9 @@ class SecurityController extends Controller
      * Send Mail.
      *
      * @param UserInterface $user
-     * @param string $subject
-     * @param string $body
-     * @param string $description
+     * @param string        $subject
+     * @param string        $body
+     * @param string        $description
      *
      * @return bool
      */
@@ -337,6 +340,6 @@ class SecurityController extends Controller
             ->setSubject($subject)
             ->setBody(serialize($body), 'text/html');
 
-        return (bool)$this->get('mailer')->send($message);
+        return (bool) $this->get('mailer')->send($message);
     }
 }

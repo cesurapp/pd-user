@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * This file is part of the pdAdmin pdUser package.
+ *
+ * @package     pdUser
+ *
+ * @author      Ramazan APAYDIN <iletisim@ramazanapaydin.com>
+ * @copyright   Copyright (c) 2018 Ramazan APAYDIN
+ * @license     LICENSE
+ *
+ * @link        https://github.com/rmznpydn/pd-user
+ */
+
 namespace Pd\UserBundle\Model;
 
 interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterface
@@ -16,18 +28,21 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
 
     /**
      * @param ProfileInterface $profile
+     *
      * @return $this
      */
     public function setProfile(ProfileInterface $profile);
 
     /**
      * @param $username
+     *
      * @return $this
      */
     public function setUsername($username);
 
     /**
      * @param $password
+     *
      * @return $this
      */
     public function setPassword($password);
@@ -51,6 +66,7 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
 
     /**
      * @param $enabled
+     *
      * @return $this
      */
     public function setEnabled($enabled);
@@ -74,6 +90,7 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
 
     /**
      * @param string $confirmationToken
+     *
      * @return $this
      */
     public function setConfirmationToken($confirmationToken);
@@ -90,13 +107,14 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
 
     /**
      * @param \DateTime|null $date
+     *
      * @return $this
      */
     public function setPasswordRequestedAt(\DateTime $date = null);
 
-
     /**
      * @param $ttl
+     *
      * @return bool
      */
     public function isPasswordRequestNonExpired($ttl);
@@ -120,24 +138,28 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
 
     /**
      * @param array $roles
+     *
      * @return $this
      */
     public function setRoles(array $roles);
 
     /**
      * @param $role
+     *
      * @return $this
      */
     public function addRole($role);
 
     /**
      * @param $role
+     *
      * @return $this
      */
     public function removeRole($role);
 
     /**
      * @param $role
+     *
      * @return bool
      */
     public function hasRole($role);
@@ -149,18 +171,21 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
 
     /**
      * @param $name
+     *
      * @return bool
      */
     public function hasGroup($name);
 
     /**
      * @param GroupInterface $group
+     *
      * @return $this
      */
     public function addGroup(GroupInterface $group);
 
     /**
      * @param GroupInterface $group
+     *
      * @return $this
      */
     public function removeGroup(GroupInterface $group);

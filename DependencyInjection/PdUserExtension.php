@@ -1,15 +1,15 @@
 <?php
 
 /**
- * This file is part of the pdAdmin pdWidget package.
+ * This file is part of the pdAdmin pdUser package.
  *
- * @package     pdWidget
+ * @package     pdUser
  *
  * @author      Ramazan APAYDIN <iletisim@ramazanapaydin.com>
  * @copyright   Copyright (c) 2018 Ramazan APAYDIN
  * @license     LICENSE
  *
- * @link        https://github.com/rmznpydn/pd-widget
+ * @link        https://github.com/rmznpydn/pd-user
  */
 
 namespace Pd\UserBundle\DependencyInjection;
@@ -27,10 +27,11 @@ use Symfony\Component\DependencyInjection\Loader;
 class PdUserExtension extends Extension
 {
     /**
-     * Load Bundle Config and Services
+     * Load Bundle Config and Services.
      *
-     * @param array $configs
+     * @param array            $configs
      * @param ContainerBuilder $container
+     *
      * @throws \Exception
      */
     public function load(array $configs, ContainerBuilder $container)
@@ -51,7 +52,7 @@ class PdUserExtension extends Extension
         $container->setParameter('pd_user.resetting_request_time', $config['resetting_request_time']);
 
         // Load Services
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yaml');
     }
 }

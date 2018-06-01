@@ -1,15 +1,15 @@
 <?php
 
 /**
- * This file is part of the pdAdmin package.
+ * This file is part of the pdAdmin pdUser package.
  *
- * @package     pdAdmin
+ * @package     pdUser
  *
  * @author      Ramazan APAYDIN <iletisim@ramazanapaydin.com>
- * @copyright   Copyright (c) 2018 pdAdmin
+ * @copyright   Copyright (c) 2018 Ramazan APAYDIN
  * @license     LICENSE
  *
- * @link        http://pdadmin.ramazanapaydin.com
+ * @link        https://github.com/rmznpydn/pd-user
  */
 
 namespace Pd\UserBundle\Model;
@@ -113,7 +113,6 @@ class User implements UserInterface, \Serializable
     {
         return $this->id;
     }
-
 
     /**
      * @return Profile
@@ -318,7 +317,8 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Group combined Roles
+     * Group combined Roles.
+     *
      * @return array
      */
     public function getRoles()

@@ -1,15 +1,15 @@
 <?php
 
 /**
- * This file is part of the pdAdmin pdWidget package.
+ * This file is part of the pdAdmin pdUser package.
  *
- * @package     pdWidget
+ * @package     pdUser
  *
  * @author      Ramazan APAYDIN <iletisim@ramazanapaydin.com>
  * @copyright   Copyright (c) 2018 Ramazan APAYDIN
  * @license     LICENSE
  *
- * @link        https://github.com/rmznpydn/pd-widget
+ * @link        https://github.com/rmznpydn/pd-user
  */
 
 namespace Pd\UserBundle;
