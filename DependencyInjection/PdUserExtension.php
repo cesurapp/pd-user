@@ -47,6 +47,8 @@ class PdUserExtension extends Extension
         $container->setParameter('pd_user.login_redirect', $config['login_redirect']);
         $container->setParameter('pd_user.email_confirmation', $config['email_confirmation']);
         $container->setParameter('pd_user.welcome_email', $config['welcome_email']);
+        $container->setParameter('pd_user.template_path', $config['template_path']);
+        $container->setParameter('pd_user.resetting_request_time', $config['resetting_request_time']);
 
         // Load Services
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));

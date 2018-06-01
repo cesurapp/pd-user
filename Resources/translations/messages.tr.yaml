@@ -1,5 +1,6 @@
 security:
     register: Kayıt Ol
+    registration_disable: Kullanıcı alımı şuanda kapalıdır, lütfen daha sonra tekrar deneyin.
     forgot_password: Şifremi Unuttum
     login_title: Giriş
     login_username: E-posta Adresi
@@ -20,6 +21,6 @@ security:
     reset_completed: Şifreniz değiştirildi, şimdi giriş yapabilirsiniz.
     resetpw_title: Şifremi Değiştir
     token_notfound: Kullanıcı bulunamadı, lütfen bağlantınızı kontrol edin yada yeniden talep edin!
-    resetpw_wait_resendig: Yeniden şifre talep etmeden önce 2 saat bekleyin.
+    resetpw_wait_resendig: Yeniden şifre talep etmeden önce %s saat bekleyin.
     user_not_found: Kullanıcı bulunamadı.
     group_name: Grup Adı

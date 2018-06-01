@@ -34,6 +34,8 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('login_redirect')->cannotBeEmpty()->end()
                 ->booleanNode('email_confirmation')->defaultFalse()->end()
                 ->booleanNode('welcome_email')->defaultTrue()->end()
+                ->scalarNode('template_path')->defaultValue('@PdUser')->end()
+                ->integerNode('resetting_request_time')->defaultValue(7200)->end()
             ->end();
 
         return $treeBuilder;

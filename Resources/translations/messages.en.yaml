@@ -1,5 +1,6 @@
 security:
     register: Register
+    registration_disable: User registration is currently off, please try again later.
     forgot_password: Forgot Password
     login_title: Login
     login_username: Email Address
