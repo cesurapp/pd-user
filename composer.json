@@ -1,0 +1,29 @@
+{
+  "name": "rmznpydn/pd-user",
+  "description": "Symfony Simple User Bundle",
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "keywords": [
+    "pdadmin",
+    "pduser",
+    "account",
+    "symfony-user",
+    "user-management"
+  ],
+  "homepage": "https://github.com/rmznpydn/pd-user",
+  "authors": [
+    {
+      "name": "Ramazan APAYDIN",
+      "homepage": "http://ramazanapaydin.com"
+    }
+  ],
+  "require": {
+    "php": "^7.1.0",
+    "twig/twig": "~2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Pd\\UserBundle\\": ""
+    }
+  }
+}

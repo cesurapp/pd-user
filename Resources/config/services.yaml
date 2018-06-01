@@ -1,0 +1,22 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    # Command
+    pd_user.command.create:
+        class: Pd\UserBundle\Command\CreateUserCommand
+        arguments: ['@doctrine.orm.entity_manager', '@service_container', '%pd_user.user_class%', '%pd_user.profile_class%']
+    pd_user.command.changepw:
+        class: Pd\UserBundle\Command\ChangePasswordCommand
+        arguments: ['@doctrine.orm.entity_manager', '@service_container', '%pd_user.user_class%']
+    pd_user.command.role:
+        class: Pd\UserBundle\Command\RoleUserCommand
+        arguments: ['@doctrine.orm.entity_manager', '@service_container', '%pd_user.user_class%']
+
+    # Login Listener to Change Language
+    pd.user_login:
+        class: Pd\UserBundle\Listener\LoginListener
+        tags:
+            - { name: kernel.event_subscriber }

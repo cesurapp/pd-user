@@ -1,0 +1,22 @@
+# Login - Logout
+security_login:
+    path: "/login"
+    controller: PdUserBundle:Security:login
+security_logout:
+    path: "/logout"
+
+# Register
+security_register:
+    path: "/register"
+    controller: PdUserBundle:Security:register
+security_register_confirm:
+    path: "/register/{token}"
+    controller: PdUserBundle:Security:registerConfirm
+
+# Resetting
+security_resetting:
+    path: "/resetting"
+    controller: PdUserBundle:Security:resetting
+security_resetting_password:
+    path: "/resetting/{token}"
+    controller: PdUserBundle:Security:resettingPassword

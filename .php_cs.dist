@@ -1,0 +1,38 @@
+<?php
+
+$fileHeaderComment = <<<COMMENT
+This file is part of the pdAdmin pdWidget package.
+
+@package     pdUser
+@author      Ramazan APAYDIN <iletisim@ramazanapaydin.com>
+@copyright   Copyright (c) 2018 Ramazan APAYDIN
+@license     LICENSE
+@link        https://github.com/rmznpydn/pd-widget
+COMMENT;
+
+$finder = PhpCsFixer\Finder::create()
+    ->in(__DIR__)
+;
+
+return PhpCsFixer\Config::create()
+    ->setRiskyAllowed(true)
+    ->setRules([
+        '@Symfony' => true,
+        '@Symfony:risky' => true,
+        'array_syntax' => ['syntax' => 'short'],
+        'header_comment' => ['header' => $fileHeaderComment, 'separate' => 'both', 'commentType' => 'PHPDoc'],
+        'linebreak_after_opening_tag' => true,
+        'mb_str_functions' => true,
+        'no_php4_constructor' => true,
+        'no_useless_else' => true,
+        'no_useless_return' => true,
+        'ordered_imports' => true,
+        'php_unit_strict' => true,
+        'phpdoc_order' => true,
+        'semicolon_after_instruction' => true,
+        'strict_comparison' => true,
+        'strict_param' => true,
+    ])
+    ->setFinder($finder)
+    ->setCacheFile(__DIR__.'.php_cs.cache')
+;
