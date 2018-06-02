@@ -1,10 +1,10 @@
 # pdUser Bundle
 Simple user management system for Symfony 4+. 
 
-[![Latest Stable Version](https://poser.pugx.org/rmznpydn/pd-widget/v/stable)](https://packagist.org/packages/rmznpydn/pd-widget)
-[![Total Downloads](https://poser.pugx.org/rmznpydn/pd-widget/downloads)](https://packagist.org/packages/rmznpydn/pd-widget)
-[![Latest Unstable Version](https://poser.pugx.org/rmznpydn/pd-widget/v/unstable)](https://packagist.org/packages/rmznpydn/pd-widget)
-[![License](https://poser.pugx.org/rmznpydn/pd-widget/license)](https://packagist.org/packages/rmznpydn/pd-widget)
+[![Latest Stable Version](https://poser.pugx.org/rmznpydn/pd-user/v/stable)](https://packagist.org/packages/rmznpydn/pd-user)
+[![Total Downloads](https://poser.pugx.org/rmznpydn/pd-user/downloads)](https://packagist.org/packages/rmznpydn/pd-user)
+[![Latest Unstable Version](https://poser.pugx.org/rmznpydn/pd-user/v/unstable)](https://packagist.org/packages/rmznpydn/pd-user)
+[![License](https://poser.pugx.org/rmznpydn/pd-user/license)](https://packagist.org/packages/rmznpydn/pd-user)
 
 Installation
 ---
@@ -15,7 +15,7 @@ Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
 
 ```console
-$ composer require rmznpydn/pd-widget
+$ composer require rmznpydn/pd-user
 ```
 
 This command requires you to have Composer installed globally, as explained
@@ -35,126 +35,166 @@ in the `config/bundles.php` file of your project:
 
 return [
     //...
-    Pd\WidgetBundle\PdWidgetBundle::class => ['all' => true]
+    Pd\UserBundle\PdUserBundle::class => ['all' => true]
 ];
 ```
 
-Add Widget Routing:
-
-```yaml
-#config/routes.yaml
-
-# Widget Routing
-widget:
-    resource: "@PdWidgetBundle/Resources/config/routing.yml"
-```
-
-Edit Doctrine Settings (`config/packages/doctrine.yaml`):
-
-```yaml
-doctrine:
-    orm:
-        resolve_target_entities:
-            Pd\WidgetBundle\Entity\UserInterface: App\Entity\User
-```
-
-UserInterface field, enter the class for the existing authorization system.
-
-### Step 3: Settings Bundle (Optional)
-You can specify the template for the widget container.
-```yaml
-# config/packages/framework.yaml
-
-pd_widget:
-    base_template: '@PdWidget/widgetBase.html.twig'
-```
-
-Create Your First Widget
----
-
-#### Step 1: Create Widget Event Listener
-
-Widgets work with Event. Create Widget with Event Listener
-
+### Step 3: Create User, Profile, Group, Class
+##### A) Create User Class
+Create the User class for your application. This class can look and act however you want: add any properties or methods you find useful. This is your User class.
 ```php
 <?php
-// src/Widgets/DashboardWidget.php
+// src/Entity/User.php
 
-namespace App\Widgets;
+namespace App\Entity;
 
-use Pd\WidgetBundle\Builder\Item;
-use Pd\WidgetBundle\Event\WidgetEvent;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Pd\UserBundle\Model\User as BaseUser;
 
-class Dashboard
+/**
+ * @ORM\Table(name="user")
+ * @UniqueEntity(fields="email", message="email_already_taken")
+ */
+class User extends BaseUser
 {
-    public function builder(WidgetEvent $event)
+    public function __construct()
     {
-        // Get Widget Container
-        $widgets = $event->getWidgetContainer();
-
-        // Add Widgets
-        $widgets
-            ->addWidget((new Item('user_info'))
-                ->setGroup('admin')
-                ->setName('widget_user_info.name')
-                ->setDescription('widget_user_info.description')
-                ->setTemplate('widgets/userInfo.html.twig')
-                //->setContent('pdWidget Text Content')
-                //->setRole(['USER_INFO_WIDGET'])
-                ->setData(function () {
-                    return ['userCount' => 5];
-                })
-                ->setOrder(5)
-            );
+        parent::__construct();
     }
 }
 ```
-#### Step 2: Create Widget Template
-You can create a Twig template for the widget or can only use text content.
-```twig
-# templates/userInfo.html.twig
 
-{% if widget.isActive %}
-    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
-        <div class="card text-center bg-primary text-white widget_user_info">
-            <div class="card-body">
-                {# Action Button #}
-                {% include '@PdWidget/widgetAction.html.twig' %}
+##### B) Create Profile Class
+Create the Profile class for your application. This class holds the user's private information.
+```php
+<?php
+// src/Entity/Profile.php
 
-                <span class="count">{{ widget.data.userCount }}</span>
-                <h5 class="font-weight-light">{{ 'widget_user_info.count'|trans }}</h5>
-            </div>
-        </div>
-    </div>
-{% endif %}
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Pd\UserBundle\Model\Profile as BaseProfile;
+
+/**
+ * User Profile Table.
+ *
+ * @ORM\Table(name="user_profile")
+ * @ORM\Entity
+ */
+class Profile extends BaseProfile
+{
+    
+}
 ```
 
-#### Step 3: Create Widget Services:
+##### C) Create Group Class
+Create the Group class for your application. This class creates user groups.
+```php
+<?php
+// src/Entity/Group.php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Pd\UserBundle\Model\Group as BaseGroup;
+
+/**
+ * @ORM\Table(name="user_group")
+ * @UniqueEntity(fields="name", message="group_already_taken")
+ */
+class Group extends BaseGroup
+{
+    
+}
+```
+
+### Step 4: Settings Bundle
+Create a "user.yaml" file for the settings.
 ```yaml
-# config/services.yaml
+# config/packages/user.yaml
 
-# Load All Widgets
-App\Widgets\:
-    resource: '../src/Widgets/*'
-    tags:
-        - { name: kernel.event_listener, event: widget.start, method: builder }
-        
-# Load Single Widget
-App\Widgets\DashboardWidget:
-    tags:
-        - { name: kernel.event_listener, event: widget.start, method: builder }
+pd_user:
+    user_class: App\Entity\User
+    profile_class: App\Entity\Profile
+    group_class: App\Entity\Group
+    default_group: ''
+    login_redirect: 'web_home'
+    email_confirmation: true
+    welcome_email: true
+    template_path: '@Admin/Auth'
+    resetting_request_time: 7200
+```
+* __user_class:__ Define 'User' class address
+* __profile_class:__ Define 'Profile' class address
+* __group_class:__ Define 'Group' class address
+* __default_group:__ New members will join group id
+* __login_redirect:__ The router name to which logged-in users will be directed.
+* __email_confirmation:__ Enables email verification for register.
+* __welcome_email:__ Welcome new members welcome message.
+* __template_path:__ Directory for Twig templates. Changes can be made by copying the source directory.
+* __resetting_request_time:__ Enter the retry time in seconds for password renewal.
+
+### Step 5: Configure Your Application's Security.yml
+Below is a minimal example of the configuration necessary to use the pdUser in your application:
+```yaml
+# config/packages/security.yaml
+
+security:
+    encoders:
+        App\Entity\User:
+            algorithm: argon2i
+    role_hierarchy:
+        ROLE_ADMIN:       [ROLE_USER]
+    providers:
+        pdadmin_auth:
+            entity:
+                class: App\Entity\User
+                property: email
+    firewalls:
+        # Enable for Development 
+        #dev:
+        #    pattern: ^/(_(profiler|wdt)|css|images|js)/
+        #    security: false
+        main:
+            pattern:    ^/
+            provider: pdadmin_auth
+            anonymous: true
+            switch_user: true
+            http_basic: ~
+            form_login:
+                use_referer: true
+                login_path: security_login
+                check_path: security_login
+                #default_target_path: 'dashboard' # Login Redirect Path
+                csrf_token_generator: security.csrf.token_manager
+            logout:
+                path: security_logout
+                #target: 'home' # Logout Redirect Path
+            remember_me:
+                secret:   '%env(APP_SECRET)%'
+                #lifetime: 604800
+                path:     /
+    access_control:
+        # Admin Panel
+        - { path: '^/%routing_admin%', role: ROLE_ADMIN }
 ```
 
-Rendering Widgets
----
-The creation process is very simple. You should use widget groups for widget creation.
+### Step 6: Import pdUser Routing
+Now that you have activated and configured the bundle, all that is left to do is import the pdUser routing files.
 
-```twig
-# Render all 'admin' widget groups
-{{ pd_widget_render('admin') }}
+By importing the routing files you will have ready made pages for things such as logging in, register, password resetting.
+```yaml
+#config/routes.yaml
 
-# Render selected widgets in 'admin' group
-{{ pd_widget_render('admin', ['user_info']) }}
+authorization:
+    resource: "@PdUserBundle/Resources/config/routing.yaml"
+    prefix: 'auth'
 ```
 
-
+### Step 6: Update Your Database Schema
+All steps are completed. You can now update the database schema.
+```yaml
+php bin/console doctrine:schema:update --force
+```
