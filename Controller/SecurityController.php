@@ -131,13 +131,13 @@ class SecurityController extends Controller
             $em->flush();
 
             // Register Success
-            return $this->render($this->getParameter('pd_user.template_path').'/Registration/registerSuccess.html.twig', [
+            return $this->render($this->getParameter('pd_user.template_path') . '/Registration/registerSuccess.html.twig', [
                 'user' => $user,
             ]);
         }
 
         // Render
-        return $this->render($this->getParameter('pd_user.template_path').'/Registration/register.html.twig', [
+        return $this->render($this->getParameter('pd_user.template_path') . '/Registration/register.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -174,7 +174,7 @@ class SecurityController extends Controller
         $em->flush();
 
         // Register Success
-        return $this->render($this->getParameter('pd_user.template_path').'/Registration/registerSuccess.html.twig', [
+        return $this->render($this->getParameter('pd_user.template_path') . '/Registration/registerSuccess.html.twig', [
             'user' => $user,
         ]);
     }
@@ -233,7 +233,7 @@ class SecurityController extends Controller
                     $em->flush();
 
                     // Render
-                    return $this->render($this->getParameter('pd_user.template_path').'/Resetting/resettingSuccess.html.twig', [
+                    return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resettingSuccess.html.twig', [
                         'sendEmail' => true,
                     ]);
                 }
@@ -241,7 +241,7 @@ class SecurityController extends Controller
         }
 
         // Render
-        return $this->render($this->getParameter('pd_user.template_path').'/Resetting/resetting.html.twig', [
+        return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resetting.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -287,13 +287,13 @@ class SecurityController extends Controller
             $this->sendEmail($user, 'Account Password Resetting', 'Password resetting completed.', 'Resetting_Completed');
 
             // Render Success
-            return $this->render($this->getParameter('pd_user.template_path').'/Resetting/resettingSuccess.html.twig', [
+            return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resettingSuccess.html.twig', [
                 'sendEmail' => false,
             ]);
         }
 
         // Render
-        return $this->render($this->getParameter('pd_user.template_path').'/Resetting/resettingPassword.html.twig', [
+        return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resettingPassword.html.twig', [
             'token' => $token,
             'form' => $form->createView(),
         ]);
@@ -313,9 +313,9 @@ class SecurityController extends Controller
      * Send Mail.
      *
      * @param UserInterface $user
-     * @param string        $subject
-     * @param string        $body
-     * @param string        $description
+     * @param string $subject
+     * @param string $body
+     * @param string $description
      *
      * @return bool
      */
@@ -340,6 +340,6 @@ class SecurityController extends Controller
             ->setSubject($subject)
             ->setBody(serialize($body), 'text/html');
 
-        return (bool) $this->get('mailer')->send($message);
+        return (bool)$this->get('mailer')->send($message);
     }
 }

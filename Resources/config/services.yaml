@@ -20,3 +20,7 @@ services:
         class: Pd\UserBundle\Listener\LoginListener
         tags:
             - { name: kernel.event_subscriber }
+
+    # Load Voters
+    pd.voter_super_admin:
+        class: Pd\UserBundle\Security\SuperAdminVoter

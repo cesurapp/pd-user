@@ -54,6 +54,7 @@ use Pd\UserBundle\Model\User as BaseUser;
 
 /**
  * @ORM\Table(name="user")
+ * @ORM\Entity
  * @UniqueEntity(fields="email", message="email_already_taken")
  */
 class User extends BaseUser
@@ -102,6 +103,7 @@ use Pd\UserBundle\Model\Group as BaseGroup;
 
 /**
  * @ORM\Table(name="user_group")
+ * @ORM\Entity
  * @UniqueEntity(fields="name", message="group_already_taken")
  */
 class Group extends BaseGroup
@@ -123,7 +125,7 @@ pd_user:
     login_redirect: 'web_home'
     email_confirmation: true
     welcome_email: true
-    template_path: '@Admin/Auth'
+    #template_path: '@Admin/Auth'
     resetting_request_time: 7200
 ```
 * __user_class:__ Define 'User' class address
@@ -177,8 +179,7 @@ security:
                 #lifetime: 604800
                 path:     /
     access_control:
-        # Admin Panel
-        - { path: '^/%routing_admin%', role: ROLE_ADMIN }
+        #- { path: '^/', role: ROLE_ADMIN }
 ```
 
 ### Step 6: Import pdUser Routing
