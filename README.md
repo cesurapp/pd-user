@@ -125,8 +125,11 @@ pd_user:
     login_redirect: 'web_home'
     email_confirmation: true
     welcome_email: true
+    user_registration: true
     #template_path: '@Admin/Auth'
     resetting_request_time: 7200
+    mail_sender_address: 'example@example.com'
+    mail_sender_name: 'pdUser'
 ```
 * __user_class:__ Define 'User' class address
 * __profile_class:__ Define 'Profile' class address
@@ -135,8 +138,11 @@ pd_user:
 * __login_redirect:__ The router name to which logged-in users will be directed.
 * __email_confirmation:__ Enables email verification for register.
 * __welcome_email:__ Welcome new members welcome message.
+* __user_registration:__ Enable/Disable user registration.
 * __template_path:__ Directory for Twig templates. Changes can be made by copying the source directory.
 * __resetting_request_time:__ Enter the retry time in seconds for password renewal.
+* __mail_sender_address:__ Mail sender address
+* __mail_sender_name:__ Mail sender name
 
 ### Step 5: Configure Your Application's Security.yml
 Below is a minimal example of the configuration necessary to use the pdUser in your application:
@@ -179,6 +185,9 @@ security:
                 #lifetime: 604800
                 path:     /
     access_control:
+        - { path: ^/auth/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/auth/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/auth/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         #- { path: '^/', role: ROLE_ADMIN }
 ```
 

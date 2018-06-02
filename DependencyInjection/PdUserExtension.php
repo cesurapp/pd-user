@@ -51,6 +51,8 @@ class PdUserExtension extends Extension
         $container->setParameter('pd_user.user_registration', $config['user_registration']);
         $container->setParameter('pd_user.template_path', $config['template_path']);
         $container->setParameter('pd_user.resetting_request_time', $config['resetting_request_time']);
+        $container->setParameter('pd_user.mail_sender_address', $config['mail_sender_address']);
+        $container->setParameter('pd_user.mail_sender_name', $config['mail_sender_name']);
 
         // Load Services
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));

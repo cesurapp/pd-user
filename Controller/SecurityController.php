@@ -65,7 +65,7 @@ class SecurityController extends Controller
         }
 
         // Check Disable Register
-        if (!$this->getParameter('user_registration')) {
+        if (!$this->getParameter('pd_user.user_registration')) {
             $this->addFlash('error', $this->get('translator')->trans('security.registration_disable'));
 
             return $this->redirectToRoute('security_login');
