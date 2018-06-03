@@ -162,9 +162,9 @@ security:
                 property: email
     firewalls:
         # Enable for Development 
-        #dev:
-        #    pattern: ^/(_(profiler|wdt)|css|images|js)/
-        #    security: false
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
         main:
             pattern:    ^/
             provider: pdadmin_auth

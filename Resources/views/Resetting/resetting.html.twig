@@ -3,6 +3,7 @@
 {% block head_title %}{{ 'security.reset_title'|trans }}{% endblock %}
 
 {% block body %}
+    {% form_theme form 'bootstrap_4_layout.html.twig' %}
     <div class="container">
         <div class="auth forgotpassword">
             <!-- Logo -->
@@ -16,7 +17,7 @@
                     </div>
                 </div>
 
-                <div class="container-fluid">
+                <div class="cf">
                     {{ form_widget(form) }}
 
                     <div class="row mt-4">

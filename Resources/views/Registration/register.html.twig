@@ -3,6 +3,7 @@
 {% block head_title %}{{ 'security.register_title'|trans }}{% endblock %}
 
 {% block body %}
+    {% form_theme form 'bootstrap_4_layout.html.twig' %}
     <div class="container">
         <div class="auth register">
             <!-- Logo -->
@@ -16,7 +17,7 @@
                     </div>
                 </div>
 
-                <div class="container-fluid">
+                <div class="cf">
                     {{ form_widget(form) }}
                     <div class="row">
                         <div class="col-sm-12 col-xs-12 text-center">
