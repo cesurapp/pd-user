@@ -49,7 +49,7 @@ class Profile implements ProfileInterface
     /**
      * @var int
      *
-     * @ORM\Column(name="phone", type="integer", length=13, nullable=true)
+     * @ORM\Column(name="phone", type="string", length=15, nullable=true)
      * @Assert\Length(min="8", max="13")
      */
     protected $phone;

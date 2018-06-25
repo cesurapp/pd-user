@@ -39,6 +39,7 @@ class Configuration implements ConfigurationInterface
                 ->integerNode('resetting_request_time')->defaultValue(7200)->end()
                 ->scalarNode('mail_sender_address')->defaultValue('example@example.com')->end()
                 ->scalarNode('mail_sender_name')->defaultValue('pdUser')->end()
+                ->arrayNode('active_language')->scalarPrototype()->end()->defaultValue(['en'])->end()
             ->end();
 
         return $treeBuilder;

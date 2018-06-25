@@ -21,6 +21,11 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    # Locale Listener
+    Pd\UserBundle\Listener\LocaleListener:
+        tags:
+            { name: kernel.event_subscriber }
+
     # Load Voters
     pd.voter_super_admin:
         class: Pd\UserBundle\Security\SuperAdminVoter

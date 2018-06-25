@@ -14,6 +14,7 @@
 
 namespace Pd\UserBundle\Controller;
 
+use Pd\MailerBundle\SwiftMailer\PdSwiftMessage;
 use Pd\UserBundle\Form\RegisterType;
 use Pd\UserBundle\Form\ResettingPasswordType;
 use Pd\UserBundle\Form\ResettingType;
@@ -32,7 +33,7 @@ class SecurityController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function loginAction()
+    public function login()
     {
         // Check Auth
         if ($this->checkAuth()) {
@@ -57,7 +58,7 @@ class SecurityController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function registerAction(Request $request)
+    public function register(Request $request)
     {
         // Check Auth
         if ($this->checkAuth()) {
@@ -120,7 +121,7 @@ class SecurityController extends Controller
 
             // User Add Default Group
             if ($group = $this->getParameter('pd_user.default_group')) {
-                $getGroup = $em->getRepository($this->getParameter('pd_user.group_class'))->findOneBy($group);
+                $getGroup = $em->getRepository($this->getParameter('pd_user.group_class'))->find($group);
                 if ((null !== $getGroup) and $getGroup instanceof GroupInterface) {
                     $user->addGroup($getGroup);
                 }
@@ -149,7 +150,7 @@ class SecurityController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function registerConfirmAction($token)
+    public function registerConfirm($token)
     {
         // Get Doctrine
         $em = $this->getDoctrine()->getManager();
@@ -188,7 +189,7 @@ class SecurityController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function resettingAction(Request $request)
+    public function resetting(Request $request)
     {
         // Check Auth
         if ($this->checkAuth()) {
@@ -254,7 +255,7 @@ class SecurityController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function resettingPasswordAction(Request $request, $token)
+    public function resettingPassword(Request $request, $token)
     {
         // Get Doctrine
         $em = $this->getDoctrine()->getManager();
@@ -319,7 +320,7 @@ class SecurityController extends Controller
      *
      * @return bool
      */
-    private function sendEmail(UserInterface $user, $subject = '', $body = '', $description = '')
+    private function sendEmail(UserInterface $user, $subject = '', $body = '', $templateId = '')
     {
         if (is_array($body)) {
             $body['email'] = $user->getEmail();
@@ -333,8 +334,8 @@ class SecurityController extends Controller
         }
 
         // Create Message
-        $message = (new \Swift_Message())
-            ->setDescription($description)
+        $message = (new PdSwiftMessage())
+            ->setTemplateId($templateId)
             ->setFrom($this->getParameter('pd_user.mail_sender_address'), $this->getParameter('pd_user.mail_sender_name'))
             ->setTo($user->getEmail())
             ->setSubject($subject)

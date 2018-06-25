@@ -130,6 +130,7 @@ pd_user:
     resetting_request_time: 7200
     mail_sender_address: 'example@example.com'
     mail_sender_name: 'pdUser'
+    active_language: ['en', 'tr']
 ```
 * __user_class:__ Define 'User' class address
 * __profile_class:__ Define 'Profile' class address
@@ -143,6 +144,7 @@ pd_user:
 * __resetting_request_time:__ Enter the retry time in seconds for password renewal.
 * __mail_sender_address:__ Mail sender address
 * __mail_sender_name:__ Mail sender name
+* __active_language:__ List of Active Language
 
 ### Step 5: Configure Your Application's Security.yml
 Below is a minimal example of the configuration necessary to use the pdUser in your application:

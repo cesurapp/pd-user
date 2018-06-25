@@ -14,6 +14,7 @@
 
 namespace Pd\UserBundle\Form;
 
+use Pd\UserBundle\Model\User;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -71,13 +72,12 @@ class ProfileType extends AbstractType
                 ->add('language', ChoiceType::class, [
                     'label' => 'language',
                     'choices' => $this->getLanguageList($options['container']),
-                    'choice_translation_domain' => false,
-                    'attr' => ['v-select' => 'true'],
+                    'choice_translation_domain' => false
                 ])
         );
 
         // Add Admin Item
-        $this->setAdminItem($builder, $options);
+        $this->setAdminItem($builder, $options['container']);
 
         // Add Submit
         $builder->add('submit', SubmitType::class, [
@@ -104,15 +104,13 @@ class ProfileType extends AbstractType
      * @param FormBuilderInterface $builder
      * @param $options
      */
-    public function setAdminItem(FormBuilderInterface &$builder, $options)
+    public function setAdminItem(FormBuilderInterface &$builder, ContainerInterface $container)
     {
-        if ($options['container']->get('security.authorization_checker')->isGranted('ROLE_ALL_ACCESS')) {
+        if ($container->get('security.authorization_checker')->isGranted(User::ROLE_ALL_ACCESS)) {
             $builder
                 ->add('createdAt', DateTimeType::class, [
                     'label' => 'created_at',
                     'format' => 'yyyy-MM-dd HH:mm',
-                    'model_timezone' => $options['container']->getParameter('model_timezone'),
-                    'view_timezone' => $options['container']->getParameter('view_timezone'),
                     'widget' => 'single_text',
                     'html5' => true,
                     'attr' => ['data-picker' => 'datetime'],
@@ -129,9 +127,8 @@ class ProfileType extends AbstractType
      */
     public function getLanguageList(ContainerInterface $container)
     {
-        $allLanguages = Intl::getLanguageBundle()->getLanguageNames();
-        $languageList = array_flip(array_intersect_key($allLanguages, array_flip($container->getParameter('active_language'))));
+        $allLangs = Intl::getLanguageBundle()->getLanguageNames();
 
-        return $languageList;
+        return array_flip(array_intersect_key($allLangs, array_flip($container->getParameter('pd_user.active_language'))));
     }
 }
