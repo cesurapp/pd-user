@@ -14,6 +14,8 @@
 
 namespace Pd\UserBundle\Listener;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Pd\UserBundle\Model\UserInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Http\SecurityEvents;
@@ -25,6 +27,20 @@ use Symfony\Component\Security\Http\SecurityEvents;
  */
 class LoginListener implements EventSubscriberInterface
 {
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+
+    /**
+     * LoginListener constructor.
+     */
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -40,9 +56,16 @@ class LoginListener implements EventSubscriberInterface
         // Get User
         $user = $event->getAuthenticationToken()->getUser();
 
-        // Change Site Language to User
-        if ($user->getProfile()->getLanguage()) {
-            $event->getRequest()->getSession()->set('_locale', $user->getProfile()->getLanguage());
+        if ($user instanceof UserInterface) {
+            // Change Site Language to User
+            if ($user->getProfile()->getLanguage()) {
+                $event->getRequest()->getSession()->set('_locale', $user->getProfile()->getLanguage());
+            }
+
+            // Set Last Login
+            $user->setLastLogin(new \DateTime());
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
         }
     }
 }

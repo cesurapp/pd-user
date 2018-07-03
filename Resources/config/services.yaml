@@ -18,6 +18,7 @@ services:
     # Login Listener to Change Language
     pd.user_login:
         class: Pd\UserBundle\Listener\LoginListener
+        arguments: ['@doctrine.orm.entity_manager']
         tags:
             - { name: kernel.event_subscriber }
 
