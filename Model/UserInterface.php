@@ -69,7 +69,19 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
      *
      * @return $this
      */
-    public function setEnabled($enabled);
+    public function setEnabled(bool $enabled);
+
+    /**
+     * @return bool
+     */
+    public function isFreeze();
+
+    /**
+     * @param $enabled
+     *
+     * @return $this
+     */
+    public function setFreeze(bool $enabled);
 
     /**
      * @return \DateTime

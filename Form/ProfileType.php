@@ -25,6 +25,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\Intl\Intl;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -57,9 +58,12 @@ class ProfileType extends AbstractType
                 ->add('lastname', TextType::class, [
                     'label' => 'lastname',
                 ])
-                ->add('phone', IntegerType::class, [
+                ->add('phone', TextType::class, [
                     'label' => 'phone',
                     'required' => false,
+                    'constraints' => [
+                        new Type(['type' => 'numeric'])
+                    ]
                 ])
                 ->add('website', TextType::class, [
                     'label' => 'website',

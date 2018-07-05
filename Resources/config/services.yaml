@@ -15,6 +15,9 @@ services:
         class: Pd\UserBundle\Command\RoleUserCommand
         arguments: ['@doctrine.orm.entity_manager', '@service_container', '%pd_user.user_class%']
 
+    # User Checker
+    Pd\UserBundle\Security\UserChecker:
+
     # Login Listener to Change Language
     pd.user_login:
         class: Pd\UserBundle\Listener\LoginListener

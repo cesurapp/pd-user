@@ -56,6 +56,11 @@ class User implements UserInterface, \Serializable
     protected $isActive;
 
     /**
+     * @ORM\Column(name="is_freeze", type="boolean")
+     */
+    protected $isFreeze;
+
+    /**
      * @ORM\Column(name="last_login", type="datetime", nullable=true)
      */
     protected $lastLogin;
@@ -92,6 +97,7 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         $this->isActive = true;
+        $this->isFreeze = false;
         $this->roles = [static::ROLE_DEFAULT];
         $this->createdAt = new \DateTime();
     }
@@ -203,13 +209,33 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param $enabled
+     * @param $enabled bool
      *
      * @return $this
      */
-    public function setEnabled($enabled)
+    public function setEnabled(bool $enabled)
     {
-        $this->isActive = (bool) $enabled;
+        $this->isActive = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFreeze()
+    {
+        return $this->isFreeze;
+    }
+
+    /**
+     * @param $enabled bool
+     *
+     * @return $this|UserInterface
+     */
+    public function setFreeze(bool $enabled)
+    {
+        $this->isFreeze = $enabled;
 
         return $this;
     }
