@@ -16,7 +16,7 @@ class UserChecker implements UserCheckerInterface
 
         // Frozen Account
         if ($user->isFreeze()) {
-            throw new CustomUserMessageAuthenticationException('Account has been frozen');
+            throw new CustomUserMessageAuthenticationException('The account has been suspended');
         }
 
         // Activate Account

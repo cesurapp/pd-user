@@ -24,3 +24,5 @@ security:
     resetpw_wait_resendig: Yeniden şifre talep etmeden önce %s saat bekleyin.
     user_not_found: Kullanıcı bulunamadı.
     group_name: Grup Adı
+The account has been suspended: Hesap askıya alınmış
+Account has not been activated: Hesap etkinleştirilmemiş, lütfen hesabınızı etkinleştirin
