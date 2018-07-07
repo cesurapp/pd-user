@@ -1,10 +1,10 @@
 # pdUser Bundle
 Simple user management system for Symfony 4+. 
 
-[![Latest Stable Version](https://poser.pugx.org/rmznpydn/pd-user/v/stable)](https://packagist.org/packages/rmznpydn/pd-user)
-[![Total Downloads](https://poser.pugx.org/rmznpydn/pd-user/downloads)](https://packagist.org/packages/rmznpydn/pd-user)
-[![Latest Unstable Version](https://poser.pugx.org/rmznpydn/pd-user/v/unstable)](https://packagist.org/packages/rmznpydn/pd-user)
-[![License](https://poser.pugx.org/rmznpydn/pd-user/license)](https://packagist.org/packages/rmznpydn/pd-user)
+[![Packagist](https://img.shields.io/packagist/dt/rmznpydn/pd-user.svg)](https://github.com/rmznpydn/pd-user)
+[![Github Release](https://img.shields.io/github/release/rmznpydn/pd-user.svg)](https://github.com/rmznpydn/pd-user)
+[![license](https://img.shields.io/github/license/rmznpydn/pd-user.svg)](https://github.com/rmznpydn/pd-user)
+[![PHP from Packagist](https://img.shields.io/packagist/php-v/rmznpydn/pd-user.svg)](https://github.com/rmznpydn/pd-user)
 
 Installation
 ---
@@ -170,6 +170,7 @@ security:
         main:
             pattern:    ^/
             provider: pdadmin_auth
+            user_checker: Pd\UserBundle\Security\UserChecker
             anonymous: true
             switch_user: true
             http_basic: ~

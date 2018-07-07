@@ -81,9 +81,9 @@ class RegisterType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new Type([
-                        'type' => 'numeric'
-                    ])
-                ]
+                        'type' => 'numeric',
+                    ]),
+                ],
             ])
         );
     }

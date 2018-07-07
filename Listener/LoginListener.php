@@ -32,7 +32,6 @@ class LoginListener implements EventSubscriberInterface
      */
     private $entityManager;
 
-
     /**
      * LoginListener constructor.
      */

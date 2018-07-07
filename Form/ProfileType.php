@@ -21,13 +21,12 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\Intl\Intl;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * Profile Form Type.
@@ -62,8 +61,8 @@ class ProfileType extends AbstractType
                     'label' => 'phone',
                     'required' => false,
                     'constraints' => [
-                        new Type(['type' => 'numeric'])
-                    ]
+                        new Type(['type' => 'numeric']),
+                    ],
                 ])
                 ->add('website', TextType::class, [
                     'label' => 'website',
@@ -76,7 +75,7 @@ class ProfileType extends AbstractType
                 ->add('language', ChoiceType::class, [
                     'label' => 'language',
                     'choices' => $this->getLanguageList($options['container']),
-                    'choice_translation_domain' => false
+                    'choice_translation_domain' => false,
                 ])
         );
 
