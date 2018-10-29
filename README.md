@@ -1,10 +1,10 @@
 # pdUser Bundle
 Simple user management system for Symfony 4+. 
 
-[![Packagist](https://img.shields.io/packagist/dt/rmznpydn/pd-user.svg)](https://github.com/rmznpydn/pd-user)
-[![Github Release](https://img.shields.io/github/release/rmznpydn/pd-user.svg)](https://github.com/rmznpydn/pd-user)
-[![license](https://img.shields.io/github/license/rmznpydn/pd-user.svg)](https://github.com/rmznpydn/pd-user)
-[![PHP from Packagist](https://img.shields.io/packagist/php-v/rmznpydn/pd-user.svg)](https://github.com/rmznpydn/pd-user)
+[![Packagist](https://img.shields.io/packagist/dt/appaydin/pd-user.svg)](https://github.com/appaydin/pd-user)
+[![Github Release](https://img.shields.io/github/release/appaydin/pd-user.svg)](https://github.com/appaydin/pd-user)
+[![license](https://img.shields.io/github/license/appaydin/pd-user.svg)](https://github.com/appaydin/pd-user)
+[![PHP from Packagist](https://img.shields.io/packagist/php-v/appaydin/pd-user.svg)](https://github.com/appaydin/pd-user)
 
 Installation
 ---
@@ -15,7 +15,7 @@ Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
 
 ```console
-$ composer require rmznpydn/pd-user
+$ composer require appaydin/pd-user
 ```
 
 This command requires you to have Composer installed globally, as explained
