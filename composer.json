@@ -1,5 +1,5 @@
 {
-  "name": "rmznpydn/pd-user",
+  "name": "appaydin/pd-user",
   "description": "Symfony Simple User Bundle",
   "type": "symfony-bundle",
   "license": "MIT",
@@ -10,7 +10,7 @@
     "symfony-user",
     "user-management"
   ],
-  "homepage": "https://github.com/rmznpydn/pd-user",
+  "homepage": "https://github.com/appaydin/pd-user",
   "authors": [
     {
       "name": "Ramazan APAYDIN",
