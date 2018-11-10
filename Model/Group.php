@@ -1,15 +1,14 @@
 <?php
 
 /**
- * This file is part of the pdAdmin pdUser package.
+ * This file is part of the pd-admin pd-user package.
  *
- * @package     pdUser
+ * @package     pd-user
  *
- * @author      Ramazan APAYDIN <iletisim@ramazanapaydin.com>
- * @copyright   Copyright (c) 2018 Ramazan APAYDIN
  * @license     LICENSE
+ * @author      Kerem APAYDIN <kerem@apaydin.me>
  *
- * @link        https://github.com/rmznpydn/pd-user
+ * @link        https://github.com/appaydin/pd-user
  */
 
 namespace Pd\UserBundle\Model;
@@ -17,6 +16,11 @@ namespace Pd\UserBundle\Model;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * User Group
+ *
+ * @author Kerem APAYDIN <kerem@apaydin.me>
+ */
 class Group implements GroupInterface
 {
     /**
@@ -128,6 +132,6 @@ class Group implements GroupInterface
      */
     public function hasRole($role)
     {
-        return in_array(mb_strtoupper($role), $this->roles, true);
+        return \in_array(mb_strtoupper($role), $this->roles, true);
     }
 }

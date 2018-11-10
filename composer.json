@@ -1,20 +1,20 @@
 {
   "name": "appaydin/pd-user",
   "description": "Symfony Simple User Bundle",
+  "homepage": "https://github.com/appaydin/pd-user",
   "type": "symfony-bundle",
   "license": "MIT",
   "keywords": [
-    "pdadmin",
-    "pduser",
+    "pd-admin",
+    "pd-user",
     "account",
     "symfony-user",
     "user-management"
   ],
-  "homepage": "https://github.com/appaydin/pd-user",
   "authors": [
     {
-      "name": "Ramazan APAYDIN",
-      "homepage": "http://ramazanapaydin.com"
+      "name": "Kerem APAYDIN",
+      "homepage": "http://apaydin.me"
     }
   ],
   "require": {

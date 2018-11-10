@@ -1,15 +1,14 @@
 <?php
 
 /**
- * This file is part of the pdAdmin pdUser package.
+ * This file is part of the pd-admin pd-user package.
  *
- * @package     pdUser
+ * @package     pd-user
  *
- * @author      Ramazan APAYDIN <iletisim@ramazanapaydin.com>
- * @copyright   Copyright (c) 2018 Ramazan APAYDIN
  * @license     LICENSE
+ * @author      Kerem APAYDIN <kerem@apaydin.me>
  *
- * @link        https://github.com/rmznpydn/pd-user
+ * @link        https://github.com/appaydin/pd-user
  */
 
 namespace Pd\UserBundle\DependencyInjection;
@@ -36,7 +35,9 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('welcome_email')->defaultTrue()->end()
                 ->booleanNode('user_registration')->defaultTrue()->end()
                 ->scalarNode('template_path')->defaultValue('@PdUser')->end()
-                ->integerNode('resetting_request_time')->defaultValue(7200)->end()
+                ->integerNode('resetting_request_time')->defaultValue(7200)
+                    ->beforeNormalization()->ifString()->then(function ($val) { return (int) $val; })->end()
+                ->end()
                 ->scalarNode('mail_sender_address')->defaultValue('example@example.com')->end()
                 ->scalarNode('mail_sender_name')->defaultValue('pdUser')->end()
                 ->arrayNode('active_language')->scalarPrototype()->end()->defaultValue(['en'])->end()

@@ -1,15 +1,14 @@
 <?php
 
 /**
- * This file is part of the pdAdmin pdUser package.
+ * This file is part of the pd-admin pd-user package.
  *
- * @package     pdUser
+ * @package     pd-user
  *
- * @author      Ramazan APAYDIN <iletisim@ramazanapaydin.com>
- * @copyright   Copyright (c) 2018 Ramazan APAYDIN
  * @license     LICENSE
+ * @author      Kerem APAYDIN <kerem@apaydin.me>
  *
- * @link        https://github.com/rmznpydn/pd-user
+ * @link        https://github.com/appaydin/pd-user
  */
 
 namespace Pd\UserBundle\Model;
@@ -18,6 +17,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * User Account
+ *
+ * @author Kerem APAYDIN <kerem@apaydin.me>
+ */
 class User implements UserInterface, \Serializable
 {
     public const ROLE_DEFAULT = 'ROLE_USER';
@@ -391,7 +395,7 @@ class User implements UserInterface, \Serializable
     {
         $role = mb_strtoupper($role);
 
-        if (!in_array($role, $this->roles, true)) {
+        if (!\in_array($role, $this->roles, true)) {
             $this->roles[] = $role;
         }
 
@@ -420,7 +424,7 @@ class User implements UserInterface, \Serializable
      */
     public function hasRole($role)
     {
-        return in_array(mb_strtoupper($role), $this->getRoles(), true);
+        return \in_array(mb_strtoupper($role), $this->getRoles(), true);
     }
 
     /**
@@ -452,7 +456,7 @@ class User implements UserInterface, \Serializable
      */
     public function hasGroup($name)
     {
-        return in_array($name, $this->getGroupNames(), true);
+        return \in_array($name, $this->getGroupNames(), true);
     }
 
     /**

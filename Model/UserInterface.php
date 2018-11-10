@@ -1,19 +1,23 @@
 <?php
 
 /**
- * This file is part of the pdAdmin pdUser package.
+ * This file is part of the pd-admin pd-user package.
  *
- * @package     pdUser
+ * @package     pd-user
  *
- * @author      Ramazan APAYDIN <iletisim@ramazanapaydin.com>
- * @copyright   Copyright (c) 2018 Ramazan APAYDIN
  * @license     LICENSE
+ * @author      Kerem APAYDIN <kerem@apaydin.me>
  *
- * @link        https://github.com/rmznpydn/pd-user
+ * @link        https://github.com/appaydin/pd-user
  */
 
 namespace Pd\UserBundle\Model;
 
+/**
+ * User Interface
+ *
+ * @author Kerem APAYDIN <kerem@apaydin.me>
+ */
 interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterface
 {
     /**
