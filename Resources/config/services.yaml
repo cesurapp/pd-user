@@ -1,35 +1,18 @@
 services:
     _defaults:
-        autowire: true
-        autoconfigure: true
-        public: false
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+        bind:
+            $userClass: '%pd_user.user_class%'
+            $profileClass: '%pd_user.profile_class%'
 
-    # Command
-    pd_user.command.create:
-        class: Pd\UserBundle\Command\CreateUserCommand
-        arguments: ['@doctrine.orm.entity_manager', '@service_container', '%pd_user.user_class%', '%pd_user.profile_class%']
-    pd_user.command.changepw:
-        class: Pd\UserBundle\Command\ChangePasswordCommand
-        arguments: ['@doctrine.orm.entity_manager', '@service_container', '%pd_user.user_class%']
-    pd_user.command.role:
-        class: Pd\UserBundle\Command\RoleUserCommand
-        arguments: ['@doctrine.orm.entity_manager', '@service_container', '%pd_user.user_class%']
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    Pd\UserBundle\:
+        resource: '../../*'
+        exclude: '../../{Entity,Migrations,Tests,Kernel.php}'
 
-    # User Checker
-    Pd\UserBundle\Security\UserChecker:
-
-    # Login Listener to Change Language
-    pd.user_login:
-        class: Pd\UserBundle\Listener\LoginListener
-        arguments: ['@doctrine.orm.entity_manager']
-        tags:
-            - { name: kernel.event_subscriber }
-
-    # Locale Listener
-    Pd\UserBundle\Listener\LocaleListener:
-        tags:
-            { name: kernel.event_subscriber }
-
-    # Load Voters
-    pd.voter_super_admin:
-        class: Pd\UserBundle\Security\SuperAdminVoter
+    Pd\UserBundle\Controller\:
+        resource: '../../Controller'
+        tags: ['controller.service_arguments']

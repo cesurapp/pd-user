@@ -14,6 +14,7 @@
 namespace Pd\UserBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,7 +22,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * User Role Changer.
@@ -36,11 +36,6 @@ class RoleUserCommand extends Command
     private $em;
 
     /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
      * @var string
      */
     private $userClass;
@@ -52,10 +47,9 @@ class RoleUserCommand extends Command
      * @param ContainerInterface     $container
      * @param string                 $userClass
      */
-    public function __construct(EntityManagerInterface $entityManager, ContainerInterface $container, string $userClass)
+    public function __construct(EntityManagerInterface $entityManager, string $userClass)
     {
         $this->em = $entityManager;
-        $this->container = $container;
         $this->userClass = $userClass;
 
         parent::__construct();
