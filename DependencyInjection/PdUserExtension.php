@@ -53,6 +53,8 @@ class PdUserExtension extends Extension
         $container->setParameter('pd_user.mail_sender_address', $config['mail_sender_address']);
         $container->setParameter('pd_user.mail_sender_name', $config['mail_sender_name']);
         $container->setParameter('pd_user.active_language', $config['active_language']);
+        $container->setParameter('pd_user.register_type', $config['register_type']);
+        $container->setParameter('pd_user.resetting_type', $config['resetting_type']);
 
         // Load Services
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));

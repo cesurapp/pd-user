@@ -131,6 +131,9 @@ pd_user:
     mail_sender_address: 'example@example.com'
     mail_sender_name: 'pdUser'
     active_language: ['en', 'tr']
+    register_type: ''
+    resetting_type: ''
+    
 ```
 * __user_class:__ Define 'User' class address
 * __profile_class:__ Define 'Profile' class address
@@ -145,6 +148,15 @@ pd_user:
 * __mail_sender_address:__ Mail sender address
 * __mail_sender_name:__ Mail sender name
 * __active_language:__ List of Active Language
+* __register_type:__ Register Form Type
+* __resetting_type:__ Resetting Form Type
+
+####Events
+    UserEvent::REGISTER_BEFORE => It is launched before the registration form.
+    UserEvent::REGISTER => When the recording is complete, it is launched.
+    UserEvent::REGISTER_CONFIRM => E-mail is launched when registration is confirmed.
+    UserEvent::RESETTING => The password is launched when the reset mail is sent.
+    UserEvent::RESETTING_COMPLETE => It is launched when the password is changed.
 
 ### Step 5: Configure Your Application's Security.yml
 Below is a minimal example of the configuration necessary to use the pdUser in your application:

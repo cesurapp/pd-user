@@ -13,6 +13,8 @@
 
 namespace Pd\UserBundle\DependencyInjection;
 
+use Pd\UserBundle\Form\RegisterType;
+use Pd\UserBundle\Form\ResettingType;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -41,6 +43,8 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('mail_sender_address')->defaultValue('example@example.com')->end()
                 ->scalarNode('mail_sender_name')->defaultValue('pdUser')->end()
                 ->arrayNode('active_language')->scalarPrototype()->end()->defaultValue(['en'])->end()
+                ->scalarNode('register_type')->defaultValue(RegisterType::class)->end()
+                ->scalarNode('resetting_type')->defaultValue(ResettingType::class)->end()
             ->end();
 
         return $treeBuilder;
