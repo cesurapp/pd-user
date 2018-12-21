@@ -83,7 +83,9 @@ class SecurityController extends AbstractController
         }
 
         // Dispatch Register Event
-        $dispatcher->dispatch(UserEvent::REGISTER_BEFORE, new UserEvent($user));
+        if ($response = $dispatcher->dispatch(UserEvent::REGISTER_BEFORE, new UserEvent($user))->getResponse()) {
+            return $response;
+        }
 
         // Create Form
         $form = $this->createForm($this->getParameter('pd_user.register_type'), $user, [
@@ -139,7 +141,9 @@ class SecurityController extends AbstractController
             $em->flush();
 
             // Dispatch Register Event
-            $dispatcher->dispatch(UserEvent::REGISTER, new UserEvent($user));
+            if ($response = $dispatcher->dispatch(UserEvent::REGISTER, new UserEvent($user))->getResponse()) {
+                return $response;
+            }
 
             // Register Success
             return $this->render($this->getParameter('pd_user.template_path') . '/Registration/registerSuccess.html.twig', [
@@ -185,7 +189,9 @@ class SecurityController extends AbstractController
         $em->flush();
 
         // Dispatch Register Event
-        $dispatcher->dispatch(UserEvent::REGISTER_CONFIRM, new UserEvent($user));
+        if ($response = $dispatcher->dispatch(UserEvent::REGISTER_CONFIRM, new UserEvent($user))->getResponse()) {
+            return $response;
+        }
 
         // Register Success
         return $this->render($this->getParameter('pd_user.template_path') . '/Registration/registerSuccess.html.twig', [
@@ -247,7 +253,9 @@ class SecurityController extends AbstractController
                     $em->flush();
 
                     // Dispatch Register Event
-                    $dispatcher->dispatch(UserEvent::RESETTING, new UserEvent($user));
+                    if ($response = $dispatcher->dispatch(UserEvent::RESETTING, new UserEvent($user))->getResponse()) {
+                        return $response;
+                    }
 
                     // Render
                     return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resettingSuccess.html.twig', [
@@ -301,7 +309,9 @@ class SecurityController extends AbstractController
             $em->flush();
 
             // Dispatch Register Event
-            $dispatcher->dispatch(UserEvent::RESETTING_COMPLETE, new UserEvent($user));
+            if ($response = $dispatcher->dispatch(UserEvent::RESETTING_COMPLETE, new UserEvent($user))->getResponse()) {
+                return $response;
+            }
 
             // Send Resetting Complete
             $this->sendEmail($user, $mailer, 'Account Password Resetting', 'Password resetting completed.', 'Resetting_Completed');
