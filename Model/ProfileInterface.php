@@ -25,14 +25,14 @@ interface ProfileInterface
      *
      * @return int
      */
-    public function getId();
+    public function getId(): int;
 
     /**
      * Get firstname.
      *
      * @return string
      */
-    public function getFirstname();
+    public function getFirstname(): ?string;
 
     /**
      * Set firstname.
@@ -41,74 +41,74 @@ interface ProfileInterface
      *
      * @return $this
      */
-    public function setFirstname($firstname);
+    public function setFirstname(string $firstname): self;
 
     /**
      * @return string
      */
-    public function getLastname();
+    public function getLastname(): ?string;
 
     /**
      * @param string $lastname
      *
      * @return $this
      */
-    public function setLastname($lastname);
+    public function setLastname(string $lastname): self;
 
     /**
      * @return string
      */
-    public function getFullName();
+    public function getFullName(): string;
 
     /**
-     * @return int
+     * @return string
      */
-    public function getPhone();
+    public function getPhone(): ?string;
 
     /**
      * @param int $phone
      *
      * @return $this
      */
-    public function setPhone($phone);
+    public function setPhone(string $phone): self;
 
     /**
      * Get website.
      *
      * @return string
      */
-    public function getWebsite();
+    public function getWebsite(): ?string;
 
     /**
      * @param string $website
      *
      * @return $this
      */
-    public function setWebsite($website);
+    public function setWebsite(string $website): self;
 
     /**
      * Get company.
      *
      * @return string
      */
-    public function getCompany();
+    public function getCompany(): ?string;
 
     /**
      * @param string $company
      *
      * @return $this
      */
-    public function setCompany($company);
+    public function setCompany(string $company): self;
 
     /**
      * @return string
      */
-    public function getLanguage();
+    public function getLanguage(): ?string;
 
     /**
      * @param string $language
      *
      * @return $this
      */
-    public function setLanguage($language);
+    public function setLanguage(string $language): self;
 }

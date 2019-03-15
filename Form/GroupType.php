@@ -36,9 +36,4 @@ class GroupType extends AbstractType
                 'label' => 'save',
             ]);
     }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setRequired('data_class');
-    }
 }

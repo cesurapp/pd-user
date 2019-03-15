@@ -51,7 +51,7 @@ class Group implements GroupInterface
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -59,17 +59,17 @@ class Group implements GroupInterface
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return $this
      */
-    public function setName($name)
+    public function setName(string $name): GroupInterface
     {
         $this->name = $name;
 
@@ -79,7 +79,7 @@ class Group implements GroupInterface
     /**
      * @return array
      */
-    public function getRoles()
+    public function getRoles(): ?array
     {
         return $this->roles;
     }
@@ -89,7 +89,7 @@ class Group implements GroupInterface
      *
      * @return $this
      */
-    public function setRoles(array $roles)
+    public function setRoles(array $roles): GroupInterface
     {
         $this->roles = $roles;
 
@@ -97,11 +97,11 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param $role
+     * @param string $role
      *
      * @return $this
      */
-    public function addRole($role)
+    public function addRole(string $role): GroupInterface
     {
         if (!$this->hasRole($role)) {
             $this->roles[] = mb_strtoupper($role);
@@ -111,11 +111,11 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param $role
+     * @param string $role
      *
      * @return $this
      */
-    public function removeRole($role)
+    public function removeRole(string $role): GroupInterface
     {
         if (false !== $key = array_search(mb_strtoupper($role), $this->roles, true)) {
             unset($this->roles[$key]);
@@ -130,7 +130,7 @@ class Group implements GroupInterface
      *
      * @return bool
      */
-    public function hasRole($role)
+    public function hasRole(string $role): bool
     {
         return \in_array(mb_strtoupper($role), $this->roles, true);
     }

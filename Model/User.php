@@ -113,21 +113,21 @@ class User implements UserInterface, \Serializable
 
     public function __toString()
     {
-        return (string) $this->getUsername();
+        return (string)$this->getUsername();
     }
 
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * @return Profile
+     * @return ProfileInterface
      */
-    public function getProfile()
+    public function getProfile(): ?ProfileInterface
     {
         return $this->profile;
     }
@@ -137,7 +137,7 @@ class User implements UserInterface, \Serializable
      *
      * @return $this
      */
-    public function setProfile(ProfileInterface $profile)
+    public function setProfile(ProfileInterface $profile): UserInterface
     {
         $this->profile = $profile;
 
@@ -147,7 +147,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return string
      */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->email;
     }
@@ -157,7 +157,7 @@ class User implements UserInterface, \Serializable
      *
      * @return $this
      */
-    public function setUsername($username)
+    public function setUsername(string $username): UserInterface
     {
         $this->email = $username;
 
@@ -167,7 +167,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return string
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -177,7 +177,7 @@ class User implements UserInterface, \Serializable
      *
      * @return $this
      */
-    public function setPassword($password)
+    public function setPassword(string $password): UserInterface
     {
         $this->password = $password;
 
@@ -187,7 +187,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -197,7 +197,7 @@ class User implements UserInterface, \Serializable
      *
      * @return $this
      */
-    public function setEmail($email)
+    public function setEmail(string $email): UserInterface
     {
         $this->email = $email;
 
@@ -207,7 +207,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return bool
      */
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return $this->isActive;
     }
@@ -217,7 +217,7 @@ class User implements UserInterface, \Serializable
      *
      * @return $this
      */
-    public function setEnabled(bool $enabled)
+    public function setEnabled(bool $enabled): UserInterface
     {
         $this->isActive = $enabled;
 
@@ -227,7 +227,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return bool
      */
-    public function isFreeze()
+    public function isFreeze(): bool
     {
         return $this->isFreeze;
     }
@@ -235,9 +235,9 @@ class User implements UserInterface, \Serializable
     /**
      * @param $enabled bool
      *
-     * @return $this|UserInterface
+     * @return $this
      */
-    public function setFreeze(bool $enabled)
+    public function setFreeze(bool $enabled): UserInterface
     {
         $this->isFreeze = $enabled;
 
@@ -247,7 +247,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return \DateTime
      */
-    public function getLastLogin()
+    public function getLastLogin(): ?\DateTime
     {
         return $this->lastLogin;
     }
@@ -257,7 +257,7 @@ class User implements UserInterface, \Serializable
      *
      * @return $this
      */
-    public function setLastLogin(\DateTime $time = null)
+    public function setLastLogin(\DateTime $time = null): UserInterface
     {
         $this->lastLogin = $time;
 
@@ -267,7 +267,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return string
      */
-    public function getConfirmationToken()
+    public function getConfirmationToken(): ?string
     {
         return $this->confirmationToken;
     }
@@ -277,7 +277,7 @@ class User implements UserInterface, \Serializable
      *
      * @return $this
      */
-    public function setConfirmationToken($confirmationToken)
+    public function setConfirmationToken(string $confirmationToken): UserInterface
     {
         $this->confirmationToken = $confirmationToken;
 
@@ -289,7 +289,7 @@ class User implements UserInterface, \Serializable
      *
      * @return $this
      */
-    public function createConfirmationToken()
+    public function createConfirmationToken(): UserInterface
     {
         $this->confirmationToken = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
 
@@ -299,7 +299,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return \DateTime
      */
-    public function getPasswordRequestedAt()
+    public function getPasswordRequestedAt(): ?\DateTime
     {
         return $this->passwordRequestedAt;
     }
@@ -309,7 +309,7 @@ class User implements UserInterface, \Serializable
      *
      * @return $this
      */
-    public function setPasswordRequestedAt(\DateTime $date = null)
+    public function setPasswordRequestedAt(\DateTime $date = null): UserInterface
     {
         $this->passwordRequestedAt = $date;
 
@@ -321,7 +321,7 @@ class User implements UserInterface, \Serializable
      *
      * @return bool
      */
-    public function isPasswordRequestNonExpired($ttl)
+    public function isPasswordRequestNonExpired($ttl): bool
     {
         return $this->getPasswordRequestedAt() instanceof \DateTime && $this->getPasswordRequestedAt()->getTimestamp() + $ttl > time();
     }
@@ -329,7 +329,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return \DateTime
      */
-    public function getCreatedAt()
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -339,7 +339,7 @@ class User implements UserInterface, \Serializable
      *
      * @return $this
      */
-    public function setCreatedAt(\DateTime $time = null)
+    public function setCreatedAt(\DateTime $time = null): UserInterface
     {
         $this->createdAt = $time;
 
@@ -351,7 +351,7 @@ class User implements UserInterface, \Serializable
      *
      * @return array
      */
-    public function getRoles()
+    public function getRoles(): ?array
     {
         $roles = $this->roles;
 
@@ -365,7 +365,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return array
      */
-    public function getRolesUser()
+    public function getRolesUser(): ?array
     {
         return $this->roles;
     }
@@ -375,7 +375,7 @@ class User implements UserInterface, \Serializable
      *
      * @return $this
      */
-    public function setRoles(array $roles)
+    public function setRoles(array $roles): UserInterface
     {
         $this->roles = [];
 
@@ -391,7 +391,7 @@ class User implements UserInterface, \Serializable
      *
      * @return $this
      */
-    public function addRole($role)
+    public function addRole(string $role): UserInterface
     {
         $role = mb_strtoupper($role);
 
@@ -407,7 +407,7 @@ class User implements UserInterface, \Serializable
      *
      * @return $this
      */
-    public function removeRole($role)
+    public function removeRole(string $role): UserInterface
     {
         if (false !== $key = array_search(mb_strtoupper($role), $this->roles, true)) {
             unset($this->roles[$key]);
@@ -422,7 +422,7 @@ class User implements UserInterface, \Serializable
      *
      * @return bool
      */
-    public function hasRole($role)
+    public function hasRole(string $role): bool
     {
         return \in_array(mb_strtoupper($role), $this->getRoles(), true);
     }
@@ -438,7 +438,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return array
      */
-    public function getGroupNames()
+    public function getGroupNames(): ?array
     {
         $names = [];
 
@@ -454,7 +454,7 @@ class User implements UserInterface, \Serializable
      *
      * @return bool
      */
-    public function hasGroup($name)
+    public function hasGroup(string $name): bool
     {
         return \in_array($name, $this->getGroupNames(), true);
     }
@@ -464,7 +464,7 @@ class User implements UserInterface, \Serializable
      *
      * @return $this
      */
-    public function addGroup(GroupInterface $group)
+    public function addGroup(GroupInterface $group): UserInterface
     {
         if (!$this->getGroups()->contains($group)) {
             $this->getGroups()->add($group);
@@ -478,7 +478,7 @@ class User implements UserInterface, \Serializable
      *
      * @return $this
      */
-    public function removeGroup(GroupInterface $group)
+    public function removeGroup(GroupInterface $group): UserInterface
     {
         if ($this->getGroups()->contains($group)) {
             $this->getGroups()->removeElement($group);

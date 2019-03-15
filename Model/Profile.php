@@ -14,6 +14,7 @@
 namespace Pd\UserBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use http\Encoding\Stream\Inflate;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -51,10 +52,10 @@ class Profile implements ProfileInterface
     protected $lastname;
 
     /**
-     * @var int
+     * @var string
      *
      * @ORM\Column(name="phone", type="string", length=15, nullable=true)
-     * @Assert\Length(min="8", max="13")
+     * @Assert\Length(min="7", max="14")
      */
     protected $phone;
 
@@ -87,7 +88,7 @@ class Profile implements ProfileInterface
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -97,7 +98,7 @@ class Profile implements ProfileInterface
      *
      * @return string
      */
-    public function getFirstname()
+    public function getFirstname(): ?string
     {
         return $this->firstname;
     }
@@ -109,7 +110,7 @@ class Profile implements ProfileInterface
      *
      * @return Profile
      */
-    public function setFirstname($firstname)
+    public function setFirstname(string $firstname): ProfileInterface
     {
         $this->firstname = $firstname;
 
@@ -121,7 +122,7 @@ class Profile implements ProfileInterface
      *
      * @return string
      */
-    public function getLastname()
+    public function getLastname(): ?string
     {
         return $this->lastname;
     }
@@ -133,7 +134,7 @@ class Profile implements ProfileInterface
      *
      * @return Profile
      */
-    public function setLastname($lastname)
+    public function setLastname(string $lastname): ProfileInterface
     {
         $this->lastname = $lastname;
 
@@ -145,17 +146,17 @@ class Profile implements ProfileInterface
      *
      * @return string
      */
-    public function getFullName()
+    public function getFullName(): string
     {
-        return $this->firstname.' '.$this->lastname;
+        return $this->firstname . ' ' . $this->lastname;
     }
 
     /**
      * Get phone.
      *
-     * @return int
+     * @return string
      */
-    public function getPhone()
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
@@ -163,11 +164,11 @@ class Profile implements ProfileInterface
     /**
      * Set phone.
      *
-     * @param int $phone
+     * @param string $phone
      *
      * @return Profile
      */
-    public function setPhone($phone)
+    public function setPhone(string $phone): ProfileInterface
     {
         $this->phone = $phone;
 
@@ -179,7 +180,7 @@ class Profile implements ProfileInterface
      *
      * @return string
      */
-    public function getWebsite()
+    public function getWebsite(): ?string
     {
         return $this->website;
     }
@@ -191,7 +192,7 @@ class Profile implements ProfileInterface
      *
      * @return Profile
      */
-    public function setWebsite($website)
+    public function setWebsite(string $website): ProfileInterface
     {
         $this->website = $website;
 
@@ -203,7 +204,7 @@ class Profile implements ProfileInterface
      *
      * @return string
      */
-    public function getCompany()
+    public function getCompany(): ?string
     {
         return $this->company;
     }
@@ -215,7 +216,7 @@ class Profile implements ProfileInterface
      *
      * @return Profile
      */
-    public function setCompany($company)
+    public function setCompany(string $company): ProfileInterface
     {
         $this->company = $company;
 
@@ -227,7 +228,7 @@ class Profile implements ProfileInterface
      *
      * @return string
      */
-    public function getLanguage()
+    public function getLanguage(): ?string
     {
         return $this->language;
     }
@@ -239,7 +240,7 @@ class Profile implements ProfileInterface
      *
      * @return Profile
      */
-    public function setLanguage($language)
+    public function setLanguage(string $language): ProfileInterface
     {
         $this->language = $language;
 
@@ -249,7 +250,7 @@ class Profile implements ProfileInterface
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getFullName();
     }

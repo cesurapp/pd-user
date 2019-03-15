@@ -23,50 +23,50 @@ interface GroupInterface
     /**
      * @return int
      */
-    public function getId();
+    public function getId(): int;
 
     /**
      * @return string
      */
-    public function getName();
+    public function getName(): ?string;
 
     /**
      * @param $name
      *
      * @return $this
      */
-    public function setName($name);
+    public function setName(string $name): self;
 
     /**
      * @return array
      */
-    public function getRoles();
+    public function getRoles(): ?array;
 
     /**
      * @param array $roles
      *
      * @return $this
      */
-    public function setRoles(array $roles);
+    public function setRoles(array $roles): self;
 
     /**
-     * @param $role
+     * @param string $role
      *
      * @return $this
      */
-    public function addRole($role);
+    public function addRole(string $role): self;
 
     /**
-     * @param $role
+     * @param string $role
      *
      * @return $this
      */
-    public function removeRole($role);
+    public function removeRole(string $role): self;
 
     /**
      * @param $role
      *
      * @return bool
      */
-    public function hasRole($role);
+    public function hasRole(string $role): bool;
 }

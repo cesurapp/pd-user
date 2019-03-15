@@ -23,186 +23,186 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
     /**
      * @return int
      */
-    public function getId();
+    public function getId(): int;
 
     /**
-     * @return Profile
+     * @return ProfileInterface
      */
-    public function getProfile();
+    public function getProfile(): ?ProfileInterface;
 
     /**
      * @param ProfileInterface $profile
      *
      * @return $this
      */
-    public function setProfile(ProfileInterface $profile);
+    public function setProfile(ProfileInterface $profile): self;
 
     /**
      * @param $username
      *
      * @return $this
      */
-    public function setUsername($username);
+    public function setUsername(string $username): self;
 
     /**
      * @param $password
      *
      * @return $this
      */
-    public function setPassword($password);
+    public function setPassword(string $password): self;
 
     /**
      * @return string
      */
-    public function getEmail();
+    public function getEmail(): ?string;
 
     /**
      * @param $email
      *
      * @return $this
      */
-    public function setEmail($email);
+    public function setEmail(string $email): self;
 
     /**
      * @return bool
      */
-    public function isEnabled();
+    public function isEnabled(): bool;
 
     /**
      * @param $enabled
      *
      * @return $this
      */
-    public function setEnabled(bool $enabled);
+    public function setEnabled(bool $enabled): self;
 
     /**
      * @return bool
      */
-    public function isFreeze();
+    public function isFreeze(): bool;
 
     /**
      * @param $enabled
      *
      * @return $this
      */
-    public function setFreeze(bool $enabled);
+    public function setFreeze(bool $enabled): self;
 
     /**
      * @return \DateTime
      */
-    public function getLastLogin();
+    public function getLastLogin(): ?\DateTime;
 
     /**
      * @param \DateTime|null $time
      *
      * @return $this
      */
-    public function setLastLogin(\DateTime $time = null);
+    public function setLastLogin(\DateTime $time = null): self;
 
     /**
      * @return string
      */
-    public function getConfirmationToken();
+    public function getConfirmationToken(): ?string;
 
     /**
      * @param string $confirmationToken
      *
      * @return $this
      */
-    public function setConfirmationToken($confirmationToken);
+    public function setConfirmationToken(string $confirmationToken): self;
 
     /**
      * @return $this
      */
-    public function createConfirmationToken();
+    public function createConfirmationToken(): self;
 
     /**
      * @return \DateTime
      */
-    public function getPasswordRequestedAt();
+    public function getPasswordRequestedAt(): ?\DateTime;
 
     /**
      * @param \DateTime|null $date
      *
      * @return $this
      */
-    public function setPasswordRequestedAt(\DateTime $date = null);
+    public function setPasswordRequestedAt(\DateTime $date = null): self;
 
     /**
      * @param $ttl
      *
      * @return bool
      */
-    public function isPasswordRequestNonExpired($ttl);
+    public function isPasswordRequestNonExpired($ttl): bool;
 
     /**
      * @return \DateTime
      */
-    public function getCreatedAt();
+    public function getCreatedAt(): ?\DateTime;
 
     /**
      * @param \DateTime|null $time
      *
      * @return $this
      */
-    public function setCreatedAt(\DateTime $time = null);
+    public function setCreatedAt(\DateTime $time = null): self;
 
     /**
      * @return array
      */
-    public function getRolesUser();
+    public function getRolesUser(): ?array;
 
     /**
      * @param array $roles
      *
      * @return $this
      */
-    public function setRoles(array $roles);
+    public function setRoles(array $roles): self;
 
     /**
      * @param $role
      *
      * @return $this
      */
-    public function addRole($role);
+    public function addRole(string $role): self;
 
     /**
      * @param $role
      *
      * @return $this
      */
-    public function removeRole($role);
+    public function removeRole(string $role): self;
 
     /**
      * @param $role
      *
      * @return bool
      */
-    public function hasRole($role);
+    public function hasRole(string $role): bool;
 
     /**
      * @return array
      */
-    public function getGroupNames();
+    public function getGroupNames(): ?array;
 
     /**
      * @param $name
      *
      * @return bool
      */
-    public function hasGroup($name);
+    public function hasGroup(string $name): bool;
 
     /**
      * @param GroupInterface $group
      *
      * @return $this
      */
-    public function addGroup(GroupInterface $group);
+    public function addGroup(GroupInterface $group): self;
 
     /**
      * @param GroupInterface $group
      *
      * @return $this
      */
-    public function removeGroup(GroupInterface $group);
+    public function removeGroup(GroupInterface $group): self;
 }

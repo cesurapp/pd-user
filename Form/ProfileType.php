@@ -13,8 +13,10 @@
 
 namespace Pd\UserBundle\Form;
 
+use Pd\UserBundle\Model\ProfileInterface;
 use Pd\UserBundle\Model\User;
 use Psr\Container\ContainerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -48,7 +50,7 @@ class ProfileType extends AbstractType
                 ->create('profile', FormType::class, [
                     'label' => false,
                     'attr' => ['class' => 'col-12'],
-                    'data_class' => $options['profile_class'],
+                    'data_class' => ProfileInterface::class,
                 ])
                 ->add('firstname', TextType::class, [
                     'label' => 'firstname',
@@ -73,13 +75,10 @@ class ProfileType extends AbstractType
                 ])
                 ->add('language', ChoiceType::class, [
                     'label' => 'language',
-                    'choices' => $this->getLanguageList($options['container']),
+                    'choices' => $this->getLanguageList($options['parameter_bag']),
                     'choice_translation_domain' => false,
                 ])
         );
-
-        // Add Admin Item
-        $this->setAdminItem($builder, $options['container']);
 
         // Add Submit
         $builder->add('submit', SubmitType::class, [
@@ -94,30 +93,7 @@ class ProfileType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver
-            ->setRequired('data_class')
-            ->setRequired('profile_class')
-            ->setRequired('container');
-    }
-
-    /**
-     * Add Admin Item.
-     *
-     * @param FormBuilderInterface $builder
-     * @param $options
-     */
-    public function setAdminItem(FormBuilderInterface &$builder, ContainerInterface $container)
-    {
-        if ($container->get('security.authorization_checker')->isGranted(User::ROLE_ALL_ACCESS)) {
-            $builder
-                ->add('createdAt', DateTimeType::class, [
-                    'label' => 'created_at',
-                    'format' => 'yyyy-MM-dd HH:mm',
-                    'widget' => 'single_text',
-                    'html5' => true,
-                    'attr' => ['data-picker' => 'datetime'],
-                ]);
-        }
+        $resolver->setRequired('parameter_bag');
     }
 
     /**
@@ -127,10 +103,9 @@ class ProfileType extends AbstractType
      *
      * @return array|bool
      */
-    public function getLanguageList(ContainerInterface $container)
+    public function getLanguageList(ParameterBagInterface $parameterBag)
     {
         $allLangs = Intl::getLanguageBundle()->getLanguageNames();
-
-        return array_flip(array_intersect_key($allLangs, array_flip($container->get('parameter_bag')->get('pd_user.active_language'))));
+        return array_flip(array_intersect_key($allLangs, array_flip($parameterBag->get('pd_user.active_language'))));
     }
 }

@@ -62,8 +62,6 @@ class ChangePasswordType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver
-            ->setRequired('data_class')
-            ->setRequired('disable_current_password');
+        $resolver->setRequired('disable_current_password');
     }
 }
