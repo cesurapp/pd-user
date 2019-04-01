@@ -278,7 +278,7 @@ class SecurityController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function resettingPassword(Request $request, EventDispatcherInterface $dispatcher, \Swift_Mailer $mailer, TranslatorInterface $translator, $token)
+    public function resettingPassword(Request $request, UserPasswordEncoderInterface $encoder, EventDispatcherInterface $dispatcher, \Swift_Mailer $mailer, TranslatorInterface $translator, $token)
     {
         // Get Doctrine
         $em = $this->getDoctrine()->getManager();
@@ -297,7 +297,6 @@ class SecurityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Encode Password & Set Token
-            $encoder = $this->get('security.password_encoder');
             $password = $encoder->encodePassword($user, $form->get('plainPassword')->getData());
             $user->setPassword($password)
                 ->setConfirmationToken(null)
