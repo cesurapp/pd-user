@@ -109,7 +109,7 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
      *
      * @return $this
      */
-    public function setConfirmationToken(string $confirmationToken): self;
+    public function setConfirmationToken(?string $confirmationToken): self;
 
     /**
      * @return $this
