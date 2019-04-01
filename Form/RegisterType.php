@@ -13,7 +13,6 @@
 
 namespace Pd\UserBundle\Form;
 
-use Pd\UserBundle\Model\ProfileInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -65,7 +64,7 @@ class RegisterType extends AbstractType
         // Add Profile
         $builder->add($builder
             ->create('profile', FormType::class, [
-                'data_class' => ProfileInterface::class,
+                'data_class' => $options['profile_class'],
                 'label' => false,
                 'attr' => ['class' => 'col-12'],
             ])
@@ -91,5 +90,10 @@ class RegisterType extends AbstractType
                 ],
             ])
         );
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setRequired('profile_class');
     }
 }

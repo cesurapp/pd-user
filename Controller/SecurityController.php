@@ -88,7 +88,9 @@ class SecurityController extends AbstractController
         }
 
         // Create Form
-        $form = $this->createForm($this->getParameter('pd_user.register_type'), $user);
+        $form = $this->createForm($this->getParameter('pd_user.register_type'), $user, [
+            'profile_class' => $this->getParameter('pd_user.profile_class')
+        ]);
 
         // Handle Form Submit
         $form->handleRequest($request);
