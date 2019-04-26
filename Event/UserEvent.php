@@ -24,11 +24,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class UserEvent extends Event
 {
-    const REGISTER_BEFORE = 'user.register_before';
-    const REGISTER = 'user.register';
-    const REGISTER_CONFIRM = 'user.register_confirm';
-    const RESETTING = 'user.resetting';
-    const RESETTING_COMPLETE = 'user.resetting_complete';
+    public const REGISTER_BEFORE = 'user.register_before';
+    public const REGISTER = 'user.register';
+    public const REGISTER_CONFIRM = 'user.register_confirm';
+    public const RESETTING = 'user.resetting';
+    public const RESETTING_COMPLETE = 'user.resetting_complete';
 
     /**
      * @var UserInterface
@@ -43,7 +43,7 @@ class UserEvent extends Event
     /**
      * MainNavEvent constructor.
      *
-     * @param UserInterface $menu
+     * @param UserInterface $user
      */
     public function __construct(UserInterface $user)
     {
@@ -51,9 +51,9 @@ class UserEvent extends Event
     }
 
     /**
-     * Get Menu.
+     * Get User.
      *
-     * @return ItemInterface
+     * @return UserInterface
      */
     public function getUser()
     {

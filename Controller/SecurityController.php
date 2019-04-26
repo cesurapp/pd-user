@@ -340,14 +340,9 @@ class SecurityController extends AbstractController
     /**
      * Send Mail.
      *
-     * @param UserInterface $user
-     * @param string $subject
-     * @param string $body
-     * @param string $description
-     *
      * @return bool
      */
-    private function sendEmail(UserInterface $user, \Swift_Mailer $mailer, $subject = '', $body = '', $templateId = '')
+    private function sendEmail(UserInterface $user, \Swift_Mailer $mailer, $subject, $body, $templateId)
     {
         if (\is_array($body)) {
             $body['email'] = $user->getEmail();

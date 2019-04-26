@@ -354,12 +354,14 @@ class User implements UserInterface, \Serializable
     public function getRoles(): ?array
     {
         $roles = $this->roles;
+        $groupRoles = [[]];
 
         foreach ($this->getGroups() as $group) {
-            $roles = array_merge($roles, $group->getRoles());
+            $groupRoles[] = $group->getRoles();
         }
+        $groupRoles = array_merge(...$groupRoles);
 
-        return array_unique($roles);
+        return array_unique(array_merge($roles, $groupRoles));
     }
 
     /**
