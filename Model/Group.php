@@ -4,10 +4,8 @@
  * This file is part of the pd-admin pd-user package.
  *
  * @package     pd-user
- *
  * @license     LICENSE
  * @author      Kerem APAYDIN <kerem@apaydin.me>
- *
  * @link        https://github.com/appaydin/pd-user
  */
 
@@ -17,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * User Group
+ * User Group.
  *
  * @author Kerem APAYDIN <kerem@apaydin.me>
  */

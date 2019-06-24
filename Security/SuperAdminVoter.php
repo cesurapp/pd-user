@@ -4,10 +4,8 @@
  * This file is part of the pd-admin pd-user package.
  *
  * @package     pd-user
- *
  * @license     LICENSE
  * @author      Kerem APAYDIN <kerem@apaydin.me>
- *
  * @link        https://github.com/appaydin/pd-user
  */
 
@@ -19,7 +17,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
- * Super Admin All Access Voter
+ * Super Admin All Access Voter.
  *
  * @author Kerem APAYDIN <kerem@apaydin.me>
  */

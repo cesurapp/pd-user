@@ -4,10 +4,8 @@
  * This file is part of the pd-admin pd-user package.
  *
  * @package     pd-user
- *
  * @license     LICENSE
  * @author      Kerem APAYDIN <kerem@apaydin.me>
- *
  * @link        https://github.com/appaydin/pd-user
  */
 
@@ -18,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * User Account
+ * User Account.
  *
  * @author Kerem APAYDIN <kerem@apaydin.me>
  */
@@ -113,7 +111,7 @@ class User implements UserInterface, \Serializable
 
     public function __toString()
     {
-        return (string)$this->getUsername();
+        return $this->getUsername();
     }
 
     /**

@@ -4,10 +4,8 @@
  * This file is part of the pd-admin pd-user package.
  *
  * @package     pd-user
- *
  * @license     LICENSE
  * @author      Kerem APAYDIN <kerem@apaydin.me>
- *
  * @link        https://github.com/appaydin/pd-user
  */
 
@@ -20,7 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 
 /**
- * User Password Reset
+ * User Password Reset.
  *
  * @author Kerem APAYDIN <kerem@apaydin.me>
  */

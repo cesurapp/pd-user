@@ -1,21 +1,19 @@
 <?php
 
 /**
- * This file is part of the pd-admin pd-menu package.
+ * This file is part of the pd-admin pd-user package.
  *
  * @package     pd-user
- *
  * @license     LICENSE
  * @author      Kerem APAYDIN <kerem@apaydin.me>
- *
  * @link        https://github.com/appaydin/pd-user
  */
 
 namespace Pd\UserBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * User Account Events.
@@ -72,6 +70,8 @@ class UserEvent extends Event
 
     /**
      * Sets a response and stops event propagation.
+     *
+     * @param Response $response
      */
     public function setResponse(Response $response)
     {
@@ -85,7 +85,7 @@ class UserEvent extends Event
      *
      * @return bool Whether a response was set
      */
-    public function hasResponse()
+    public function hasResponse(): bool
     {
         return null !== $this->response;
     }

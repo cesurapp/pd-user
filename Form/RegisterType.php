@@ -4,10 +4,8 @@
  * This file is part of the pd-admin pd-user package.
  *
  * @package     pd-user
- *
  * @license     LICENSE
  * @author      Kerem APAYDIN <kerem@apaydin.me>
- *
  * @link        https://github.com/appaydin/pd-user
  */
 
@@ -25,7 +23,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Type;
 
 /**
- * User Register Form
+ * User Register Form.
  *
  * @author Kerem APAYDIN <kerem@apaydin.me>
  */

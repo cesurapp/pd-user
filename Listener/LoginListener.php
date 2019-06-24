@@ -4,10 +4,8 @@
  * This file is part of the pd-admin pd-user package.
  *
  * @package     pd-user
- *
  * @license     LICENSE
  * @author      Kerem APAYDIN <kerem@apaydin.me>
- *
  * @link        https://github.com/appaydin/pd-user
  */
 
@@ -33,6 +31,8 @@ class LoginListener implements EventSubscriberInterface
 
     /**
      * LoginListener constructor.
+     *
+     * @param EntityManagerInterface $entityManager
      */
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -40,15 +40,10 @@ class LoginListener implements EventSubscriberInterface
     }
 
     /**
-     * {@inheritdoc}
+     * On Login Event.
+     *
+     * @param InteractiveLoginEvent $event
      */
-    public static function getSubscribedEvents()
-    {
-        return [
-            SecurityEvents::INTERACTIVE_LOGIN => 'onLogin',
-        ];
-    }
-
     public function onLogin(InteractiveLoginEvent $event)
     {
         // Get User
@@ -65,5 +60,12 @@ class LoginListener implements EventSubscriberInterface
             $this->entityManager->persist($user);
             $this->entityManager->flush();
         }
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return [
+            SecurityEvents::INTERACTIVE_LOGIN => 'onLogin',
+        ];
     }
 }

@@ -4,17 +4,14 @@
  * This file is part of the pd-admin pd-user package.
  *
  * @package     pd-user
- *
  * @license     LICENSE
  * @author      Kerem APAYDIN <kerem@apaydin.me>
- *
  * @link        https://github.com/appaydin/pd-user
  */
 
 namespace Pd\UserBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -44,7 +41,6 @@ class RoleUserCommand extends Command
      * CreateUserCommand constructor.
      *
      * @param EntityManagerInterface $entityManager
-     * @param ContainerInterface     $container
      * @param string                 $userClass
      */
     public function __construct(EntityManagerInterface $entityManager, string $userClass)

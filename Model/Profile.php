@@ -4,21 +4,18 @@
  * This file is part of the pd-admin pd-user package.
  *
  * @package     pd-user
- *
  * @license     LICENSE
  * @author      Kerem APAYDIN <kerem@apaydin.me>
- *
  * @link        https://github.com/appaydin/pd-user
  */
 
 namespace Pd\UserBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use http\Encoding\Stream\Inflate;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * User Profile
+ * User Profile.
  *
  * @author Kerem APAYDIN <kerem@apaydin.me>
  */
@@ -148,7 +145,7 @@ class Profile implements ProfileInterface
      */
     public function getFullName(): string
     {
-        return $this->firstname . ' ' . $this->lastname;
+        return $this->firstname.' '.$this->lastname;
     }
 
     /**

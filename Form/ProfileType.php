@@ -4,33 +4,28 @@
  * This file is part of the pd-admin pd-user package.
  *
  * @package     pd-user
- *
  * @license     LICENSE
  * @author      Kerem APAYDIN <kerem@apaydin.me>
- *
  * @link        https://github.com/appaydin/pd-user
  */
 
 namespace Pd\UserBundle\Form;
 
 use Pd\UserBundle\Model\ProfileInterface;
-use Pd\UserBundle\Model\User;
-use Psr\Container\ContainerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Intl\Intl;
+use Symfony\Component\Intl\Languages;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Type;
 
 /**
- * User Profile Type
+ * User Profile Type.
  *
  * @author Kerem APAYDIN <kerem@apaydin.me>
  */
@@ -99,13 +94,12 @@ class ProfileType extends AbstractType
     /**
      * Return Active Language List.
      *
-     * @param ContainerInterface $container
+     * @param ParameterBagInterface $parameterBag
      *
      * @return array|bool
      */
     public function getLanguageList(ParameterBagInterface $parameterBag)
     {
-        $allLangs = Intl::getLanguageBundle()->getLanguageNames();
-        return array_flip(array_intersect_key($allLangs, array_flip($parameterBag->get('pd_user.active_language'))));
+        return array_flip(array_intersect_key(Languages::getNames(), array_flip($parameterBag->get('pd_user.active_language'))));
     }
 }

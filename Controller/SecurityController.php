@@ -4,10 +4,8 @@
  * This file is part of the pd-admin pd-user package.
  *
  * @package     pd-user
- *
  * @license     LICENSE
  * @author      Kerem APAYDIN <kerem@apaydin.me>
- *
  * @link        https://github.com/appaydin/pd-user
  */
 
@@ -15,20 +13,19 @@ namespace Pd\UserBundle\Controller;
 
 use Pd\MailerBundle\SwiftMailer\PdSwiftMessage;
 use Pd\UserBundle\Event\UserEvent;
-use Pd\UserBundle\Form\RegisterType;
 use Pd\UserBundle\Form\ResettingPasswordType;
-use Pd\UserBundle\Form\ResettingType;
 use Pd\UserBundle\Model\GroupInterface;
 use Pd\UserBundle\Model\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityController extends AbstractController
@@ -36,7 +33,9 @@ class SecurityController extends AbstractController
     /**
      * Login.
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @param AuthenticationUtils $authenticationUtils
+     *
+     * @return RedirectResponse|Response
      */
     public function login(AuthenticationUtils $authenticationUtils)
     {
@@ -46,7 +45,7 @@ class SecurityController extends AbstractController
         }
 
         // Render
-        return $this->render($this->getParameter('pd_user.template_path') . '/Security/login.html.twig', [
+        return $this->render($this->getParameter('pd_user.template_path').'/Security/login.html.twig', [
             'last_username' => $authenticationUtils->getLastUsername(),
             'error' => $authenticationUtils->getLastAuthenticationError(),
         ]);
@@ -55,11 +54,13 @@ class SecurityController extends AbstractController
     /**
      * Registration.
      *
-     * @param Request $request
+     * @param Request                      $request
+     * @param EventDispatcherInterface     $dispatcher
+     * @param TranslatorInterface          $translator
+     * @param UserPasswordEncoderInterface $encoder
+     * @param \Swift_Mailer                $mailer
      *
-     * @throws \Exception
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
     public function register(Request $request, EventDispatcherInterface $dispatcher, TranslatorInterface $translator, UserPasswordEncoderInterface $encoder, \Swift_Mailer $mailer)
     {
@@ -83,13 +84,13 @@ class SecurityController extends AbstractController
         }
 
         // Dispatch Register Event
-        if ($response = $dispatcher->dispatch(UserEvent::REGISTER_BEFORE, new UserEvent($user))->getResponse()) {
+        if ($response = $dispatcher->dispatch(new UserEvent($user), UserEvent::REGISTER_BEFORE)->getResponse()) {
             return $response;
         }
 
         // Create Form
         $form = $this->createForm($this->getParameter('pd_user.register_type'), $user, [
-            'profile_class' => $this->getParameter('pd_user.profile_class')
+            'profile_class' => $this->getParameter('pd_user.profile_class'),
         ]);
 
         // Handle Form Submit
@@ -140,18 +141,18 @@ class SecurityController extends AbstractController
             $em->flush();
 
             // Dispatch Register Event
-            if ($response = $dispatcher->dispatch(UserEvent::REGISTER, new UserEvent($user))->getResponse()) {
+            if ($response = $dispatcher->dispatch(new UserEvent($user), UserEvent::REGISTER)->getResponse()) {
                 return $response;
             }
 
             // Register Success
-            return $this->render($this->getParameter('pd_user.template_path') . '/Registration/registerSuccess.html.twig', [
+            return $this->render($this->getParameter('pd_user.template_path').'/Registration/registerSuccess.html.twig', [
                 'user' => $user,
             ]);
         }
 
         // Render
-        return $this->render($this->getParameter('pd_user.template_path') . '/Registration/register.html.twig', [
+        return $this->render($this->getParameter('pd_user.template_path').'/Registration/register.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -159,11 +160,14 @@ class SecurityController extends AbstractController
     /**
      * Registration Confirm Token.
      *
+     * @param \Swift_Mailer            $mailer
+     * @param EventDispatcherInterface $dispatcher
+     * @param TranslatorInterface      $translator
      * @param $token
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function registerConfirm(\Swift_Mailer $mailer, EventDispatcherInterface $dispatcher, TranslatorInterface $translator, $token)
+    public function registerConfirm(\Swift_Mailer $mailer, EventDispatcherInterface $dispatcher, TranslatorInterface $translator, $token): Response
     {
         // Get Doctrine
         $em = $this->getDoctrine()->getManager();
@@ -188,12 +192,12 @@ class SecurityController extends AbstractController
         $em->flush();
 
         // Dispatch Register Event
-        if ($response = $dispatcher->dispatch(UserEvent::REGISTER_CONFIRM, new UserEvent($user))->getResponse()) {
+        if ($response = $dispatcher->dispatch(new UserEvent($user), UserEvent::REGISTER_CONFIRM)->getResponse()) {
             return $response;
         }
 
         // Register Success
-        return $this->render($this->getParameter('pd_user.template_path') . '/Registration/registerSuccess.html.twig', [
+        return $this->render($this->getParameter('pd_user.template_path').'/Registration/registerSuccess.html.twig', [
             'user' => $user,
         ]);
     }
@@ -201,11 +205,12 @@ class SecurityController extends AbstractController
     /**
      * Resetting Request.
      *
-     * @param Request $request
+     * @param Request                  $request
+     * @param EventDispatcherInterface $dispatcher
+     * @param \Swift_Mailer            $mailer
+     * @param TranslatorInterface      $translator
      *
-     * @throws \Exception
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
     public function resetting(Request $request, EventDispatcherInterface $dispatcher, \Swift_Mailer $mailer, TranslatorInterface $translator)
     {
@@ -252,12 +257,12 @@ class SecurityController extends AbstractController
                     $em->flush();
 
                     // Dispatch Register Event
-                    if ($response = $dispatcher->dispatch(UserEvent::RESETTING, new UserEvent($user))->getResponse()) {
+                    if ($response = $dispatcher->dispatch(new UserEvent($user), UserEvent::RESETTING)->getResponse()) {
                         return $response;
                     }
 
                     // Render
-                    return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resettingSuccess.html.twig', [
+                    return $this->render($this->getParameter('pd_user.template_path').'/Resetting/resettingSuccess.html.twig', [
                         'sendEmail' => true,
                     ]);
                 }
@@ -265,7 +270,7 @@ class SecurityController extends AbstractController
         }
 
         // Render
-        return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resetting.html.twig', [
+        return $this->render($this->getParameter('pd_user.template_path').'/Resetting/resetting.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -273,12 +278,16 @@ class SecurityController extends AbstractController
     /**
      * Reset Password Form.
      *
-     * @param Request $request
+     * @param Request                      $request
+     * @param UserPasswordEncoderInterface $encoder
+     * @param EventDispatcherInterface     $dispatcher
+     * @param \Swift_Mailer                $mailer
+     * @param TranslatorInterface          $translator
      * @param $token
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function resettingPassword(Request $request, UserPasswordEncoderInterface $encoder, EventDispatcherInterface $dispatcher, \Swift_Mailer $mailer, TranslatorInterface $translator, $token)
+    public function resettingPassword(Request $request, UserPasswordEncoderInterface $encoder, EventDispatcherInterface $dispatcher, \Swift_Mailer $mailer, TranslatorInterface $translator, $token): Response
     {
         // Get Doctrine
         $em = $this->getDoctrine()->getManager();
@@ -307,7 +316,7 @@ class SecurityController extends AbstractController
             $em->flush();
 
             // Dispatch Register Event
-            if ($response = $dispatcher->dispatch(UserEvent::RESETTING_COMPLETE, new UserEvent($user))->getResponse()) {
+            if ($response = $dispatcher->dispatch(new UserEvent($user), UserEvent::RESETTING_COMPLETE)->getResponse()) {
                 return $response;
             }
 
@@ -315,13 +324,13 @@ class SecurityController extends AbstractController
             $this->sendEmail($user, $mailer, 'Account Password Resetting', 'Password resetting completed.', 'Resetting_Completed');
 
             // Render Success
-            return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resettingSuccess.html.twig', [
+            return $this->render($this->getParameter('pd_user.template_path').'/Resetting/resettingSuccess.html.twig', [
                 'sendEmail' => false,
             ]);
         }
 
         // Render
-        return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resettingPassword.html.twig', [
+        return $this->render($this->getParameter('pd_user.template_path').'/Resetting/resettingPassword.html.twig', [
             'token' => $token,
             'form' => $form->createView(),
         ]);
@@ -332,7 +341,7 @@ class SecurityController extends AbstractController
      *
      * @return bool
      */
-    private function checkAuth()
+    private function checkAuth(): bool
     {
         return $this->isGranted('IS_AUTHENTICATED_FULLY') || $this->isGranted('IS_AUTHENTICATED_REMEMBERED');
     }
@@ -340,9 +349,15 @@ class SecurityController extends AbstractController
     /**
      * Send Mail.
      *
+     * @param UserInterface $user
+     * @param \Swift_Mailer $mailer
+     * @param $subject
+     * @param $body
+     * @param $templateId
+     *
      * @return bool
      */
-    private function sendEmail(UserInterface $user, \Swift_Mailer $mailer, $subject, $body, $templateId)
+    private function sendEmail(UserInterface $user, \Swift_Mailer $mailer, $subject, $body, $templateId): bool
     {
         if (\is_array($body)) {
             $body['email'] = $user->getEmail();
@@ -363,6 +378,6 @@ class SecurityController extends AbstractController
             ->setSubject($subject)
             ->setBody(serialize($body), 'text/html');
 
-        return (bool)$mailer->send($message);
+        return (bool) $mailer->send($message);
     }
 }
