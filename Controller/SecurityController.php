@@ -124,7 +124,7 @@ class SecurityController extends AbstractController
             } else {
                 // Send Welcome
                 if ($this->getParameter('pd_user.welcome_email')) {
-                    $this->sendEmail($user, $mailer, 'Registration', 'Welcome', 'Welcome');
+                    $this->sendEmail($user, $mailer, 'Registration Complete', 'Welcome', 'Welcome');
                 }
             }
 
@@ -184,7 +184,7 @@ class SecurityController extends AbstractController
 
         // Send Welcome
         if ($this->getParameter('pd_user.welcome_email')) {
-            $this->sendEmail($user, $mailer, 'Registration', 'Welcome', 'Welcome');
+            $this->sendEmail($user, $mailer, 'Registration Complete', 'Welcome', 'Welcome');
         }
 
         // Update User

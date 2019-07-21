@@ -103,7 +103,7 @@ class CreateUserCommand extends Command
         $user = (new $this->userClass())
             ->setEnabled(true)
             ->setEmail($input->getArgument('email'))
-            ->addRole($input->getArgument('role'))
+            ->setRoles([$input->getArgument('role')])
             ->setProfile((new $this->profileClass())
                 ->setFirstname('Demo')
                 ->setLastname('Account'));
