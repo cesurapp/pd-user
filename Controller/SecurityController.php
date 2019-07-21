@@ -45,7 +45,7 @@ class SecurityController extends AbstractController
         }
 
         // Render
-        return $this->render($this->getParameter('pd_user.template_path').'/Security/login.html.twig', [
+        return $this->render($this->getParameter('pd_user.template_path') . '/Security/login.html.twig', [
             'last_username' => $authenticationUtils->getLastUsername(),
             'error' => $authenticationUtils->getLastAuthenticationError(),
         ]);
@@ -54,11 +54,11 @@ class SecurityController extends AbstractController
     /**
      * Registration.
      *
-     * @param Request                      $request
-     * @param EventDispatcherInterface     $dispatcher
-     * @param TranslatorInterface          $translator
+     * @param Request $request
+     * @param EventDispatcherInterface $dispatcher
+     * @param TranslatorInterface $translator
      * @param UserPasswordEncoderInterface $encoder
-     * @param \Swift_Mailer                $mailer
+     * @param \Swift_Mailer $mailer
      *
      * @return RedirectResponse|Response
      */
@@ -146,13 +146,13 @@ class SecurityController extends AbstractController
             }
 
             // Register Success
-            return $this->render($this->getParameter('pd_user.template_path').'/Registration/registerSuccess.html.twig', [
+            return $this->render($this->getParameter('pd_user.template_path') . '/Registration/registerSuccess.html.twig', [
                 'user' => $user,
             ]);
         }
 
         // Render
-        return $this->render($this->getParameter('pd_user.template_path').'/Registration/register.html.twig', [
+        return $this->render($this->getParameter('pd_user.template_path') . '/Registration/register.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -160,9 +160,9 @@ class SecurityController extends AbstractController
     /**
      * Registration Confirm Token.
      *
-     * @param \Swift_Mailer            $mailer
+     * @param \Swift_Mailer $mailer
      * @param EventDispatcherInterface $dispatcher
-     * @param TranslatorInterface      $translator
+     * @param TranslatorInterface $translator
      * @param $token
      *
      * @return Response
@@ -197,7 +197,7 @@ class SecurityController extends AbstractController
         }
 
         // Register Success
-        return $this->render($this->getParameter('pd_user.template_path').'/Registration/registerSuccess.html.twig', [
+        return $this->render($this->getParameter('pd_user.template_path') . '/Registration/registerSuccess.html.twig', [
             'user' => $user,
         ]);
     }
@@ -205,10 +205,10 @@ class SecurityController extends AbstractController
     /**
      * Resetting Request.
      *
-     * @param Request                  $request
+     * @param Request $request
      * @param EventDispatcherInterface $dispatcher
-     * @param \Swift_Mailer            $mailer
-     * @param TranslatorInterface      $translator
+     * @param \Swift_Mailer $mailer
+     * @param TranslatorInterface $translator
      *
      * @return RedirectResponse|Response
      */
@@ -236,7 +236,7 @@ class SecurityController extends AbstractController
             } else {
                 // Create TTL
                 if ($user->isPasswordRequestNonExpired($this->getParameter('pd_user.resetting_request_time'))) {
-                    $form->get('username')->addError(new FormError($translator->trans('security.resetpw_wait_resendig', ['%s' => $this->getParameter('pd_user.resetting_request_time')])));
+                    $form->get('username')->addError(new FormError($translator->trans('security.resetpw_wait_resendig', ['%s' => ($this->getParameter('pd_user.resetting_request_time') / 3600)])));
                 } else {
                     // Create Confirmation Token
                     if (empty($user->getConfirmationToken()) || null === $user->getConfirmationToken()) {
@@ -262,7 +262,7 @@ class SecurityController extends AbstractController
                     }
 
                     // Render
-                    return $this->render($this->getParameter('pd_user.template_path').'/Resetting/resettingSuccess.html.twig', [
+                    return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resettingSuccess.html.twig', [
                         'sendEmail' => true,
                     ]);
                 }
@@ -270,7 +270,7 @@ class SecurityController extends AbstractController
         }
 
         // Render
-        return $this->render($this->getParameter('pd_user.template_path').'/Resetting/resetting.html.twig', [
+        return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resetting.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -278,11 +278,11 @@ class SecurityController extends AbstractController
     /**
      * Reset Password Form.
      *
-     * @param Request                      $request
+     * @param Request $request
      * @param UserPasswordEncoderInterface $encoder
-     * @param EventDispatcherInterface     $dispatcher
-     * @param \Swift_Mailer                $mailer
-     * @param TranslatorInterface          $translator
+     * @param EventDispatcherInterface $dispatcher
+     * @param \Swift_Mailer $mailer
+     * @param TranslatorInterface $translator
      * @param $token
      *
      * @return Response
@@ -324,13 +324,13 @@ class SecurityController extends AbstractController
             $this->sendEmail($user, $mailer, 'Account Password Resetting', 'Password resetting completed.', 'Resetting_Completed');
 
             // Render Success
-            return $this->render($this->getParameter('pd_user.template_path').'/Resetting/resettingSuccess.html.twig', [
+            return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resettingSuccess.html.twig', [
                 'sendEmail' => false,
             ]);
         }
 
         // Render
-        return $this->render($this->getParameter('pd_user.template_path').'/Resetting/resettingPassword.html.twig', [
+        return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resettingPassword.html.twig', [
             'token' => $token,
             'form' => $form->createView(),
         ]);
@@ -378,6 +378,6 @@ class SecurityController extends AbstractController
             ->setSubject($subject)
             ->setBody(serialize($body), 'text/html');
 
-        return (bool) $mailer->send($message);
+        return (bool)$mailer->send($message);
     }
 }

@@ -21,6 +21,6 @@ security:
     reset_completed: Your password has been changed. You can log in now.
     resetpw_title: Change Password
     token_notfound: The user with 'confirmation token' does not exist for value '%s'
-    resetpw_wait_resendig: Wait 2 hours before resending.
+    resetpw_wait_resendig: Wait %s hours before resending.
     user_not_found: User Not Found.
     group_name: Group Name
