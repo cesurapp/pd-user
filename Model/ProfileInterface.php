@@ -5,7 +5,7 @@
  *
  * @package     pd-user
  * @license     LICENSE
- * @author      Kerem APAYDIN <kerem@apaydin.me>
+ * @author      Ramazan APAYDIN <apaydin541@gmail.com>
  * @link        https://github.com/appaydin/pd-user
  */
 
@@ -14,14 +14,12 @@ namespace Pd\UserBundle\Model;
 /**
  * User Profile Data.
  *
- * @author Kerem APAYDIN <kerem@apaydin.me>
+ * @author Ramazan APAYDIN <apaydin541@gmail.com>
  */
 interface ProfileInterface
 {
     /**
      * Get id.
-     *
-     * @return int
      */
     public function getId(): int;
 
@@ -35,8 +33,6 @@ interface ProfileInterface
     /**
      * Set firstname.
      *
-     * @param string $firstname
-     *
      * @return $this
      */
     public function setFirstname(string $firstname): self;
@@ -47,15 +43,10 @@ interface ProfileInterface
     public function getLastname(): ?string;
 
     /**
-     * @param string $lastname
-     *
      * @return $this
      */
     public function setLastname(string $lastname): self;
 
-    /**
-     * @return string
-     */
     public function getFullName(): string;
 
     /**
@@ -78,8 +69,6 @@ interface ProfileInterface
     public function getWebsite(): ?string;
 
     /**
-     * @param string $website
-     *
      * @return $this
      */
     public function setWebsite(string $website): self;
@@ -92,8 +81,6 @@ interface ProfileInterface
     public function getCompany(): ?string;
 
     /**
-     * @param string $company
-     *
      * @return $this
      */
     public function setCompany(string $company): self;
@@ -104,8 +91,6 @@ interface ProfileInterface
     public function getLanguage(): ?string;
 
     /**
-     * @param string $language
-     *
      * @return $this
      */
     public function setLanguage(string $language): self;

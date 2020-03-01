@@ -5,7 +5,7 @@
  *
  * @package     pd-user
  * @license     LICENSE
- * @author      Kerem APAYDIN <kerem@apaydin.me>
+ * @author      Ramazan APAYDIN <apaydin541@gmail.com>
  * @link        https://github.com/appaydin/pd-user
  */
 
@@ -14,13 +14,10 @@ namespace Pd\UserBundle\Model;
 /**
  * User Group Interface.
  *
- * @author Kerem APAYDIN <kerem@apaydin.me>
+ * @author Ramazan APAYDIN <apaydin541@gmail.com>
  */
 interface GroupInterface
 {
-    /**
-     * @return int
-     */
     public function getId(): int;
 
     /**
@@ -41,30 +38,22 @@ interface GroupInterface
     public function getRoles(): ?array;
 
     /**
-     * @param array $roles
-     *
      * @return $this
      */
     public function setRoles(array $roles): self;
 
     /**
-     * @param string $role
-     *
      * @return $this
      */
     public function addRole(string $role): self;
 
     /**
-     * @param string $role
-     *
      * @return $this
      */
     public function removeRole(string $role): self;
 
     /**
      * @param $role
-     *
-     * @return bool
      */
     public function hasRole(string $role): bool;
 }

@@ -5,7 +5,7 @@
  *
  * @package     pd-user
  * @license     LICENSE
- * @author      Kerem APAYDIN <kerem@apaydin.me>
+ * @author      Ramazan APAYDIN <apaydin541@gmail.com>
  * @link        https://github.com/appaydin/pd-user
  */
 
@@ -23,7 +23,7 @@ use Symfony\Component\Console\Question\Question;
 /**
  * User Role Changer.
  *
- * @author Kerem APAYDIN <kerem@apaydin.me>
+ * @author Ramazan APAYDIN <apaydin541@gmail.com>
  */
 class RoleUserCommand extends Command
 {
@@ -39,9 +39,6 @@ class RoleUserCommand extends Command
 
     /**
      * CreateUserCommand constructor.
-     *
-     * @param EntityManagerInterface $entityManager
-     * @param string                 $userClass
      */
     public function __construct(EntityManagerInterface $entityManager, string $userClass)
     {

@@ -5,7 +5,7 @@
  *
  * @package     pd-user
  * @license     LICENSE
- * @author      Kerem APAYDIN <kerem@apaydin.me>
+ * @author      Ramazan APAYDIN <apaydin541@gmail.com>
  * @link        https://github.com/appaydin/pd-user
  */
 
@@ -83,8 +83,6 @@ class ProfileType extends AbstractType
 
     /**
      * Set Default Options.
-     *
-     * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -93,8 +91,6 @@ class ProfileType extends AbstractType
 
     /**
      * Return Active Language List.
-     *
-     * @param ParameterBagInterface $parameterBag
      *
      * @return array|bool
      */

@@ -5,7 +5,7 @@
  *
  * @package     pd-user
  * @license     LICENSE
- * @author      Kerem APAYDIN <kerem@apaydin.me>
+ * @author      Ramazan APAYDIN <apaydin541@gmail.com>
  * @link        https://github.com/appaydin/pd-user
  */
 
@@ -33,8 +33,6 @@ class SecurityController extends AbstractController
     /**
      * Login.
      *
-     * @param AuthenticationUtils $authenticationUtils
-     *
      * @return RedirectResponse|Response
      */
     public function login(AuthenticationUtils $authenticationUtils)
@@ -45,7 +43,7 @@ class SecurityController extends AbstractController
         }
 
         // Render
-        return $this->render($this->getParameter('pd_user.template_path') . '/Security/login.html.twig', [
+        return $this->render($this->getParameter('pd_user.template_path').'/Security/login.html.twig', [
             'last_username' => $authenticationUtils->getLastUsername(),
             'error' => $authenticationUtils->getLastAuthenticationError(),
         ]);
@@ -53,12 +51,6 @@ class SecurityController extends AbstractController
 
     /**
      * Registration.
-     *
-     * @param Request $request
-     * @param EventDispatcherInterface $dispatcher
-     * @param TranslatorInterface $translator
-     * @param UserPasswordEncoderInterface $encoder
-     * @param \Swift_Mailer $mailer
      *
      * @return RedirectResponse|Response
      */
@@ -146,13 +138,13 @@ class SecurityController extends AbstractController
             }
 
             // Register Success
-            return $this->render($this->getParameter('pd_user.template_path') . '/Registration/registerSuccess.html.twig', [
+            return $this->render($this->getParameter('pd_user.template_path').'/Registration/registerSuccess.html.twig', [
                 'user' => $user,
             ]);
         }
 
         // Render
-        return $this->render($this->getParameter('pd_user.template_path') . '/Registration/register.html.twig', [
+        return $this->render($this->getParameter('pd_user.template_path').'/Registration/register.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -160,12 +152,7 @@ class SecurityController extends AbstractController
     /**
      * Registration Confirm Token.
      *
-     * @param \Swift_Mailer $mailer
-     * @param EventDispatcherInterface $dispatcher
-     * @param TranslatorInterface $translator
      * @param $token
-     *
-     * @return Response
      */
     public function registerConfirm(\Swift_Mailer $mailer, EventDispatcherInterface $dispatcher, TranslatorInterface $translator, $token): Response
     {
@@ -197,18 +184,13 @@ class SecurityController extends AbstractController
         }
 
         // Register Success
-        return $this->render($this->getParameter('pd_user.template_path') . '/Registration/registerSuccess.html.twig', [
+        return $this->render($this->getParameter('pd_user.template_path').'/Registration/registerSuccess.html.twig', [
             'user' => $user,
         ]);
     }
 
     /**
      * Resetting Request.
-     *
-     * @param Request $request
-     * @param EventDispatcherInterface $dispatcher
-     * @param \Swift_Mailer $mailer
-     * @param TranslatorInterface $translator
      *
      * @return RedirectResponse|Response
      */
@@ -262,7 +244,7 @@ class SecurityController extends AbstractController
                     }
 
                     // Render
-                    return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resettingSuccess.html.twig', [
+                    return $this->render($this->getParameter('pd_user.template_path').'/Resetting/resettingSuccess.html.twig', [
                         'sendEmail' => true,
                     ]);
                 }
@@ -270,7 +252,7 @@ class SecurityController extends AbstractController
         }
 
         // Render
-        return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resetting.html.twig', [
+        return $this->render($this->getParameter('pd_user.template_path').'/Resetting/resetting.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -278,14 +260,7 @@ class SecurityController extends AbstractController
     /**
      * Reset Password Form.
      *
-     * @param Request $request
-     * @param UserPasswordEncoderInterface $encoder
-     * @param EventDispatcherInterface $dispatcher
-     * @param \Swift_Mailer $mailer
-     * @param TranslatorInterface $translator
      * @param $token
-     *
-     * @return Response
      */
     public function resettingPassword(Request $request, UserPasswordEncoderInterface $encoder, EventDispatcherInterface $dispatcher, \Swift_Mailer $mailer, TranslatorInterface $translator, $token): Response
     {
@@ -324,13 +299,13 @@ class SecurityController extends AbstractController
             $this->sendEmail($user, $mailer, 'Account Password Resetting', 'Password resetting completed.', 'Resetting_Completed');
 
             // Render Success
-            return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resettingSuccess.html.twig', [
+            return $this->render($this->getParameter('pd_user.template_path').'/Resetting/resettingSuccess.html.twig', [
                 'sendEmail' => false,
             ]);
         }
 
         // Render
-        return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resettingPassword.html.twig', [
+        return $this->render($this->getParameter('pd_user.template_path').'/Resetting/resettingPassword.html.twig', [
             'token' => $token,
             'form' => $form->createView(),
         ]);
@@ -338,8 +313,6 @@ class SecurityController extends AbstractController
 
     /**
      * Check User Authorized.
-     *
-     * @return bool
      */
     private function checkAuth(): bool
     {
@@ -349,13 +322,9 @@ class SecurityController extends AbstractController
     /**
      * Send Mail.
      *
-     * @param UserInterface $user
-     * @param \Swift_Mailer $mailer
      * @param $subject
      * @param $body
      * @param $templateId
-     *
-     * @return bool
      */
     private function sendEmail(UserInterface $user, \Swift_Mailer $mailer, $subject, $body, $templateId): bool
     {
@@ -378,6 +347,6 @@ class SecurityController extends AbstractController
             ->setSubject($subject)
             ->setBody(serialize($body), 'text/html');
 
-        return (bool)$mailer->send($message);
+        return (bool) $mailer->send($message);
     }
 }

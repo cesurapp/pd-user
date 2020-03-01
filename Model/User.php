@@ -5,7 +5,7 @@
  *
  * @package     pd-user
  * @license     LICENSE
- * @author      Kerem APAYDIN <kerem@apaydin.me>
+ * @author      Ramazan APAYDIN <apaydin541@gmail.com>
  * @link        https://github.com/appaydin/pd-user
  */
 
@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * User Account.
  *
- * @author Kerem APAYDIN <kerem@apaydin.me>
+ * @author Ramazan APAYDIN <apaydin541@gmail.com>
  */
 class User implements UserInterface, \Serializable
 {
@@ -114,9 +114,6 @@ class User implements UserInterface, \Serializable
         return $this->getUsername();
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
@@ -131,8 +128,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param ProfileInterface $profile
-     *
      * @return $this
      */
     public function setProfile(ProfileInterface $profile): UserInterface
@@ -142,9 +137,6 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getUsername(): string
     {
         return $this->email;
@@ -162,9 +154,6 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getPassword(): string
     {
         return $this->password;
@@ -202,9 +191,6 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnabled(): bool
     {
         return $this->isActive;
@@ -222,9 +208,6 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isFreeze(): bool
     {
         return $this->isFreeze;
@@ -251,8 +234,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param \DateTime|null $time
-     *
      * @return $this
      */
     public function setLastLogin(\DateTime $time = null): UserInterface
@@ -303,8 +284,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param \DateTime|null $date
-     *
      * @return $this
      */
     public function setPasswordRequestedAt(\DateTime $date = null): UserInterface
@@ -316,8 +295,6 @@ class User implements UserInterface, \Serializable
 
     /**
      * @param $ttl
-     *
-     * @return bool
      */
     public function isPasswordRequestNonExpired($ttl): bool
     {
@@ -333,8 +310,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param \DateTime|null $time
-     *
      * @return $this
      */
     public function setCreatedAt(\DateTime $time = null): UserInterface
@@ -371,8 +346,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param array $roles
-     *
      * @return $this
      */
     public function setRoles(array $roles): UserInterface
@@ -419,8 +392,6 @@ class User implements UserInterface, \Serializable
 
     /**
      * @param $role
-     *
-     * @return bool
      */
     public function hasRole(string $role): bool
     {
@@ -451,8 +422,6 @@ class User implements UserInterface, \Serializable
 
     /**
      * @param $name
-     *
-     * @return bool
      */
     public function hasGroup(string $name): bool
     {
@@ -460,8 +429,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param GroupInterface $group
-     *
      * @return $this
      */
     public function addGroup(GroupInterface $group): UserInterface
@@ -474,8 +441,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param GroupInterface $group
-     *
      * @return $this
      */
     public function removeGroup(GroupInterface $group): UserInterface

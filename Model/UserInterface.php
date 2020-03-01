@@ -5,7 +5,7 @@
  *
  * @package     pd-user
  * @license     LICENSE
- * @author      Kerem APAYDIN <kerem@apaydin.me>
+ * @author      Ramazan APAYDIN <apaydin541@gmail.com>
  * @link        https://github.com/appaydin/pd-user
  */
 
@@ -14,13 +14,10 @@ namespace Pd\UserBundle\Model;
 /**
  * User Interface.
  *
- * @author Kerem APAYDIN <kerem@apaydin.me>
+ * @author Ramazan APAYDIN <apaydin541@gmail.com>
  */
 interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterface
 {
-    /**
-     * @return int
-     */
     public function getId(): int;
 
     /**
@@ -29,8 +26,6 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
     public function getProfile(): ?ProfileInterface;
 
     /**
-     * @param ProfileInterface $profile
-     *
      * @return $this
      */
     public function setProfile(ProfileInterface $profile): self;
@@ -61,9 +56,6 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
      */
     public function setEmail(string $email): self;
 
-    /**
-     * @return bool
-     */
     public function isEnabled(): bool;
 
     /**
@@ -73,9 +65,6 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
      */
     public function setEnabled(bool $enabled): self;
 
-    /**
-     * @return bool
-     */
     public function isFreeze(): bool;
 
     /**
@@ -91,8 +80,6 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
     public function getLastLogin(): ?\DateTime;
 
     /**
-     * @param \DateTime|null $time
-     *
      * @return $this
      */
     public function setLastLogin(\DateTime $time = null): self;
@@ -120,16 +107,12 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
     public function getPasswordRequestedAt(): ?\DateTime;
 
     /**
-     * @param \DateTime|null $date
-     *
      * @return $this
      */
     public function setPasswordRequestedAt(\DateTime $date = null): self;
 
     /**
      * @param $ttl
-     *
-     * @return bool
      */
     public function isPasswordRequestNonExpired($ttl): bool;
 
@@ -139,8 +122,6 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
     public function getCreatedAt(): ?\DateTime;
 
     /**
-     * @param \DateTime|null $time
-     *
      * @return $this
      */
     public function setCreatedAt(\DateTime $time = null): self;
@@ -151,8 +132,6 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
     public function getRolesUser(): ?array;
 
     /**
-     * @param array $roles
-     *
      * @return $this
      */
     public function setRoles(array $roles): self;
@@ -173,8 +152,6 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
 
     /**
      * @param $role
-     *
-     * @return bool
      */
     public function hasRole(string $role): bool;
 
@@ -185,21 +162,15 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
 
     /**
      * @param $name
-     *
-     * @return bool
      */
     public function hasGroup(string $name): bool;
 
     /**
-     * @param GroupInterface $group
-     *
      * @return $this
      */
     public function addGroup(GroupInterface $group): self;
 
     /**
-     * @param GroupInterface $group
-     *
      * @return $this
      */
     public function removeGroup(GroupInterface $group): self;

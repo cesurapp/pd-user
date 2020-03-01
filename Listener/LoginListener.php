@@ -5,7 +5,7 @@
  *
  * @package     pd-user
  * @license     LICENSE
- * @author      Kerem APAYDIN <kerem@apaydin.me>
+ * @author      Ramazan APAYDIN <apaydin541@gmail.com>
  * @link        https://github.com/appaydin/pd-user
  */
 
@@ -20,7 +20,7 @@ use Symfony\Component\Security\Http\SecurityEvents;
 /**
  * Listener set to user defined Language.
  *
- * @author Kerem APAYDIN <kerem@apaydin.me>
+ * @author Ramazan APAYDIN <apaydin541@gmail.com>
  */
 class LoginListener implements EventSubscriberInterface
 {
@@ -31,8 +31,6 @@ class LoginListener implements EventSubscriberInterface
 
     /**
      * LoginListener constructor.
-     *
-     * @param EntityManagerInterface $entityManager
      */
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -41,8 +39,6 @@ class LoginListener implements EventSubscriberInterface
 
     /**
      * On Login Event.
-     *
-     * @param InteractiveLoginEvent $event
      */
     public function onLogin(InteractiveLoginEvent $event)
     {

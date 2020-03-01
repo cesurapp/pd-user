@@ -5,7 +5,7 @@
  *
  * @package     pd-user
  * @license     LICENSE
- * @author      Kerem APAYDIN <kerem@apaydin.me>
+ * @author      Ramazan APAYDIN <apaydin541@gmail.com>
  * @link        https://github.com/appaydin/pd-user
  */
 
@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * User Profile.
  *
- * @author Kerem APAYDIN <kerem@apaydin.me>
+ * @author Ramazan APAYDIN <apaydin541@gmail.com>
  */
 class Profile implements ProfileInterface
 {
@@ -82,8 +82,6 @@ class Profile implements ProfileInterface
 
     /**
      * Get id.
-     *
-     * @return int
      */
     public function getId(): int
     {
@@ -102,8 +100,6 @@ class Profile implements ProfileInterface
 
     /**
      * Set firstname.
-     *
-     * @param string $firstname
      *
      * @return Profile
      */
@@ -127,8 +123,6 @@ class Profile implements ProfileInterface
     /**
      * Set lastname.
      *
-     * @param string $lastname
-     *
      * @return Profile
      */
     public function setLastname(string $lastname): ProfileInterface
@@ -140,8 +134,6 @@ class Profile implements ProfileInterface
 
     /**
      * Get Fullname.
-     *
-     * @return string
      */
     public function getFullName(): string
     {
@@ -160,8 +152,6 @@ class Profile implements ProfileInterface
 
     /**
      * Set phone.
-     *
-     * @param string $phone
      *
      * @return Profile
      */
@@ -185,8 +175,6 @@ class Profile implements ProfileInterface
     /**
      * Set website.
      *
-     * @param string $website
-     *
      * @return Profile
      */
     public function setWebsite(string $website): ProfileInterface
@@ -208,8 +196,6 @@ class Profile implements ProfileInterface
 
     /**
      * Set company.
-     *
-     * @param string $company
      *
      * @return Profile
      */
@@ -233,8 +219,6 @@ class Profile implements ProfileInterface
     /**
      * Set language.
      *
-     * @param string $language
-     *
      * @return Profile
      */
     public function setLanguage(string $language): ProfileInterface
@@ -244,9 +228,6 @@ class Profile implements ProfileInterface
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         return $this->getFullName();

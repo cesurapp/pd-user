@@ -5,7 +5,7 @@
  *
  * @package     pd-user
  * @license     LICENSE
- * @author      Kerem APAYDIN <kerem@apaydin.me>
+ * @author      Ramazan APAYDIN <apaydin541@gmail.com>
  * @link        https://github.com/appaydin/pd-user
  */
 
@@ -22,7 +22,7 @@ use Symfony\Component\Console\Question\Question;
 /**
  * User Change Password.
  *
- * @author Kerem APAYDIN <kerem@apaydin.me>
+ * @author Ramazan APAYDIN <apaydin541@gmail.com>
  */
 class ChangePasswordCommand extends Command
 {
@@ -43,10 +43,6 @@ class ChangePasswordCommand extends Command
 
     /**
      * CreateUserCommand constructor.
-     *
-     * @param EntityManagerInterface $entityManager
-     * @param ContainerInterface     $container
-     * @param string                 $userClass
      */
     public function __construct(EntityManagerInterface $entityManager, ContainerInterface $container, string $userClass)
     {

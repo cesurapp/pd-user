@@ -5,7 +5,7 @@
  *
  * @package     pd-user
  * @license     LICENSE
- * @author      Kerem APAYDIN <kerem@apaydin.me>
+ * @author      Ramazan APAYDIN <apaydin541@gmail.com>
  * @link        https://github.com/appaydin/pd-user
  */
 
@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * User Group.
  *
- * @author Kerem APAYDIN <kerem@apaydin.me>
+ * @author Ramazan APAYDIN <apaydin541@gmail.com>
  */
 class Group implements GroupInterface
 {
@@ -46,9 +46,6 @@ class Group implements GroupInterface
         $this->roles = $roles;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
@@ -63,8 +60,6 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param string $name
-     *
      * @return $this
      */
     public function setName(string $name): GroupInterface
@@ -83,8 +78,6 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param array $roles
-     *
      * @return $this
      */
     public function setRoles(array $roles): GroupInterface
@@ -95,8 +88,6 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param string $role
-     *
      * @return $this
      */
     public function addRole(string $role): GroupInterface
@@ -109,8 +100,6 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param string $role
-     *
      * @return $this
      */
     public function removeRole(string $role): GroupInterface
@@ -125,8 +114,6 @@ class Group implements GroupInterface
 
     /**
      * @param $role
-     *
-     * @return bool
      */
     public function hasRole(string $role): bool
     {

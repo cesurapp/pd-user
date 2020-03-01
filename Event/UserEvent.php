@@ -5,7 +5,7 @@
  *
  * @package     pd-user
  * @license     LICENSE
- * @author      Kerem APAYDIN <kerem@apaydin.me>
+ * @author      Ramazan APAYDIN <apaydin541@gmail.com>
  * @link        https://github.com/appaydin/pd-user
  */
 
@@ -18,7 +18,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 /**
  * User Account Events.
  *
- * @author Kerem APAYDIN <kerem@apaydin.me>
+ * @author Ramazan APAYDIN <apaydin541@gmail.com>
  */
 class UserEvent extends Event
 {
@@ -40,8 +40,6 @@ class UserEvent extends Event
 
     /**
      * MainNavEvent constructor.
-     *
-     * @param UserInterface $user
      */
     public function __construct(UserInterface $user)
     {
@@ -70,8 +68,6 @@ class UserEvent extends Event
 
     /**
      * Sets a response and stops event propagation.
-     *
-     * @param Response $response
      */
     public function setResponse(Response $response)
     {
