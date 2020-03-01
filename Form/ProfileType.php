@@ -27,7 +27,7 @@ use Symfony\Component\Validator\Constraints\Type;
 /**
  * User Profile Type.
  *
- * @author Kerem APAYDIN <kerem@apaydin.me>
+ * @author Ramazan APAYDIN <apaydin541@gmail.com>
  */
 class ProfileType extends AbstractType
 {
