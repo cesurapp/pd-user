@@ -19,7 +19,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * Group Type.
  *
- * @author Kerem APAYDIN <kerem@apaydin.me>
+ * @author Ramazan APAYDIN <apaydin541@gmail.com>
  */
 class GroupType extends AbstractType
 {

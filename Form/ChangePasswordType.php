@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints\Length;
 /**
  * Registration Form Type.
  *
- * @author Kerem APAYDIN <kerem@apaydin.me>
+ * @author Ramazan APAYDIN <apaydin541@gmail.com>
  */
 class ChangePasswordType extends AbstractType
 {
