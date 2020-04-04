@@ -83,6 +83,8 @@ class ProfileType extends AbstractType
 
     /**
      * Set Default Options.
+     *
+     * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -92,10 +94,12 @@ class ProfileType extends AbstractType
     /**
      * Return Active Language List.
      *
+     * @param ParameterBagInterface $bag
+     *
      * @return array|bool
      */
-    public function getLanguageList(ParameterBagInterface $parameterBag)
+    public function getLanguageList(ParameterBagInterface $bag)
     {
-        return array_flip(array_intersect_key(Languages::getNames(), array_flip($parameterBag->get('pd_user.active_language'))));
+        return array_flip(array_intersect_key(Languages::getNames(), array_flip($bag->get('pd_user.active_language'))));
     }
 }

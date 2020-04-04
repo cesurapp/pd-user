@@ -48,9 +48,6 @@ class CreateUserCommand extends Command
      */
     private $profileClass;
 
-    /**
-     * CreateUserCommand constructor.
-     */
     public function __construct(EntityManagerInterface $entityManager, ContainerInterface $container, string $userClass, string $profileClass)
     {
         $this->em = $entityManager;

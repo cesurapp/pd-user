@@ -38,9 +38,6 @@ class UserEvent extends Event
      */
     private $response;
 
-    /**
-     * MainNavEvent constructor.
-     */
     public function __construct(UserInterface $user)
     {
         $this->user = $user;
@@ -51,7 +48,7 @@ class UserEvent extends Event
      *
      * @return UserInterface
      */
-    public function getUser()
+    public function getUser(): UserInterface
     {
         return $this->user;
     }
@@ -61,15 +58,17 @@ class UserEvent extends Event
      *
      * @return Response|null
      */
-    public function getResponse()
+    public function getResponse(): ?Response
     {
         return $this->response;
     }
 
     /**
      * Sets a response and stops event propagation.
+     * 
+     * @param Response $response
      */
-    public function setResponse(Response $response)
+    public function setResponse(Response $response): void
     {
         $this->response = $response;
 

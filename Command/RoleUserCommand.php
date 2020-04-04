@@ -37,9 +37,6 @@ class RoleUserCommand extends Command
      */
     private $userClass;
 
-    /**
-     * CreateUserCommand constructor.
-     */
     public function __construct(EntityManagerInterface $entityManager, string $userClass)
     {
         $this->em = $entityManager;
@@ -63,7 +60,7 @@ class RoleUserCommand extends Command
             $question = new Question('Email Adress: ');
             $question->setValidator(function ($email) {
                 if (empty($email)) {
-                    throw new \Exception('Email can not be empty');
+                    throw new \RuntimeException('Email can not be empty');
                 }
 
                 return $email;

@@ -41,9 +41,6 @@ class ChangePasswordCommand extends Command
      */
     private $userClass;
 
-    /**
-     * CreateUserCommand constructor.
-     */
     public function __construct(EntityManagerInterface $entityManager, ContainerInterface $container, string $userClass)
     {
         $this->em = $entityManager;
@@ -74,7 +71,7 @@ class ChangePasswordCommand extends Command
             $question = new Question('Password: ');
             $question->setValidator(function ($password) {
                 if (empty($password)) {
-                    throw new \Exception('Password can not be empty');
+                    throw new \RuntimeException('Password can not be empty');
                 }
 
                 return $password;

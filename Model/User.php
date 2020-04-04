@@ -13,6 +13,7 @@ namespace Pd\UserBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -128,6 +129,8 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * @param ProfileInterface $profile
+     *
      * @return $this
      */
     public function setProfile(ProfileInterface $profile): UserInterface
@@ -191,6 +194,9 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function isEnabled(): bool
     {
         return $this->isActive;
@@ -234,6 +240,8 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * @param \DateTime|null $time
+     *
      * @return $this
      */
     public function setLastLogin(\DateTime $time = null): UserInterface
@@ -264,8 +272,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @throws \Exception
-     *
      * @return $this
      */
     public function createConfirmationToken(): UserInterface
@@ -284,6 +290,8 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * @param \DateTime|null $date
+     *
      * @return $this
      */
     public function setPasswordRequestedAt(\DateTime $date = null): UserInterface
@@ -295,6 +303,8 @@ class User implements UserInterface, \Serializable
 
     /**
      * @param $ttl
+     *
+     * @return bool
      */
     public function isPasswordRequestNonExpired($ttl): bool
     {
@@ -310,6 +320,8 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * @param \DateTime|null $time
+     *
      * @return $this
      */
     public function setCreatedAt(\DateTime $time = null): UserInterface
@@ -346,9 +358,27 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Change Roles
+     *
+     * @param array $roles
+     *
      * @return $this
      */
     public function setRoles(array $roles): UserInterface
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Add Roles Array
+     *
+     * @param array $roles
+     *
+     * @return $this
+     */
+    public function addRoles(array $roles): UserInterface
     {
         $this->roles = [];
 
@@ -360,6 +390,8 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Add Role
+     *
      * @param $role
      *
      * @return $this
@@ -376,6 +408,8 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Remove Role
+     *
      * @param $role
      *
      * @return $this
@@ -391,7 +425,11 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Check Role
+     *
      * @param $role
+     *
+     * @return bool
      */
     public function hasRole(string $role): bool
     {
@@ -399,14 +437,18 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return ArrayCollection
+     * Get Group List
+     *
+     * @return PersistentCollection
      */
-    public function getGroups()
+    public function getGroups(): ?PersistentCollection
     {
-        return $this->groups ?: $this->groups = new ArrayCollection();
+        return $this->groups;
     }
 
     /**
+     * Get Group Names
+     *
      * @return array
      */
     public function getGroupNames(): ?array
@@ -421,7 +463,11 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Check Group
+     *
      * @param $name
+     *
+     * @return bool
      */
     public function hasGroup(string $name): bool
     {
@@ -429,6 +475,10 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Add Group
+     *
+     * @param GroupInterface $group
+     *
      * @return $this
      */
     public function addGroup(GroupInterface $group): UserInterface
@@ -441,6 +491,10 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Remove Group
+     *
+     * @param GroupInterface $group
+     *
      * @return $this
      */
     public function removeGroup(GroupInterface $group): UserInterface
@@ -452,16 +506,13 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
+    /**
+     * Set Default ROLE
+     */
     public function eraseCredentials()
     {
-        // TODO: Implement eraseCredentials() method.
     }
 
-    /**
-     * @see \Serializable::serialize()
-     *
-     * @return string
-     */
     public function serialize()
     {
         return serialize([
@@ -474,18 +525,15 @@ class User implements UserInterface, \Serializable
         ]);
     }
 
-    /** @see \Serializable::unserialize()
-     * @param string $serialized
-     */
     public function unserialize($serialized)
     {
-        list(
+        [
             $this->id,
             $this->password,
             $this->email,
             $this->isActive,
             $this->lastLogin,
             $this->createdAt
-            ) = unserialize($serialized);
+        ] = unserialize($serialized);
     }
 }

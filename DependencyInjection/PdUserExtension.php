@@ -26,7 +26,8 @@ class PdUserExtension extends Extension
     /**
      * Load Bundle Config and Services.
      *
-     * @throws \Exception
+     * @param array $configs
+     * @param ContainerBuilder $container
      */
     public function load(array $configs, ContainerBuilder $container)
     {

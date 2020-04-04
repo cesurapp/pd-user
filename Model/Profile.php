@@ -101,6 +101,8 @@ class Profile implements ProfileInterface
     /**
      * Set firstname.
      *
+     * @param string $firstname
+     *
      * @return Profile
      */
     public function setFirstname(string $firstname): ProfileInterface
@@ -123,6 +125,8 @@ class Profile implements ProfileInterface
     /**
      * Set lastname.
      *
+     * @param string $lastname
+     *
      * @return Profile
      */
     public function setLastname(string $lastname): ProfileInterface
@@ -137,7 +141,7 @@ class Profile implements ProfileInterface
      */
     public function getFullName(): string
     {
-        return $this->firstname.' '.$this->lastname;
+        return $this->firstname . ' ' . $this->lastname;
     }
 
     /**
@@ -152,6 +156,8 @@ class Profile implements ProfileInterface
 
     /**
      * Set phone.
+     *
+     * @param string $phone
      *
      * @return Profile
      */
@@ -175,6 +181,8 @@ class Profile implements ProfileInterface
     /**
      * Set website.
      *
+     * @param string $website
+     *
      * @return Profile
      */
     public function setWebsite(string $website): ProfileInterface
@@ -197,6 +205,8 @@ class Profile implements ProfileInterface
     /**
      * Set company.
      *
+     * @param string $company
+     *
      * @return Profile
      */
     public function setCompany(string $company): ProfileInterface
@@ -218,6 +228,8 @@ class Profile implements ProfileInterface
 
     /**
      * Set language.
+     *
+     * @param string $language
      *
      * @return Profile
      */

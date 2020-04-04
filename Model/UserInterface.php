@@ -11,13 +11,19 @@
 
 namespace Pd\UserBundle\Model;
 
+use Doctrine\ORM\PersistentCollection;
+use Symfony\Component\Security\Core\User\UserInterface as BaseUserInterface;
+
 /**
  * User Interface.
  *
  * @author Ramazan APAYDIN <apaydin541@gmail.com>
  */
-interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterface
+interface UserInterface extends BaseUserInterface
 {
+    /**
+     * @return int
+     */
     public function getId(): int;
 
     /**
@@ -26,6 +32,8 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
     public function getProfile(): ?ProfileInterface;
 
     /**
+     * @param ProfileInterface $profile
+     *
      * @return $this
      */
     public function setProfile(ProfileInterface $profile): self;
@@ -65,6 +73,9 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
      */
     public function setEnabled(bool $enabled): self;
 
+    /**
+     * @return bool
+     */
     public function isFreeze(): bool;
 
     /**
@@ -80,6 +91,8 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
     public function getLastLogin(): ?\DateTime;
 
     /**
+     * @param \DateTime|null $time
+     *
      * @return $this
      */
     public function setLastLogin(\DateTime $time = null): self;
@@ -107,6 +120,8 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
     public function getPasswordRequestedAt(): ?\DateTime;
 
     /**
+     * @param \DateTime|null $date
+     *
      * @return $this
      */
     public function setPasswordRequestedAt(\DateTime $date = null): self;
@@ -122,6 +137,8 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
     public function getCreatedAt(): ?\DateTime;
 
     /**
+     * @param \DateTime|null $time
+     *
      * @return $this
      */
     public function setCreatedAt(\DateTime $time = null): self;
@@ -132,6 +149,8 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
     public function getRolesUser(): ?array;
 
     /**
+     * @param array $roles
+     *
      * @return $this
      */
     public function setRoles(array $roles): self;
@@ -151,26 +170,41 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
     public function removeRole(string $role): self;
 
     /**
-     * @param $role
+     * @param string $role
+     *
+     * @return bool
      */
     public function hasRole(string $role): bool;
 
     /**
-     * @return array
+     * @return array|null
      */
     public function getGroupNames(): ?array;
 
     /**
-     * @param $name
+     * Get Group Collection
+     *
+     * @return PersistentCollection|null
+     */
+    public function getGroups(): ?PersistentCollection;
+
+    /**
+     * @param string $name
+     *
+     * @return bool
      */
     public function hasGroup(string $name): bool;
 
     /**
+     * @param GroupInterface $group
+     *
      * @return $this
      */
     public function addGroup(GroupInterface $group): self;
 
     /**
+     * @param GroupInterface $group
+     *
      * @return $this
      */
     public function removeGroup(GroupInterface $group): self;

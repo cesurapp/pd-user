@@ -29,9 +29,6 @@ class LoginListener implements EventSubscriberInterface
      */
     private $entityManager;
 
-    /**
-     * LoginListener constructor.
-     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
@@ -39,8 +36,12 @@ class LoginListener implements EventSubscriberInterface
 
     /**
      * On Login Event.
+     *
+     * @param InteractiveLoginEvent $event
+     *
+     * @throws \Exception
      */
-    public function onLogin(InteractiveLoginEvent $event)
+    public function onLogin(InteractiveLoginEvent $event): void
     {
         // Get User
         $user = $event->getAuthenticationToken()->getUser();

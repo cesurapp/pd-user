@@ -18,8 +18,10 @@
     }
   ],
   "require": {
-    "php": "^7.1.3",
-    "twig/twig": "~2"
+    "php": "^7.3.0",
+    "twig/twig": "*",
+    "symfony/mailer": "*",
+    "symfony/event-dispatcher": "*"
   },
   "autoload": {
     "psr-4": {
