@@ -11,6 +11,7 @@
 
 namespace Pd\UserBundle\Controller;
 
+use Pd\UserBundle\Configuration\ConfigInterface;
 use Pd\UserBundle\Event\UserEvent;
 use Pd\UserBundle\Form\ResettingPasswordType;
 use Pd\UserBundle\Model\GroupInterface;
@@ -41,11 +42,11 @@ class SecurityController extends AbstractController
     {
         // Check Auth
         if ($this->checkAuth()) {
-            return $this->redirectToRoute($this->getParameter('pd_user.login_redirect'));
+            return $this->redirectToRoute($this->getParameter('login_redirect'));
         }
 
         // Render
-        return $this->render($this->getParameter('pd_user.template_path') . '/Security/login.html.twig', [
+        return $this->render($this->getParameter('template_path') . '/Security/login.html.twig', [
             'last_username' => $authenticationUtils->getLastUsername(),
             'error' => $authenticationUtils->getLastAuthenticationError(),
         ]);
@@ -67,18 +68,18 @@ class SecurityController extends AbstractController
     {
         // Check Auth
         if ($this->checkAuth()) {
-            return $this->redirectToRoute($this->getParameter('pd_user.login_redirect'));
+            return $this->redirectToRoute($this->getParameter('login_redirect'));
         }
 
         // Check Disable Register
-        if (!$this->getParameter('pd_user.user_registration')) {
+        if (!$this->getParameter('user_registration')) {
             $this->addFlash('error', $translator->trans('security.registration_disable'));
 
             return $this->redirectToRoute('security_login');
         }
 
         // Create User
-        $user = $this->getParameter('pd_user.user_class');
+        $user = $this->getParameter('user_class');
         $user = new $user();
         if (!$user instanceof UserInterface) {
             throw new InvalidArgumentException();
@@ -90,8 +91,8 @@ class SecurityController extends AbstractController
         }
 
         // Create Form
-        $form = $this->createForm($this->getParameter('pd_user.register_type'), $user, [
-            'profile_class' => $this->getParameter('pd_user.profile_class'),
+        $form = $this->createForm($this->getParameter('register_type'), $user, [
+            'profile_class' => $this->getParameter('profile_class'),
         ]);
 
         // Handle Form Submit
@@ -106,7 +107,7 @@ class SecurityController extends AbstractController
             $user->setPassword($password);
 
             // User Confirmation
-            if ($this->getParameter('pd_user.email_confirmation')) {
+            if ($this->getParameter('email_confirmation')) {
                 // Disable User
                 $user->setEnabled(false);
 
@@ -122,14 +123,14 @@ class SecurityController extends AbstractController
                         UrlGeneratorInterface::ABSOLUTE_URL),
                 ];
                 $this->sendEmail($user, $mailer, 'Account Confirmation', $emailBody, 'Register');
-            } else if ($this->getParameter('pd_user.welcome_email')) {
+            } else if ($this->getParameter('welcome_email')) {
                 // Send Welcome
                 $this->sendEmail($user, $mailer, 'Registration Complete', 'Welcome', 'Welcome');
             }
 
             // User Add Default Group
-            if ($group = $this->getParameter('pd_user.default_group')) {
-                $getGroup = $em->getRepository($this->getParameter('pd_user.group_class'))->find($group);
+            if ($group = $this->getParameter('default_group')) {
+                $getGroup = $em->getRepository($this->getParameter('group_class'))->find($group);
                 if ($getGroup instanceof GroupInterface) {
                     $user->addGroup($getGroup);
                 }
@@ -145,13 +146,13 @@ class SecurityController extends AbstractController
             }
 
             // Register Success
-            return $this->render($this->getParameter('pd_user.template_path') . '/Registration/registerSuccess.html.twig', [
+            return $this->render($this->getParameter('template_path') . '/Registration/registerSuccess.html.twig', [
                 'user' => $user,
             ]);
         }
 
         // Render
-        return $this->render($this->getParameter('pd_user.template_path') . '/Registration/register.html.twig', [
+        return $this->render($this->getParameter('template_path') . '/Registration/register.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -172,7 +173,7 @@ class SecurityController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         // Find User
-        $user = $em->getRepository($this->getParameter('pd_user.user_class'))->findOneBy(['confirmationToken' => $token]);
+        $user = $em->getRepository($this->getParameter('user_class'))->findOneBy(['confirmationToken' => $token]);
         if (null === $user) {
             throw $this->createNotFoundException(sprintf($translator->trans('security.token_notfound'), $token));
         }
@@ -182,7 +183,7 @@ class SecurityController extends AbstractController
         $user->setEnabled(true);
 
         // Send Welcome
-        if ($this->getParameter('pd_user.welcome_email')) {
+        if ($this->getParameter('welcome_email')) {
             $this->sendEmail($user, $mailer, 'Registration Complete', 'Welcome', 'Welcome');
         }
 
@@ -196,7 +197,7 @@ class SecurityController extends AbstractController
         }
 
         // Register Success
-        return $this->render($this->getParameter('pd_user.template_path') . '/Registration/registerSuccess.html.twig', [
+        return $this->render($this->getParameter('template_path') . '/Registration/registerSuccess.html.twig', [
             'user' => $user,
         ]);
     }
@@ -215,11 +216,11 @@ class SecurityController extends AbstractController
     {
         // Check Auth
         if ($this->checkAuth()) {
-            return $this->redirectToRoute($this->getParameter('pd_user.login_redirect'));
+            return $this->redirectToRoute($this->getParameter('login_redirect'));
         }
 
         // Build Form
-        $form = $this->createForm($this->getParameter('pd_user.resetting_type'));
+        $form = $this->createForm($this->getParameter('resetting_type'));
 
         // Handle Form Submit
         $form->handleRequest($request);
@@ -229,13 +230,13 @@ class SecurityController extends AbstractController
             $em = $this->getDoctrine()->getManager();
 
             // Find User
-            $user = $em->getRepository($this->getParameter('pd_user.user_class'))->findOneBy(['email' => $form->get('username')->getData()]);
+            $user = $em->getRepository($this->getParameter('user_class'))->findOneBy(['email' => $form->get('username')->getData()]);
             if (null === $user) {
                 $form->get('username')->addError(new FormError($translator->trans('security.user_not_found')));
             } else {
                 // Create TTL
-                if ($user->isPasswordRequestNonExpired($this->getParameter('pd_user.resetting_request_time'))) {
-                    $form->get('username')->addError(new FormError($translator->trans('security.resetpw_wait_resendig', ['%s' => ($this->getParameter('pd_user.resetting_request_time') / 3600)])));
+                if ($user->isPasswordRequestNonExpired($this->getParameter('resetting_request_time'))) {
+                    $form->get('username')->addError(new FormError($translator->trans('security.resetpw_wait_resendig', ['%s' => ($this->getParameter('resetting_request_time') / 3600)])));
                 } else {
                     // Create Confirmation Token
                     if (empty($user->getConfirmationToken()) || null === $user->getConfirmationToken()) {
@@ -261,7 +262,7 @@ class SecurityController extends AbstractController
                     }
 
                     // Render
-                    return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resettingSuccess.html.twig', [
+                    return $this->render($this->getParameter('template_path') . '/Resetting/resettingSuccess.html.twig', [
                         'sendEmail' => true,
                     ]);
                 }
@@ -269,7 +270,7 @@ class SecurityController extends AbstractController
         }
 
         // Render
-        return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resetting.html.twig', [
+        return $this->render($this->getParameter('template_path') . '/Resetting/resetting.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -292,7 +293,7 @@ class SecurityController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         // Find User
-        $user = $em->getRepository($this->getParameter('pd_user.user_class'))->findOneBy(['confirmationToken' => $token]);
+        $user = $em->getRepository($this->getParameter('user_class'))->findOneBy(['confirmationToken' => $token]);
         if (null === $user) {
             throw $this->createNotFoundException(sprintf($translator->trans('security.token_notfound'), $token));
         }
@@ -323,13 +324,13 @@ class SecurityController extends AbstractController
             $this->sendEmail($user, $mailer, 'Account Password Resetting', 'Password resetting completed.', 'Resetting_Completed');
 
             // Render Success
-            return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resettingSuccess.html.twig', [
+            return $this->render($this->getParameter('template_path') . '/Resetting/resettingSuccess.html.twig', [
                 'sendEmail' => false,
             ]);
         }
 
         // Render
-        return $this->render($this->getParameter('pd_user.template_path') . '/Resetting/resettingPassword.html.twig', [
+        return $this->render($this->getParameter('template_path') . '/Resetting/resettingPassword.html.twig', [
             'token' => $token,
             'form' => $form->createView(),
         ]);
@@ -370,11 +371,27 @@ class SecurityController extends AbstractController
         // Create Message
         $message = (new Email())
             ->setTemplateId($templateId)
-            ->from($this->getParameter('pd_user.mail_sender_address'), $this->getParameter('pd_user.mail_sender_name'))
+            ->from($this->getParameter('mail_sender_address'), $this->getParameter('mail_sender_name'))
             ->to($user->getEmail())
             ->subject($subject)
             ->body(serialize($body));
 
         return (bool)$mailer->send($message);
+    }
+
+    protected function getParameter(string $name)
+    {
+        if ($this->has('app.params')) {
+            return $this->get('app.params')->get($name);
+        }
+
+        return parent::getParameter($name);
+    }
+
+    public static function getSubscribedServices()
+    {
+        return array_merge([
+            'app.params' => '?' . ConfigInterface::class
+        ], parent::getSubscribedServices());
     }
 }

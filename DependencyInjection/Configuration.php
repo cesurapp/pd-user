@@ -36,7 +36,7 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('user_registration')->defaultTrue()->end()
                 ->scalarNode('template_path')->defaultValue('@PdUser')->end()
                 ->integerNode('resetting_request_time')->defaultValue(7200)
-                    ->beforeNormalization()->ifString()->then(function ($val) { return (int) $val; })->end()
+                    ->beforeNormalization()->ifString()->then(static function ($val) { return (int) $val; })->end()
                 ->end()
                 ->scalarNode('mail_sender_address')->defaultValue('example@example.com')->end()
                 ->scalarNode('mail_sender_name')->defaultValue('pdUser')->end()

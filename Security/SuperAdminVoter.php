@@ -33,8 +33,14 @@ class SuperAdminVoter extends Voter
             'ROLE_PREVIOUS_ADMIN',
         ];
 
-        if (\in_array($attribute, $excluded, true)) {
-            return false;
+        if (!is_array($attribute)) {
+            $attribute = [$attribute];
+        }
+
+        foreach ($attribute as $item) {
+            if (in_array($item, $excluded, false)) {
+                return false;
+            }
         }
 
         return true;
@@ -51,7 +57,7 @@ class SuperAdminVoter extends Voter
         }
 
         // Check All Access
-        if (\in_array(User::ROLE_ALL_ACCESS, $user->getRoles(), true)) {
+        if (in_array(User::ROLE_ALL_ACCESS, $user->getRoles(), true)) {
             return true;
         }
 

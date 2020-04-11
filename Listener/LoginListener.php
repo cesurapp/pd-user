@@ -14,6 +14,7 @@ namespace Pd\UserBundle\Listener;
 use Doctrine\ORM\EntityManagerInterface;
 use Pd\UserBundle\Model\UserInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Http\SecurityEvents;
 
@@ -28,10 +29,15 @@ class LoginListener implements EventSubscriberInterface
      * @var EntityManagerInterface
      */
     private $entityManager;
+    /**
+     * @var RequestStack
+     */
+    private $request;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, RequestStack $request)
     {
         $this->entityManager = $entityManager;
+        $this->request = $request;
     }
 
     /**
@@ -53,7 +59,11 @@ class LoginListener implements EventSubscriberInterface
             }
 
             // Set Last Login
-            $user->setLastLogin(new \DateTime());
+            $user
+                ->setLastLogin(new \DateTime())
+                ->setLastLoginIp($this->request->getCurrentRequest()->getClientIp());
+
+            // Save
             $this->entityManager->persist($user);
             $this->entityManager->flush();
         }

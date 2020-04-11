@@ -97,5 +97,7 @@ class RoleUserCommand extends Command
         } else {
             $output->writeln('User not found!');
         }
+
+        return 0;
     }
 }

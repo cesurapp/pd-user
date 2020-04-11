@@ -11,7 +11,6 @@
 
 namespace Pd\UserBundle\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -67,6 +66,11 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(name="last_login", type="datetime", nullable=true)
      */
     protected $lastLogin;
+
+    /**
+     * @ORM\Column(name="last_login_ip", type="string", length=32, nullable=true)
+     */
+    protected $lastLoginIp;
 
     /**
      * @ORM\Column(name="confirmation_token", type="string", length=180, unique=true, nullable=true)
@@ -247,6 +251,30 @@ class User implements UserInterface, \Serializable
     public function setLastLogin(\DateTime $time = null): UserInterface
     {
         $this->lastLogin = $time;
+
+        return $this;
+    }
+
+    /**
+     * Get Last Login IP
+     *
+     * @return string|null
+     */
+    public function getLastLoginIp(): ?string
+    {
+        return $this->lastLoginIp;
+    }
+
+    /**
+     * Set Last Login IP
+     *
+     * @param string|null $lastLoginIp
+     *
+     * @return UserInterface
+     */
+    public function setLastLoginIp(?string $lastLoginIp): UserInterface
+    {
+        $this->lastLoginIp = $lastLoginIp;
 
         return $this;
     }

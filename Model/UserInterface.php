@@ -98,6 +98,18 @@ interface UserInterface extends BaseUserInterface
     public function setLastLogin(\DateTime $time = null): self;
 
     /**
+     * @return string|null
+     */
+    public function getLastLoginIp(): ?string;
+
+    /**
+     * @param string|null $lastLoginIp
+     *
+     * @return $this
+     */
+    public function setLastLoginIp(?string $lastLoginIp): self;
+
+    /**
      * @return string
      */
     public function getConfirmationToken(): ?string;
