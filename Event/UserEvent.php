@@ -45,8 +45,6 @@ class UserEvent extends Event
 
     /**
      * Get User.
-     *
-     * @return UserInterface
      */
     public function getUser(): UserInterface
     {
@@ -55,8 +53,6 @@ class UserEvent extends Event
 
     /**
      * Returns the response object.
-     *
-     * @return Response|null
      */
     public function getResponse(): ?Response
     {
@@ -65,8 +61,6 @@ class UserEvent extends Event
 
     /**
      * Sets a response and stops event propagation.
-     * 
-     * @param Response $response
      */
     public function setResponse(Response $response): void
     {

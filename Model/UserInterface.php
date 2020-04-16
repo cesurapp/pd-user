@@ -21,9 +21,6 @@ use Symfony\Component\Security\Core\User\UserInterface as BaseUserInterface;
  */
 interface UserInterface extends BaseUserInterface
 {
-    /**
-     * @return int
-     */
     public function getId(): int;
 
     /**
@@ -32,8 +29,6 @@ interface UserInterface extends BaseUserInterface
     public function getProfile(): ?ProfileInterface;
 
     /**
-     * @param ProfileInterface $profile
-     *
      * @return $this
      */
     public function setProfile(ProfileInterface $profile): self;
@@ -73,9 +68,6 @@ interface UserInterface extends BaseUserInterface
      */
     public function setEnabled(bool $enabled): self;
 
-    /**
-     * @return bool
-     */
     public function isFreeze(): bool;
 
     /**
@@ -91,20 +83,13 @@ interface UserInterface extends BaseUserInterface
     public function getLastLogin(): ?\DateTime;
 
     /**
-     * @param \DateTime|null $time
-     *
      * @return $this
      */
     public function setLastLogin(\DateTime $time = null): self;
 
-    /**
-     * @return string|null
-     */
     public function getLastLoginIp(): ?string;
 
     /**
-     * @param string|null $lastLoginIp
-     *
      * @return $this
      */
     public function setLastLoginIp(?string $lastLoginIp): self;
@@ -132,8 +117,6 @@ interface UserInterface extends BaseUserInterface
     public function getPasswordRequestedAt(): ?\DateTime;
 
     /**
-     * @param \DateTime|null $date
-     *
      * @return $this
      */
     public function setPasswordRequestedAt(\DateTime $date = null): self;
@@ -149,8 +132,6 @@ interface UserInterface extends BaseUserInterface
     public function getCreatedAt(): ?\DateTime;
 
     /**
-     * @param \DateTime|null $time
-     *
      * @return $this
      */
     public function setCreatedAt(\DateTime $time = null): self;
@@ -161,8 +142,6 @@ interface UserInterface extends BaseUserInterface
     public function getRolesUser(): ?array;
 
     /**
-     * @param array $roles
-     *
      * @return $this
      */
     public function setRoles(array $roles): self;
@@ -181,42 +160,23 @@ interface UserInterface extends BaseUserInterface
      */
     public function removeRole(string $role): self;
 
-    /**
-     * @param string $role
-     *
-     * @return bool
-     */
     public function hasRole(string $role): bool;
 
-    /**
-     * @return array|null
-     */
     public function getGroupNames(): ?array;
 
     /**
-     * Get Group Collection
-     *
-     * @return PersistentCollection|null
+     * Get Group Collection.
      */
     public function getGroups(): ?PersistentCollection;
 
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
     public function hasGroup(string $name): bool;
 
     /**
-     * @param GroupInterface $group
-     *
      * @return $this
      */
     public function addGroup(GroupInterface $group): self;
 
     /**
-     * @param GroupInterface $group
-     *
      * @return $this
      */
     public function removeGroup(GroupInterface $group): self;

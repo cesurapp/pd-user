@@ -11,6 +11,7 @@
 
 namespace Pd\UserBundle\Controller;
 
+use Pd\MailerBundle\PdMailerBundle;
 use Pd\UserBundle\Configuration\ConfigInterface;
 use Pd\UserBundle\Event\UserEvent;
 use Pd\UserBundle\Form\ResettingPasswordType;
@@ -34,9 +35,6 @@ class SecurityController extends AbstractController
 {
     /**
      * Login.
-     *
-     * @param AuthenticationUtils $authenticationUtils
-     * @return Response
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -46,7 +44,7 @@ class SecurityController extends AbstractController
         }
 
         // Render
-        return $this->render($this->getParameter('template_path') . '/Security/login.html.twig', [
+        return $this->render($this->getParameter('template_path').'/Security/login.html.twig', [
             'last_username' => $authenticationUtils->getLastUsername(),
             'error' => $authenticationUtils->getLastAuthenticationError(),
         ]);
@@ -54,12 +52,6 @@ class SecurityController extends AbstractController
 
     /**
      * Registration.
-     *
-     * @param Request $request
-     * @param EventDispatcherInterface $dispatcher
-     * @param TranslatorInterface $translator
-     * @param UserPasswordEncoderInterface $encoder
-     * @param MailerInterface $mailer
      *
      * @return RedirectResponse|Response
      */
@@ -122,10 +114,10 @@ class SecurityController extends AbstractController
                         ['token' => $user->getConfirmationToken()],
                         UrlGeneratorInterface::ABSOLUTE_URL),
                 ];
-                $this->sendEmail($user, $mailer, 'Account Confirmation', $emailBody, 'Register');
-            } else if ($this->getParameter('welcome_email')) {
+                $this->sendEmail($user, $mailer, 'Account Confirmation', $emailBody, 'register');
+            } elseif ($this->getParameter('welcome_email')) {
                 // Send Welcome
-                $this->sendEmail($user, $mailer, 'Registration Complete', 'Welcome', 'Welcome');
+                $this->sendEmail($user, $mailer, 'Registration Complete', 'Welcome', 'welcome');
             }
 
             // User Add Default Group
@@ -146,24 +138,19 @@ class SecurityController extends AbstractController
             }
 
             // Register Success
-            return $this->render($this->getParameter('template_path') . '/Registration/registerSuccess.html.twig', [
+            return $this->render($this->getParameter('template_path').'/Registration/registerSuccess.html.twig', [
                 'user' => $user,
             ]);
         }
 
         // Render
-        return $this->render($this->getParameter('template_path') . '/Registration/register.html.twig', [
+        return $this->render($this->getParameter('template_path').'/Registration/register.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
     /**
      * Registration Confirm Token.
-     *
-     * @param MailerInterface $mailer
-     * @param EventDispatcherInterface $dispatcher
-     * @param TranslatorInterface $translator
-     * @param $token
      *
      * @return Response
      */
@@ -184,7 +171,7 @@ class SecurityController extends AbstractController
 
         // Send Welcome
         if ($this->getParameter('welcome_email')) {
-            $this->sendEmail($user, $mailer, 'Registration Complete', 'Welcome', 'Welcome');
+            $this->sendEmail($user, $mailer, 'Registration Complete', 'Welcome', 'welcome');
         }
 
         // Update User
@@ -197,18 +184,13 @@ class SecurityController extends AbstractController
         }
 
         // Register Success
-        return $this->render($this->getParameter('template_path') . '/Registration/registerSuccess.html.twig', [
+        return $this->render($this->getParameter('template_path').'/Registration/registerSuccess.html.twig', [
             'user' => $user,
         ]);
     }
 
     /**
      * Resetting Request.
-     *
-     * @param Request $request
-     * @param EventDispatcherInterface $dispatcher
-     * @param MailerInterface $mailer
-     * @param TranslatorInterface $translator
      *
      * @return RedirectResponse|Response
      */
@@ -250,7 +232,7 @@ class SecurityController extends AbstractController
                             ['token' => $user->getConfirmationToken()],
                             UrlGeneratorInterface::ABSOLUTE_URL),
                     ];
-                    $this->sendEmail($user, $mailer, 'Account Password Resetting', $emailBody, 'Resetting');
+                    $this->sendEmail($user, $mailer, 'Account Password Resetting', $emailBody, 'resetting');
 
                     // Update User
                     $em->persist($user);
@@ -262,7 +244,7 @@ class SecurityController extends AbstractController
                     }
 
                     // Render
-                    return $this->render($this->getParameter('template_path') . '/Resetting/resettingSuccess.html.twig', [
+                    return $this->render($this->getParameter('template_path').'/Resetting/resettingSuccess.html.twig', [
                         'sendEmail' => true,
                     ]);
                 }
@@ -270,20 +252,13 @@ class SecurityController extends AbstractController
         }
 
         // Render
-        return $this->render($this->getParameter('template_path') . '/Resetting/resetting.html.twig', [
+        return $this->render($this->getParameter('template_path').'/Resetting/resetting.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
     /**
      * Reset Password Form.
-     *
-     * @param Request $request
-     * @param UserPasswordEncoderInterface $encoder
-     * @param EventDispatcherInterface $dispatcher
-     * @param MailerInterface $mailer
-     * @param TranslatorInterface $translator
-     * @param $token
      *
      * @return Response
      */
@@ -321,16 +296,16 @@ class SecurityController extends AbstractController
             }
 
             // Send Resetting Complete
-            $this->sendEmail($user, $mailer, 'Account Password Resetting', 'Password resetting completed.', 'Resetting_Completed');
+            $this->sendEmail($user, $mailer, 'Account Password Resetting', 'Password resetting completed.', 'resetting-complete');
 
             // Render Success
-            return $this->render($this->getParameter('template_path') . '/Resetting/resettingSuccess.html.twig', [
+            return $this->render($this->getParameter('template_path').'/Resetting/resettingSuccess.html.twig', [
                 'sendEmail' => false,
             ]);
         }
 
         // Render
-        return $this->render($this->getParameter('template_path') . '/Resetting/resettingPassword.html.twig', [
+        return $this->render($this->getParameter('template_path').'/Resetting/resettingPassword.html.twig', [
             'token' => $token,
             'form' => $form->createView(),
         ]);
@@ -347,51 +322,59 @@ class SecurityController extends AbstractController
     /**
      * Send Mail.
      *
-     * @param UserInterface $user
-     * @param MailerInterface $mailer
      * @param $subject
      * @param $body
      * @param $templateId
-     *
-     * @return bool
      */
-    private function sendEmail(UserInterface $user, MailerInterface $mailer, $subject, $body, $templateId): bool
+    private function sendEmail(UserInterface $user, MailerInterface $mailer, $subject, $body, $templateId): void
     {
-        if (\is_array($body)) {
-            $body['email'] = $user->getEmail();
-            $body['fullname'] = $user->getProfile()->getFullName();
+        // Convert Array
+        if (!\is_array($body)) {
+            $body = ['content' => $body];
+        }
+        $body['email'] = $user->getEmail();
+        $body['fullName'] = $user->getProfile()->getFullName();
+
+        // Create Email
+        $email = new Email();
+
+        if (class_exists(PdMailerBundle::class) && $this->getParameter('pd_mailer.template_active')) {
+            // Create Message
+            $email
+                ->from($this->getParameter('mail_sender_address'), $this->getParameter('mail_sender_name'))
+                ->to($user->getEmail())
+                ->subject($subject)
+                ->html($body)
+                ->getHeaders()->addTextHeader('template', $templateId);
         } else {
-            $body = [
-                'email' => $user->getEmail(),
-                'fullname' => $user->getProfile()->getFullName(),
-                'content' => $body,
-            ];
+            $email
+                ->from($this->getParameter('mail_sender_address'), $this->getParameter('mail_sender_name'))
+                ->to($user->getEmail())
+                ->subject($subject)
+                ->html($this->renderView("@PdUser/Email/{$templateId}.html.twig", $body));
         }
 
-        // Create Message
-        $message = (new Email())
-            ->setTemplateId($templateId)
-            ->from($this->getParameter('mail_sender_address'), $this->getParameter('mail_sender_name'))
-            ->to($user->getEmail())
-            ->subject($subject)
-            ->body(serialize($body));
-
-        return (bool)$mailer->send($message);
+        // Send
+        $mailer->send($email);
     }
 
+    /**
+     * Override Parameters
+     *
+     * @return mixed
+     */
     protected function getParameter(string $name)
     {
-        if ($this->has('app.params')) {
-            return $this->get('app.params')->get($name);
-        }
-
-        return parent::getParameter($name);
+        return $this->has('app.params') ? $this->get('app.params')->get($name) : parent::getParameter($name);
     }
 
+    /**
+     * Add Custom Services
+     */
     public static function getSubscribedServices()
     {
         return array_merge([
-            'app.params' => '?' . ConfigInterface::class
+            'app.params' => '?'.ConfigInterface::class,
         ], parent::getSubscribedServices());
     }
 }

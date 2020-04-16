@@ -25,9 +25,6 @@ class PdUserExtension extends Extension
 {
     /**
      * Load Bundle Config and Services.
-     *
-     * @param array $configs
-     * @param ContainerBuilder $container
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -39,7 +36,7 @@ class PdUserExtension extends Extension
         $container->getParameterBag()->add($config);
 
         // Load Services
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yaml');
     }
 }

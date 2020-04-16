@@ -133,8 +133,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param ProfileInterface $profile
-     *
      * @return $this
      */
     public function setProfile(ProfileInterface $profile): UserInterface
@@ -198,9 +196,6 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnabled(): bool
     {
         return $this->isActive;
@@ -244,8 +239,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param \DateTime|null $time
-     *
      * @return $this
      */
     public function setLastLogin(\DateTime $time = null): UserInterface
@@ -256,9 +249,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get Last Login IP
-     *
-     * @return string|null
+     * Get Last Login IP.
      */
     public function getLastLoginIp(): ?string
     {
@@ -266,11 +257,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set Last Login IP
-     *
-     * @param string|null $lastLoginIp
-     *
-     * @return UserInterface
+     * Set Last Login IP.
      */
     public function setLastLoginIp(?string $lastLoginIp): UserInterface
     {
@@ -318,8 +305,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param \DateTime|null $date
-     *
      * @return $this
      */
     public function setPasswordRequestedAt(\DateTime $date = null): UserInterface
@@ -331,8 +316,6 @@ class User implements UserInterface, \Serializable
 
     /**
      * @param $ttl
-     *
-     * @return bool
      */
     public function isPasswordRequestNonExpired($ttl): bool
     {
@@ -348,8 +331,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param \DateTime|null $time
-     *
      * @return $this
      */
     public function setCreatedAt(\DateTime $time = null): UserInterface
@@ -386,9 +367,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Change Roles
-     *
-     * @param array $roles
+     * Change Roles.
      *
      * @return $this
      */
@@ -400,9 +379,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Add Roles Array
-     *
-     * @param array $roles
+     * Add Roles Array.
      *
      * @return $this
      */
@@ -418,7 +395,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Add Role
+     * Add Role.
      *
      * @param $role
      *
@@ -436,7 +413,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Remove Role
+     * Remove Role.
      *
      * @param $role
      *
@@ -453,11 +430,9 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Check Role
+     * Check Role.
      *
      * @param $role
-     *
-     * @return bool
      */
     public function hasRole(string $role): bool
     {
@@ -465,7 +440,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get Group List
+     * Get Group List.
      *
      * @return PersistentCollection
      */
@@ -475,7 +450,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get Group Names
+     * Get Group Names.
      *
      * @return array
      */
@@ -491,11 +466,9 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Check Group
+     * Check Group.
      *
      * @param $name
-     *
-     * @return bool
      */
     public function hasGroup(string $name): bool
     {
@@ -503,9 +476,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Add Group
-     *
-     * @param GroupInterface $group
+     * Add Group.
      *
      * @return $this
      */
@@ -519,9 +490,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Remove Group
-     *
-     * @param GroupInterface $group
+     * Remove Group.
      *
      * @return $this
      */
@@ -535,7 +504,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set Default ROLE
+     * Set Default ROLE.
      */
     public function eraseCredentials()
     {

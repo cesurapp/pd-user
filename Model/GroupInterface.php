@@ -38,30 +38,22 @@ interface GroupInterface
     public function getRoles(): ?array;
 
     /**
-     * @param array $roles
-     *
      * @return $this
      */
     public function setRoles(array $roles): self;
 
     /**
-     * @param string $role
-     *
      * @return $this
      */
     public function addRole(string $role): self;
 
     /**
-     * @param string $role
-     *
      * @return $this
      */
     public function removeRole(string $role): self;
 
     /**
      * @param $role
-     *
-     * @return bool
      */
     public function hasRole(string $role): bool;
 }

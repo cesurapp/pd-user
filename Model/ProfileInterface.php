@@ -33,8 +33,6 @@ interface ProfileInterface
     /**
      * Set firstname.
      *
-     * @param string $firstname
-     *
      * @return $this
      */
     public function setFirstname(string $firstname): self;
@@ -45,16 +43,14 @@ interface ProfileInterface
     public function getLastname(): ?string;
 
     /**
-     * Set Last Name
-     * @param string $lastname
+     * Set Last Name.
      *
      * @return $this
      */
     public function setLastname(string $lastname): self;
 
     /**
-     * Get Full Name
-     * @return string
+     * Get Full Name.
      */
     public function getFullName(): string;
 
@@ -64,8 +60,6 @@ interface ProfileInterface
     public function getPhone(): ?string;
 
     /**
-     * @param string $phone
-     *
      * @return $this
      */
     public function setPhone(string $phone): self;
@@ -78,8 +72,6 @@ interface ProfileInterface
     public function getWebsite(): ?string;
 
     /**
-     * @param string $website
-     *
      * @return $this
      */
     public function setWebsite(string $website): self;
@@ -92,8 +84,6 @@ interface ProfileInterface
     public function getCompany(): ?string;
 
     /**
-     * @param string $company
-     *
      * @return $this
      */
     public function setCompany(string $company): self;
@@ -104,8 +94,6 @@ interface ProfileInterface
     public function getLanguage(): ?string;
 
     /**
-     * @param string $language
-     *
      * @return $this
      */
     public function setLanguage(string $language): self;

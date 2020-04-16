@@ -60,8 +60,6 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param string $name
-     *
      * @return $this
      */
     public function setName(string $name): GroupInterface
@@ -80,8 +78,6 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param array $roles
-     *
      * @return $this
      */
     public function setRoles(array $roles): GroupInterface
@@ -92,8 +88,6 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param string $role
-     *
      * @return $this
      */
     public function addRole(string $role): GroupInterface
@@ -106,8 +100,6 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param string $role
-     *
      * @return $this
      */
     public function removeRole(string $role): GroupInterface
@@ -122,8 +114,6 @@ class Group implements GroupInterface
 
     /**
      * @param $role
-     *
-     * @return bool
      */
     public function hasRole(string $role): bool
     {

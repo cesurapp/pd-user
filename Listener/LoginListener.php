@@ -43,8 +43,6 @@ class LoginListener implements EventSubscriberInterface
     /**
      * On Login Event.
      *
-     * @param InteractiveLoginEvent $event
-     *
      * @throws \Exception
      */
     public function onLogin(InteractiveLoginEvent $event): void
