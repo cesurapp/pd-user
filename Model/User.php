@@ -11,8 +11,8 @@
 
 namespace Pd\UserBundle\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -66,6 +66,11 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(name="last_login", type="datetime", nullable=true)
      */
     protected $lastLogin;
+
+    /**
+     * @ORM\Column(name="last_login_ip", type="string", length=32, nullable=true)
+     */
+    protected $lastLoginIp;
 
     /**
      * @ORM\Column(name="confirmation_token", type="string", length=180, unique=true, nullable=true)
@@ -244,6 +249,24 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Get Last Login IP.
+     */
+    public function getLastLoginIp(): ?string
+    {
+        return $this->lastLoginIp;
+    }
+
+    /**
+     * Set Last Login IP.
+     */
+    public function setLastLoginIp(?string $lastLoginIp): UserInterface
+    {
+        $this->lastLoginIp = $lastLoginIp;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getConfirmationToken(): ?string
@@ -264,8 +287,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @throws \Exception
-     *
      * @return $this
      */
     public function createConfirmationToken(): UserInterface
@@ -346,9 +367,23 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Change Roles.
+     *
      * @return $this
      */
     public function setRoles(array $roles): UserInterface
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Add Roles Array.
+     *
+     * @return $this
+     */
+    public function addRoles(array $roles): UserInterface
     {
         $this->roles = [];
 
@@ -360,6 +395,8 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Add Role.
+     *
      * @param $role
      *
      * @return $this
@@ -376,6 +413,8 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Remove Role.
+     *
      * @param $role
      *
      * @return $this
@@ -391,6 +430,8 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Check Role.
+     *
      * @param $role
      */
     public function hasRole(string $role): bool
@@ -399,14 +440,18 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return ArrayCollection
+     * Get Group List.
+     *
+     * @return PersistentCollection
      */
-    public function getGroups()
+    public function getGroups(): ?PersistentCollection
     {
-        return $this->groups ?: $this->groups = new ArrayCollection();
+        return $this->groups;
     }
 
     /**
+     * Get Group Names.
+     *
      * @return array
      */
     public function getGroupNames(): ?array
@@ -421,6 +466,8 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Check Group.
+     *
      * @param $name
      */
     public function hasGroup(string $name): bool
@@ -429,6 +476,8 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Add Group.
+     *
      * @return $this
      */
     public function addGroup(GroupInterface $group): UserInterface
@@ -441,6 +490,8 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Remove Group.
+     *
      * @return $this
      */
     public function removeGroup(GroupInterface $group): UserInterface
@@ -452,16 +503,13 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
+    /**
+     * Set Default ROLE.
+     */
     public function eraseCredentials()
     {
-        // TODO: Implement eraseCredentials() method.
     }
 
-    /**
-     * @see \Serializable::serialize()
-     *
-     * @return string
-     */
     public function serialize()
     {
         return serialize([
@@ -474,18 +522,15 @@ class User implements UserInterface, \Serializable
         ]);
     }
 
-    /** @see \Serializable::unserialize()
-     * @param string $serialized
-     */
     public function unserialize($serialized)
     {
-        list(
+        [
             $this->id,
             $this->password,
             $this->email,
             $this->isActive,
             $this->lastLogin,
             $this->createdAt
-            ) = unserialize($serialized);
+        ] = unserialize($serialized);
     }
 }

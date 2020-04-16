@@ -48,9 +48,6 @@ class CreateUserCommand extends Command
      */
     private $profileClass;
 
-    /**
-     * CreateUserCommand constructor.
-     */
     public function __construct(EntityManagerInterface $entityManager, ContainerInterface $container, string $userClass, string $profileClass)
     {
         $this->em = $entityManager;
@@ -104,7 +101,7 @@ class CreateUserCommand extends Command
                 ->setLastname('Account'));
 
         // Set Password
-        $password = $this->container->get('security.password_encoder')->encodePassword($user, $input->getArgument('password'));
+        $password = $this->container->get('security.password_encoder')->encodePassword($user, $input->getArgument('password') ?? '123123');
         $user->setPassword($password);
 
         // Save
@@ -116,5 +113,7 @@ class CreateUserCommand extends Command
         $output->writeln(sprintf('Email: <comment>%s</comment>', $user->getUsername()));
         $output->writeln(sprintf('Password: <comment>%s</comment>', $input->getArgument('password')));
         $output->writeln(sprintf('Role: <comment>%s</comment>', $input->getArgument('role')));
+
+        return 0;
     }
 }

@@ -11,12 +11,15 @@
 
 namespace Pd\UserBundle\Model;
 
+use Doctrine\ORM\PersistentCollection;
+use Symfony\Component\Security\Core\User\UserInterface as BaseUserInterface;
+
 /**
  * User Interface.
  *
  * @author Ramazan APAYDIN <apaydin541@gmail.com>
  */
-interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterface
+interface UserInterface extends BaseUserInterface
 {
     public function getId(): int;
 
@@ -84,6 +87,13 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
      */
     public function setLastLogin(\DateTime $time = null): self;
 
+    public function getLastLoginIp(): ?string;
+
+    /**
+     * @return $this
+     */
+    public function setLastLoginIp(?string $lastLoginIp): self;
+
     /**
      * @return string
      */
@@ -150,19 +160,15 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
      */
     public function removeRole(string $role): self;
 
-    /**
-     * @param $role
-     */
     public function hasRole(string $role): bool;
 
-    /**
-     * @return array
-     */
     public function getGroupNames(): ?array;
 
     /**
-     * @param $name
+     * Get Group Collection.
      */
+    public function getGroups(): ?PersistentCollection;
+
     public function hasGroup(string $name): bool;
 
     /**

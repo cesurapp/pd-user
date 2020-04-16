@@ -94,8 +94,8 @@ class ProfileType extends AbstractType
      *
      * @return array|bool
      */
-    public function getLanguageList(ParameterBagInterface $parameterBag)
+    public function getLanguageList(ParameterBagInterface $bag)
     {
-        return array_flip(array_intersect_key(Languages::getNames(), array_flip($parameterBag->get('pd_user.active_language'))));
+        return array_flip(array_intersect_key(Languages::getNames(), array_flip($bag->get('active_language'))));
     }
 }

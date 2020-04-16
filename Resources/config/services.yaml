@@ -4,8 +4,8 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         public: false       # Allows optimizing the container by removing unused services; this also means
         bind:
-            $userClass: '%pd_user.user_class%'
-            $profileClass: '%pd_user.profile_class%'
+            $userClass: '%user_class%'
+            $profileClass: '%profile_class%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -16,3 +16,4 @@ services:
     Pd\UserBundle\Controller\:
         resource: '../../Controller'
         tags: ['controller.service_arguments']
+

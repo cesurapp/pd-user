@@ -43,10 +43,15 @@ interface ProfileInterface
     public function getLastname(): ?string;
 
     /**
+     * Set Last Name.
+     *
      * @return $this
      */
     public function setLastname(string $lastname): self;
 
+    /**
+     * Get Full Name.
+     */
     public function getFullName(): string;
 
     /**
@@ -55,8 +60,6 @@ interface ProfileInterface
     public function getPhone(): ?string;
 
     /**
-     * @param int $phone
-     *
      * @return $this
      */
     public function setPhone(string $phone): self;

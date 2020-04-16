@@ -33,8 +33,14 @@ class SuperAdminVoter extends Voter
             'ROLE_PREVIOUS_ADMIN',
         ];
 
-        if (\in_array($attribute, $excluded, true)) {
-            return false;
+        if (!\is_array($attribute)) {
+            $attribute = [$attribute];
+        }
+
+        foreach ($attribute as $item) {
+            if (\in_array($item, $excluded, false)) {
+                return false;
+            }
         }
 
         return true;
