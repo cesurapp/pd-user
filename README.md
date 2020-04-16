@@ -1,5 +1,5 @@
 # pdUser Bundle
-Simple user management system for Symfony 4+. 
+Simple user management system for Symfony 5+. 
 
 [![Packagist](https://img.shields.io/packagist/dt/appaydin/pd-user.svg)](https://github.com/appaydin/pd-user)
 [![Github Release](https://img.shields.io/github/release/appaydin/pd-user.svg)](https://github.com/appaydin/pd-user)
@@ -24,7 +24,7 @@ of the Composer documentation.
 
 ### Step 2: Enable the Bundle
 
-With Symfony 4, the package will be activated automatically. But if something goes wrong, you can install it manually.
+With Symfony 5, the package will be activated automatically. But if something goes wrong, you can install it manually.
 
 Then, enable the bundle by adding it to the list of registered bundles
 in the `config/bundles.php` file of your project:
