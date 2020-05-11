@@ -341,14 +341,14 @@ class SecurityController extends AbstractController
         if (class_exists(PdMailerBundle::class) && $this->getParameter('pd_mailer.template_active')) {
             // Create Message
             $email
-                ->from($this->getParameter('mail_sender_address'), $this->getParameter('mail_sender_name'))
+                ->from(new Address($this->getParameter('mail_sender_address'), $this->getParameter('mail_sender_name')))
                 ->to($user->getEmail())
                 ->subject($subject)
                 ->html($body)
                 ->getHeaders()->addTextHeader('template', $templateId);
         } else {
             $email
-                ->from($this->getParameter('mail_sender_address'), $this->getParameter('mail_sender_name'))
+                ->from(new Address($this->getParameter('mail_sender_address'), $this->getParameter('mail_sender_name')))
                 ->to($user->getEmail())
                 ->subject($subject)
                 ->html($this->renderView("@PdUser/Email/{$templateId}.html.twig", $body));

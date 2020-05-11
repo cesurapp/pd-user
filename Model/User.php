@@ -14,6 +14,7 @@ namespace Pd\UserBundle\Model;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * User Account.
@@ -107,6 +108,7 @@ class User implements UserInterface, \Serializable
         $this->isFreeze = false;
         $this->roles = [static::ROLE_DEFAULT];
         $this->createdAt = new \DateTime();
+        $this->groups = new ArrayCollection();
     }
 
     public function getSalt()
@@ -444,7 +446,7 @@ class User implements UserInterface, \Serializable
      *
      * @return PersistentCollection
      */
-    public function getGroups(): ?PersistentCollection
+    public function getGroups()
     {
         return $this->groups;
     }

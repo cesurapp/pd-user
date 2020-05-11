@@ -167,7 +167,7 @@ interface UserInterface extends BaseUserInterface
     /**
      * Get Group Collection.
      */
-    public function getGroups(): ?PersistentCollection;
+    public function getGroups();
 
     public function hasGroup(string $name): bool;
 
