@@ -12,12 +12,12 @@
 namespace Pd\UserBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * User Change Password.
@@ -32,19 +32,19 @@ class ChangePasswordCommand extends Command
     private $em;
 
     /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
      * @var string
      */
     private $userClass;
 
-    public function __construct(EntityManagerInterface $entityManager, ContainerInterface $container, string $userClass)
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $encoder;
+
+    public function __construct(EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder, string $userClass)
     {
         $this->em = $entityManager;
-        $this->container = $container;
+        $this->encoder = $encoder;
         $this->userClass = $userClass;
 
         parent::__construct();
@@ -88,7 +88,7 @@ class ChangePasswordCommand extends Command
 
         if (null !== $user) {
             // Set Password
-            $password = $this->container->get('security.password_encoder')->encodePassword($user, $input->getArgument('password'));
+            $password = $this->encoder->encodePassword($user, $input->getArgument('password'));
             $user->setPassword($password);
 
             // Save

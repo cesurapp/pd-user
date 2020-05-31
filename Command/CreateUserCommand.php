@@ -20,6 +20,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Create New User.
@@ -34,9 +35,9 @@ class CreateUserCommand extends Command
     private $em;
 
     /**
-     * @var ContainerInterface
+     * @var UserPasswordEncoderInterface
      */
-    private $container;
+    private $encoder;
 
     /**
      * @var string
@@ -48,10 +49,10 @@ class CreateUserCommand extends Command
      */
     private $profileClass;
 
-    public function __construct(EntityManagerInterface $entityManager, ContainerInterface $container, string $userClass, string $profileClass)
+    public function __construct(EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder, string $userClass, string $profileClass)
     {
         $this->em = $entityManager;
-        $this->container = $container;
+        $this->encoder = $encoder;
         $this->userClass = $userClass;
         $this->profileClass = $profileClass;
 
@@ -101,7 +102,7 @@ class CreateUserCommand extends Command
                 ->setLastname('Account'));
 
         // Set Password
-        $password = $this->container->get('security.password_encoder')->encodePassword($user, $input->getArgument('password') ?? '123123');
+        $password = $this->encoder->encodePassword($user, $input->getArgument('password') ?? '123123');
         $user->setPassword($password);
 
         // Save
