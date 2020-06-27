@@ -31,6 +31,7 @@ class SuperAdminVoter extends Voter
             'IS_AUTHENTICATED_REMEMBERED',
             'ISGRANTED_VOTER',
             'ROLE_PREVIOUS_ADMIN',
+            'IS_IMPERSONATOR',
         ];
 
         if (!\is_array($attribute)) {
