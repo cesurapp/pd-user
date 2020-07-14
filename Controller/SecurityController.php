@@ -353,7 +353,7 @@ class SecurityController extends AbstractController
                 ->from(new Address($this->getParameter('mail_sender_address'), $this->getParameter('mail_sender_name')))
                 ->to($user->getEmail())
                 ->subject($subject)
-                ->html($this->renderView("@PdUser/Email/{$templateId}.html.twig", $body));
+                ->html($this->renderView($this->getParameter('template_path')."/Email/{$templateId}.html.twig", $body));
         }
 
         // Send
