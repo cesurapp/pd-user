@@ -34,7 +34,7 @@ class UserChecker implements UserCheckerInterface
         }
 
         // Activate Account
-        if (!$user->isEnabled()) {
+        if (!$user->isActive()) {
             throw new CustomUserMessageAuthenticationException('Account has not been activated');
         }
     }

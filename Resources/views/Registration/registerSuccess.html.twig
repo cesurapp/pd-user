@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="form-group auth-message">
-                    {% if user.isEnabled %}
+                    {% if user.isActive %}
                         {{ 'security.register_success'|trans }}
                     {% else %}
                         {{ 'security.register_confirmed'|trans }}

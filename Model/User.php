@@ -381,7 +381,7 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->password,
             $this->email,
-            $this->isActive,
+            $this->active,
             $this->lastLogin,
             $this->createdAt,
         ]);
@@ -393,7 +393,7 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->password,
             $this->email,
-            $this->isActive,
+            $this->active,
             $this->lastLogin,
             $this->createdAt
         ] = unserialize($serialized);
