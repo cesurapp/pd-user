@@ -32,11 +32,11 @@ class ResettingPasswordType extends AbstractType
                 'type' => PasswordType::class,
                 'first_options' => [
                     'attr' => ['placeholder' => 'security.password'],
-                    'label_attr' => ['style' => 'display:none'],
+                    'label' => 'security.password'
                 ],
                 'second_options' => [
                     'attr' => ['placeholder' => 'security.password_confirmation'],
-                    'label_attr' => ['style' => 'display:none'],
+                    'label' => 'security.password_confirmation'
                 ],
                 'constraints' => [
                     new Length([

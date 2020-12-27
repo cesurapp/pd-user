@@ -42,49 +42,49 @@ class User implements UserInterface, \Serializable
     protected $profile;
 
     /**
-     * @ORM\Column(type="string", length=98)
+     * @ORM\Column(type="string", length=100)
      */
     protected $password;
 
     /**
-     * @ORM\Column(type="string", length=60, unique=true)
+     * @ORM\Column(type="string", length=100, unique=true)
      * @Assert\NotBlank()
      * @Assert\Email()
      */
     protected $email;
 
     /**
-     * @ORM\Column(name="is_active", type="boolean")
+     * @ORM\Column(type="boolean")
      */
-    protected $isActive;
+    protected $active;
 
     /**
-     * @ORM\Column(name="is_freeze", type="boolean")
+     * @ORM\Column(type="boolean")
      */
-    protected $isFreeze;
+    protected $freeze;
 
     /**
-     * @ORM\Column(name="last_login", type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $lastLogin;
 
     /**
-     * @ORM\Column(name="last_login_ip", type="string", length=32, nullable=true)
+     * @ORM\Column(type="string", length=32, nullable=true)
      */
     protected $lastLoginIp;
 
     /**
-     * @ORM\Column(name="confirmation_token", type="string", length=180, unique=true, nullable=true)
+     * @ORM\Column(type="string", length=180, unique=true, nullable=true)
      */
     protected $confirmationToken;
 
     /**
-     * @ORM\Column(name="password_requested_at", type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $passwordRequestedAt;
 
     /**
-     * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $createdAt;
 
@@ -104,8 +104,8 @@ class User implements UserInterface, \Serializable
 
     public function __construct()
     {
-        $this->isActive = true;
-        $this->isFreeze = false;
+        $this->active = true;
+        $this->freeze = false;
         $this->roles = [static::ROLE_DEFAULT];
         $this->createdAt = new \DateTime();
         $this->groups = new ArrayCollection();
@@ -126,17 +126,11 @@ class User implements UserInterface, \Serializable
         return $this->id;
     }
 
-    /**
-     * @return ProfileInterface
-     */
     public function getProfile(): ?ProfileInterface
     {
         return $this->profile;
     }
 
-    /**
-     * @return $this
-     */
     public function setProfile(ProfileInterface $profile): UserInterface
     {
         $this->profile = $profile;
@@ -149,11 +143,6 @@ class User implements UserInterface, \Serializable
         return $this->email;
     }
 
-    /**
-     * @param $username
-     *
-     * @return $this
-     */
     public function setUsername(string $username): UserInterface
     {
         $this->email = $username;
@@ -166,11 +155,6 @@ class User implements UserInterface, \Serializable
         return $this->password;
     }
 
-    /**
-     * @param $password
-     *
-     * @return $this
-     */
     public function setPassword(string $password): UserInterface
     {
         $this->password = $password;
@@ -178,19 +162,11 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * @param $email
-     *
-     * @return $this
-     */
     public function setEmail(string $email): UserInterface
     {
         $this->email = $email;
@@ -198,51 +174,35 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function isEnabled(): bool
+    public function isActive(): bool
     {
-        return $this->isActive;
+        return $this->active;
     }
 
-    /**
-     * @param $enabled bool
-     *
-     * @return $this
-     */
-    public function setEnabled(bool $enabled): UserInterface
+    public function setActive(bool $active): UserInterface
     {
-        $this->isActive = $enabled;
+        $this->active = $active;
 
         return $this;
     }
 
     public function isFreeze(): bool
     {
-        return $this->isFreeze;
+        return $this->freeze;
     }
 
-    /**
-     * @param $enabled bool
-     *
-     * @return $this
-     */
     public function setFreeze(bool $enabled): UserInterface
     {
-        $this->isFreeze = $enabled;
+        $this->freeze = $enabled;
 
         return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
     public function getLastLogin(): ?\DateTime
     {
         return $this->lastLogin;
     }
 
-    /**
-     * @return $this
-     */
     public function setLastLogin(\DateTime $time = null): UserInterface
     {
         $this->lastLogin = $time;
@@ -250,17 +210,11 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    /**
-     * Get Last Login IP.
-     */
     public function getLastLoginIp(): ?string
     {
         return $this->lastLoginIp;
     }
 
-    /**
-     * Set Last Login IP.
-     */
     public function setLastLoginIp(?string $lastLoginIp): UserInterface
     {
         $this->lastLoginIp = $lastLoginIp;
@@ -268,19 +222,11 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getConfirmationToken(): ?string
     {
         return $this->confirmationToken;
     }
 
-    /**
-     * @param string $confirmationToken
-     *
-     * @return $this
-     */
     public function setConfirmationToken(?string $confirmationToken): UserInterface
     {
         $this->confirmationToken = $confirmationToken;
@@ -288,9 +234,6 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function createConfirmationToken(): UserInterface
     {
         $this->confirmationToken = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
@@ -298,17 +241,11 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
     public function getPasswordRequestedAt(): ?\DateTime
     {
         return $this->passwordRequestedAt;
     }
 
-    /**
-     * @return $this
-     */
     public function setPasswordRequestedAt(\DateTime $date = null): UserInterface
     {
         $this->passwordRequestedAt = $date;
@@ -316,25 +253,16 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    /**
-     * @param $ttl
-     */
     public function isPasswordRequestNonExpired($ttl): bool
     {
         return $this->getPasswordRequestedAt() instanceof \DateTime && $this->getPasswordRequestedAt()->getTimestamp() + $ttl > time();
     }
 
-    /**
-     * @return \DateTime
-     */
     public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * @return $this
-     */
     public function setCreatedAt(\DateTime $time = null): UserInterface
     {
         $this->createdAt = $time;
@@ -342,11 +270,6 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    /**
-     * Group combined Roles.
-     *
-     * @return array
-     */
     public function getRoles(): ?array
     {
         $roles = $this->roles;
@@ -360,19 +283,11 @@ class User implements UserInterface, \Serializable
         return array_unique(array_merge($roles, $groupRoles));
     }
 
-    /**
-     * @return array
-     */
     public function getRolesUser(): ?array
     {
         return $this->roles;
     }
 
-    /**
-     * Change Roles.
-     *
-     * @return $this
-     */
     public function setRoles(array $roles): UserInterface
     {
         $this->roles = $roles;
@@ -380,11 +295,6 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    /**
-     * Add Roles Array.
-     *
-     * @return $this
-     */
     public function addRoles(array $roles): UserInterface
     {
         $this->roles = [];
@@ -396,13 +306,6 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    /**
-     * Add Role.
-     *
-     * @param $role
-     *
-     * @return $this
-     */
     public function addRole(string $role): UserInterface
     {
         $role = mb_strtoupper($role);
@@ -414,13 +317,6 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    /**
-     * Remove Role.
-     *
-     * @param $role
-     *
-     * @return $this
-     */
     public function removeRole(string $role): UserInterface
     {
         if (false !== $key = array_search(mb_strtoupper($role), $this->roles, true)) {
@@ -431,31 +327,16 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    /**
-     * Check Role.
-     *
-     * @param $role
-     */
     public function hasRole(string $role): bool
     {
         return \in_array(mb_strtoupper($role), $this->getRoles(), true);
     }
 
-    /**
-     * Get Group List.
-     *
-     * @return PersistentCollection
-     */
     public function getGroups()
     {
         return $this->groups;
     }
 
-    /**
-     * Get Group Names.
-     *
-     * @return array
-     */
     public function getGroupNames(): ?array
     {
         $names = [];
@@ -467,21 +348,11 @@ class User implements UserInterface, \Serializable
         return $names;
     }
 
-    /**
-     * Check Group.
-     *
-     * @param $name
-     */
     public function hasGroup(string $name): bool
     {
         return \in_array($name, $this->getGroupNames(), true);
     }
 
-    /**
-     * Add Group.
-     *
-     * @return $this
-     */
     public function addGroup(GroupInterface $group): UserInterface
     {
         if (!$this->getGroups()->contains($group)) {
@@ -491,11 +362,6 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    /**
-     * Remove Group.
-     *
-     * @return $this
-     */
     public function removeGroup(GroupInterface $group): UserInterface
     {
         if ($this->getGroups()->contains($group)) {
@@ -505,9 +371,6 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    /**
-     * Set Default ROLE.
-     */
     public function eraseCredentials()
     {
     }

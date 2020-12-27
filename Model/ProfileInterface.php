@@ -28,31 +28,31 @@ interface ProfileInterface
      *
      * @return string
      */
-    public function getFirstname(): ?string;
+    public function getFirstName(): ?string;
 
     /**
      * Set firstname.
      *
      * @return $this
      */
-    public function setFirstname(string $firstname): self;
+    public function setFirstName(?string $firstname): self;
 
     /**
      * @return string
      */
-    public function getLastname(): ?string;
+    public function getLastName(): ?string;
 
     /**
      * Set Last Name.
      *
      * @return $this
      */
-    public function setLastname(string $lastname): self;
+    public function setLastName(?string $lastname): self;
 
     /**
      * Get Full Name.
      */
-    public function getFullName(): string;
+    public function getFullName(): ?string;
 
     /**
      * @return string
@@ -62,7 +62,7 @@ interface ProfileInterface
     /**
      * @return $this
      */
-    public function setPhone(string $phone): self;
+    public function setPhone(?string $phone): self;
 
     /**
      * Get website.
@@ -74,7 +74,7 @@ interface ProfileInterface
     /**
      * @return $this
      */
-    public function setWebsite(string $website): self;
+    public function setWebsite(?string $website): self;
 
     /**
      * Get company.
@@ -96,5 +96,5 @@ interface ProfileInterface
     /**
      * @return $this
      */
-    public function setLanguage(string $language): self;
+    public function setLanguage(?string $language): self;
 }

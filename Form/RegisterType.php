@@ -33,22 +33,25 @@ class RegisterType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'attr' => ['placeholder' => 'security.email'],
-                'label_attr' => ['style' => 'display:none'],
-                'label' => false,
+                'label' => 'security.email',
+                'attr' => [
+                    'placeholder' => 'security.email'
+                ]
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'mapped' => false,
                 'type' => PasswordType::class,
                 'first_options' => [
-                    'attr' => ['placeholder' => 'security.password'],
-                    'label_attr' => ['style' => 'display:none'],
-                    'label' => false,
+                    'label' => 'security.password',
+                    'attr' => [
+                        'placeholder' => 'security.password'
+                    ]
                 ],
                 'second_options' => [
-                    'attr' => ['placeholder' => 'security.password_confirmation'],
-                    'label_attr' => ['style' => 'display:none'],
-                    'label' => false,
+                    'label' => 'security.password_confirmation',
+                    'attr' => [
+                        'placeholder' => 'security.password_confirmation'
+                    ]
                 ],
                 'constraints' => [
                     new Length([
@@ -60,7 +63,7 @@ class RegisterType extends AbstractType
             ]);
 
         // Add Profile
-        $builder->add($builder
+        /*$builder->add($builder
             ->create('profile', FormType::class, [
                 'data_class' => $options['profile_class'],
                 'label' => false,
@@ -87,7 +90,7 @@ class RegisterType extends AbstractType
                     ]),
                 ],
             ])
-        );
+        );*/
     }
 
     public function configureOptions(OptionsResolver $resolver)

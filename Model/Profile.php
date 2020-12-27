@@ -33,33 +33,31 @@ class Profile implements ProfileInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="firstname", type="string", length=50)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=50, nullable=true)
      * @Assert\Length(min="3", max="50")
      */
-    protected $firstname;
+    protected $firstName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lastname", type="string", length=50)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=50, nullable=true)
      * @Assert\Length(min="3", max="50")
      */
-    protected $lastname;
+    protected $lastName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="phone", type="string", length=15, nullable=true)
-     * @Assert\Length(min="7", max="14")
+     * @ORM\Column(type="string", length=15, nullable=true)
+     * @Assert\Length(min="6", max="15")
      */
     protected $phone;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="website", type="string", length=100, nullable=true)
+     * @ORM\Column(type="string", length=100, nullable=true)
      * @Assert\Url()
      */
     protected $website;
@@ -67,7 +65,7 @@ class Profile implements ProfileInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="company", type="string", length=100, nullable=true)
+     * @ORM\Column(type="string", length=100, nullable=true)
      * @Assert\Length(min="2", max="100")
      */
     protected $company;
@@ -75,160 +73,99 @@ class Profile implements ProfileInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="language", type="string", length=3, nullable=true)
+     * @ORM\Column( type="string", length=3, nullable=true)
      * @Assert\Language()
      */
     protected $language;
 
-    /**
-     * Get id.
-     */
+    public function __construct()
+    {
+        $this->firstName = 'User';
+    }
+
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * Get firstname.
-     *
-     * @return string
-     */
-    public function getFirstname(): ?string
+    public function getFirstName(): ?string
     {
         return $this->firstname;
     }
 
-    /**
-     * Set firstname.
-     *
-     * @return Profile
-     */
-    public function setFirstname(string $firstname): ProfileInterface
+    public function setFirstName(?string $firstname): ProfileInterface
     {
         $this->firstname = $firstname;
 
         return $this;
     }
 
-    /**
-     * Get lastname.
-     *
-     * @return string
-     */
-    public function getLastname(): ?string
+    public function getLastName(): ?string
     {
         return $this->lastname;
     }
 
-    /**
-     * Set lastname.
-     *
-     * @return Profile
-     */
-    public function setLastname(string $lastname): ProfileInterface
+    public function setLastName(?string $lastname): ProfileInterface
     {
         $this->lastname = $lastname;
 
         return $this;
     }
 
-    /**
-     * Get Fullname.
-     */
-    public function getFullName(): string
+    public function getFullName(): ?string
     {
-        return $this->firstname.' '.$this->lastname;
+        return trim($this->firstName.' '.$this->lastName);
     }
 
-    /**
-     * Get phone.
-     *
-     * @return string
-     */
     public function getPhone(): ?string
     {
         return $this->phone;
     }
 
-    /**
-     * Set phone.
-     *
-     * @return Profile
-     */
-    public function setPhone(string $phone): ProfileInterface
+    public function setPhone(?string $phone): ProfileInterface
     {
         $this->phone = $phone;
 
         return $this;
     }
 
-    /**
-     * Get website.
-     *
-     * @return string
-     */
     public function getWebsite(): ?string
     {
         return $this->website;
     }
 
-    /**
-     * Set website.
-     *
-     * @return Profile
-     */
-    public function setWebsite(string $website): ProfileInterface
+    public function setWebsite(?string $website): ProfileInterface
     {
         $this->website = $website;
 
         return $this;
     }
 
-    /**
-     * Get company.
-     *
-     * @return string
-     */
     public function getCompany(): ?string
     {
         return $this->company;
     }
 
-    /**
-     * Set company.
-     *
-     * @return Profile
-     */
-    public function setCompany(string $company): ProfileInterface
+    public function setCompany(?string $company): ProfileInterface
     {
         $this->company = $company;
 
         return $this;
     }
 
-    /**
-     * Get language.
-     *
-     * @return string
-     */
     public function getLanguage(): ?string
     {
         return $this->language;
     }
 
-    /**
-     * Set language.
-     *
-     * @return Profile
-     */
-    public function setLanguage(string $language): ProfileInterface
+    public function setLanguage(?string $language): ProfileInterface
     {
         $this->language = $language;
 
         return $this;
     }
 
-    public function __toString(): string
+    public function __toString(): ?string
     {
         return $this->getFullName();
     }

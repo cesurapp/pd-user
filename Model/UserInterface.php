@@ -59,15 +59,21 @@ interface UserInterface extends BaseUserInterface
      */
     public function setEmail(string $email): self;
 
-    public function isEnabled(): bool;
+    /**
+     * @return bool
+     */
+    public function isActive(): bool;
 
     /**
      * @param $enabled
      *
      * @return $this
      */
-    public function setEnabled(bool $enabled): self;
+    public function setActive(bool $enabled): self;
 
+    /**
+     * @return bool
+     */
     public function isFreeze(): bool;
 
     /**
@@ -87,6 +93,9 @@ interface UserInterface extends BaseUserInterface
      */
     public function setLastLogin(\DateTime $time = null): self;
 
+    /**
+     * @return string|null
+     */
     public function getLastLoginIp(): ?string;
 
     /**
@@ -160,8 +169,15 @@ interface UserInterface extends BaseUserInterface
      */
     public function removeRole(string $role): self;
 
+    /**
+     * @param string $role
+     * @return bool
+     */
     public function hasRole(string $role): bool;
 
+    /**
+     * @return array|null
+     */
     public function getGroupNames(): ?array;
 
     /**
@@ -169,6 +185,10 @@ interface UserInterface extends BaseUserInterface
      */
     public function getGroups();
 
+    /**
+     * @param string $name
+     * @return bool
+     */
     public function hasGroup(string $name): bool;
 
     /**

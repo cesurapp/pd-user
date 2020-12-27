@@ -27,8 +27,7 @@ class ResettingType extends AbstractType
         $builder
             ->add('username', EmailType::class, [
                 'attr' => ['placeholder' => 'security.login_username'],
-                'label_attr' => ['style' => 'display:none'],
-                'label' => false,
+                'label' => 'security.login_username',
             ]);
     }
 }

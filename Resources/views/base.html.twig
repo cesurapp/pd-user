@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-
     {# Head Block #}
     {% block head %}{% endblock %}
 
@@ -39,6 +38,8 @@
             z-index: 1;
             min-height: 100%;
             height: auto !important;
+            display: flex;
+            align-items: center;
         }
         #app-login .container {
             max-width: 350px;
@@ -112,6 +113,9 @@
             margin-bottom: 15px;
             box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 10px 0 rgba(0, 0, 0, 0.16);
             transition: box-shadow 0.3s ease;
+        }
+        #app-login .auth form .form-group > label{
+            display: none;
         }
         #app-login .auth form .header .float-icon a:hover {
             box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.25), 0 6px 20px 0 rgba(0, 0, 0, 0.2);

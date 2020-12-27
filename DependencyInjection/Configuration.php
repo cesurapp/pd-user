@@ -12,6 +12,7 @@
 namespace Pd\UserBundle\DependencyInjection;
 
 use Pd\UserBundle\Form\RegisterType;
+use Pd\UserBundle\Form\ResettingPasswordType;
 use Pd\UserBundle\Form\ResettingType;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -43,6 +44,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('active_language')->scalarPrototype()->end()->defaultValue(['en'])->end()
                 ->scalarNode('register_type')->defaultValue(RegisterType::class)->end()
                 ->scalarNode('resetting_type')->defaultValue(ResettingType::class)->end()
+                ->scalarNode('resetting_password_type')->defaultValue(ResettingPasswordType::class)->end()
             ->end();
 
         return $treeBuilder;
