@@ -90,24 +90,24 @@ class Profile implements ProfileInterface
 
     public function getFirstName(): ?string
     {
-        return $this->firstname;
+        return $this->firstName;
     }
 
-    public function setFirstName(?string $firstname): ProfileInterface
+    public function setFirstName(?string $firstName): ProfileInterface
     {
-        $this->firstname = $firstname;
+        $this->firstName = $firstName;
 
         return $this;
     }
 
     public function getLastName(): ?string
     {
-        return $this->lastname;
+        return $this->lastName;
     }
 
-    public function setLastName(?string $lastname): ProfileInterface
+    public function setLastName(?string $lastName): ProfileInterface
     {
-        $this->lastname = $lastname;
+        $this->lastName = $lastName;
 
         return $this;
     }
