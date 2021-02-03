@@ -11,6 +11,7 @@
 
 namespace Pd\UserBundle\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\Security\Core\User\UserInterface as BaseUserInterface;
 
@@ -184,6 +185,13 @@ interface UserInterface extends BaseUserInterface
      * Get Group Collection.
      */
     public function getGroups();
+
+    /**
+     * Set Group Collection
+     * 
+     * @return $this
+     */
+    public function setGroups(ArrayCollection $groups): self;
 
     /**
      * @param string $name

@@ -337,6 +337,13 @@ class User implements UserInterface, \Serializable
         return $this->groups;
     }
 
+    public function setGroups(ArrayCollection $groups): UserInterface
+    {
+        $this->groups = $groups;
+        
+        return $this;
+    }
+
     public function getGroupNames(): ?array
     {
         $names = [];
