@@ -18,7 +18,7 @@
     }
   ],
   "require": {
-    "php": "^7.4.0",
+    "php": ">=8.0.0",
     "twig/twig": "*",
     "symfony/mailer": "*",
     "symfony/event-dispatcher": "*"
