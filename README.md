@@ -1,5 +1,5 @@
 # pdUser Bundle
-Simple user management system for Symfony 5+. 
+Simple user management system for Symfony 5+.
 
 [![Packagist](https://img.shields.io/packagist/dt/appaydin/pd-user.svg)](https://github.com/appaydin/pd-user)
 [![Github Release](https://img.shields.io/github/release/appaydin/pd-user.svg)](https://github.com/appaydin/pd-user)
@@ -39,7 +39,7 @@ return [
 ];
 ```
 
-### Step 3: Create User, Profile, Group, Class
+### Step 3: Create User, Group, Class
 ##### A) Create User Class
 Create the User class for your application. This class can look and act however you want: add any properties or methods you find useful. This is your User class.
 ```php
@@ -66,30 +66,7 @@ class User extends BaseUser
 }
 ```
 
-##### B) Create Profile Class
-Create the Profile class for your application. This class holds the user's private information.
-```php
-<?php
-// src/Entity/Profile.php
-
-namespace App\Entity;
-
-use Doctrine\ORM\Mapping as ORM;
-use Pd\UserBundle\Model\Profile as BaseProfile;
-
-/**
- * User Profile Table.
- *
- * @ORM\Table(name="user_profile")
- * @ORM\Entity
- */
-class Profile extends BaseProfile
-{
-    
-}
-```
-
-##### C) Create Group Class
+##### B) Create Group Class
 Create the Group class for your application. This class creates user groups.
 ```php
 <?php
@@ -108,7 +85,7 @@ use Pd\UserBundle\Model\Group as BaseGroup;
  */
 class Group extends BaseGroup
 {
-    
+
 }
 ```
 
@@ -119,7 +96,6 @@ Create a "user.yaml" file for the settings.
 
 pd_user:
     user_class: App\Entity\User
-    profile_class: App\Entity\Profile
     group_class: App\Entity\Group
     default_group: ''
     login_redirect: 'web_home'
@@ -133,10 +109,9 @@ pd_user:
     active_language: ['en', 'tr']
     register_type: ''
     resetting_type: ''
-    
+
 ```
 * __user_class:__ Define 'User' class address
-* __profile_class:__ Define 'Profile' class address
 * __group_class:__ Define 'Group' class address
 * __default_group:__ New members will join group id
 * __login_redirect:__ The router name to which logged-in users will be directed.
@@ -175,7 +150,7 @@ security:
                 class: App\Entity\User
                 property: email
     firewalls:
-        # Enable for Development 
+        # Enable for Development
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
