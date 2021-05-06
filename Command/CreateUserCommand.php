@@ -12,7 +12,6 @@
 namespace Pd\UserBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -29,33 +28,11 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class CreateUserCommand extends Command
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var UserPasswordEncoderInterface
-     */
-    private $encoder;
-
-    /**
-     * @var string
-     */
-    private $userClass;
-
-    /**
-     * @var string
-     */
-    private $profileClass;
-
-    public function __construct(EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder, string $userClass, string $profileClass)
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private UserPasswordEncoderInterface $encoder,
+        private string $userClass)
     {
-        $this->em = $entityManager;
-        $this->encoder = $encoder;
-        $this->userClass = $userClass;
-        $this->profileClass = $profileClass;
-
         parent::__construct();
     }
 
@@ -84,30 +61,29 @@ class CreateUserCommand extends Command
         }
 
         if (!$input->getArgument('role')) {
-            $question = new ChoiceQuestion('Roles: ', ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'], 2);
+            $question = new ChoiceQuestion('Roles: ', ['ROLE_USER', 'ROLE_SUPER_ADMIN'], 1);
             $answer = $this->getHelper('question')->ask($input, $output, $question);
             $input->setArgument('role', $answer);
         }
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // Create User
         $user = (new $this->userClass())
             ->setActive(true)
             ->setEmail($input->getArgument('email'))
             ->setRoles([$input->getArgument('role')])
-            ->setProfile((new $this->profileClass())
-                ->setFirstname('Demo')
-                ->setLastname('Account'));
+            ->setFirstname('Demo')
+            ->setLastname('Account');
 
         // Set Password
         $password = $this->encoder->encodePassword($user, $input->getArgument('password') ?? '123123');
         $user->setPassword($password);
 
         // Save
-        $this->em->persist($user);
-        $this->em->flush();
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
 
         // Output
         $output->writeln('Created User:');
@@ -115,6 +91,6 @@ class CreateUserCommand extends Command
         $output->writeln(sprintf('Password: <comment>%s</comment>', $input->getArgument('password')));
         $output->writeln(sprintf('Role: <comment>%s</comment>', $input->getArgument('role')));
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

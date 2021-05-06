@@ -13,14 +13,10 @@ namespace Pd\UserBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * User Register Form.
@@ -61,40 +57,10 @@ class RegisterType extends AbstractType
                 ],
                 'invalid_message' => 'password_dont_match',
             ]);
-
-        // Add Profile
-        /*$builder->add($builder
-            ->create('profile', FormType::class, [
-                'data_class' => $options['profile_class'],
-                'label' => false,
-                'attr' => ['class' => 'col-12'],
-            ])
-            ->add('firstname', TextType::class, [
-                'label_attr' => ['style' => 'display:none'],
-                'label' => false,
-                'attr' => ['placeholder' => 'firstname'],
-            ])
-            ->add('lastname', TextType::class, [
-                'label_attr' => ['style' => 'display:none'],
-                'label' => false,
-                'attr' => ['placeholder' => 'lastname'],
-            ])
-            ->add('phone', TextType::class, [
-                'label_attr' => ['style' => 'display:none'],
-                'label' => false,
-                'attr' => ['placeholder' => 'phone'],
-                'required' => false,
-                'constraints' => [
-                    new Type([
-                        'type' => 'numeric',
-                    ]),
-                ],
-            ])
-        );*/
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function getBlockPrefix(): string
     {
-        $resolver->setRequired('profile_class');
+        return '';
     }
 }

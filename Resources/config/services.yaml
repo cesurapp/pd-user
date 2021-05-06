@@ -5,7 +5,6 @@ services:
         public: false       # Allows optimizing the container by removing unused services; this also means
         bind:
             $userClass: '%user_class%'
-            $profileClass: '%profile_class%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

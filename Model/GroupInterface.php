@@ -19,41 +19,11 @@ namespace Pd\UserBundle\Model;
 interface GroupInterface
 {
     public function getId(): int;
-
-    /**
-     * @return string
-     */
     public function getName(): ?string;
-
-    /**
-     * @param $name
-     *
-     * @return $this
-     */
     public function setName(string $name): self;
-
-    /**
-     * @return array
-     */
     public function getRoles(): ?array;
-
-    /**
-     * @return $this
-     */
     public function setRoles(array $roles): self;
-
-    /**
-     * @return $this
-     */
     public function addRole(string $role): self;
-
-    /**
-     * @return $this
-     */
     public function removeRole(string $role): self;
-
-    /**
-     * @param $role
-     */
     public function hasRole(string $role): bool;
 }

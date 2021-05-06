@@ -28,19 +28,10 @@ class UserEvent extends Event
     public const RESETTING = 'user.resetting';
     public const RESETTING_COMPLETE = 'user.resetting_complete';
 
-    /**
-     * @var UserInterface
-     */
-    protected $user;
-
-    /**
-     * @var Response
-     */
     private $response;
 
-    public function __construct(UserInterface $user)
+    public function __construct(private UserInterface $user)
     {
-        $this->user = $user;
     }
 
     /**

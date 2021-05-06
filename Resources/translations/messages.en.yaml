@@ -24,3 +24,9 @@ security:
     resetpw_wait_resendig: Wait %s hours before resending.
     user_not_found: User Not Found.
     group_name: Group Name
+
+email:
+    registration_complete: Registration Complete
+    account_confirmation: Verify Your Account
+    account_password_resetting: Reset Your Password
+    password_resetting_completed: Password Has Been Changed

@@ -24,7 +24,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 class User implements UserInterface, \Serializable
 {
     public const ROLE_DEFAULT = 'ROLE_USER';
-    public const ROLE_ADMIN = 'ROLE_ADMIN';
     public const ROLE_ALL_ACCESS = 'ROLE_SUPER_ADMIN';
 
     /**
@@ -35,20 +34,12 @@ class User implements UserInterface, \Serializable
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Profile", cascade={"persist", "merge", "remove"})
-     * @ORM\JoinColumn(name="profile_id", referencedColumnName="id")
-     * @Assert\Valid()
-     */
-    protected $profile;
-
-    /**
      * @ORM\Column(type="string", length=100)
      */
     protected $password;
 
     /**
-     * @ORM\Column(type="string", length=100, unique=true)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=100, unique=true, nullable=true)
      * @Assert\Email()
      */
     protected $email;
@@ -67,11 +58,6 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $lastLogin;
-
-    /**
-     * @ORM\Column(type="string", length=32, nullable=true)
-     */
-    protected $lastLoginIp;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true, nullable=true)
@@ -102,6 +88,29 @@ class User implements UserInterface, \Serializable
      */
     protected $groups;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(min="2", max="255")
+     */
+    protected $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(min="2", max="255")
+     */
+    protected $lastName;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    protected $phone;
+
+    /**
+     * @ORM\Column(type="string", length=3, nullable=true)
+     * @Assert\Language()
+     */
+    protected $language;
+
     public function __construct()
     {
         $this->active = true;
@@ -111,39 +120,17 @@ class User implements UserInterface, \Serializable
         $this->groups = new ArrayCollection();
     }
 
-    public function getSalt()
-    {
-        return null;
-    }
-
-    public function __toString()
-    {
-        return $this->getUsername();
-    }
-
     public function getId(): int
     {
         return $this->id;
     }
 
-    public function getProfile(): ?ProfileInterface
-    {
-        return $this->profile;
-    }
-
-    public function setProfile(ProfileInterface $profile): UserInterface
-    {
-        $this->profile = $profile;
-
-        return $this;
-    }
-
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->email;
     }
 
-    public function setUsername(string $username): UserInterface
+    public function setUsername(?string $username): UserInterface
     {
         $this->email = $username;
 
@@ -179,9 +166,9 @@ class User implements UserInterface, \Serializable
         return $this->active;
     }
 
-    public function setActive(bool $active): UserInterface
+    public function setActive(bool $enabled): UserInterface
     {
-        $this->active = $active;
+        $this->active = $enabled;
 
         return $this;
     }
@@ -210,18 +197,6 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getLastLoginIp(): ?string
-    {
-        return $this->lastLoginIp;
-    }
-
-    public function setLastLoginIp(?string $lastLoginIp): UserInterface
-    {
-        $this->lastLoginIp = $lastLoginIp;
-
-        return $this;
-    }
-
     public function getConfirmationToken(): ?string
     {
         return $this->confirmationToken;
@@ -246,7 +221,7 @@ class User implements UserInterface, \Serializable
         return $this->passwordRequestedAt;
     }
 
-    public function setPasswordRequestedAt(\DateTime $date = null): UserInterface
+    public function setPasswordRequestedAt(?\DateTime $date): UserInterface
     {
         $this->passwordRequestedAt = $date;
 
@@ -263,15 +238,19 @@ class User implements UserInterface, \Serializable
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $time = null): UserInterface
+    public function setCreatedAt(?\DateTime $date): UserInterface
     {
-        $this->createdAt = $time;
+        $this->createdAt = $date;
 
         return $this;
     }
 
-    public function getRoles(): ?array
+    public function getRoles(bool $privateRoles = false): ?array
     {
+        if ($privateRoles) {
+            return $this->roles;
+        }
+
         $roles = $this->roles;
         $groupRoles = [[]];
 
@@ -281,11 +260,6 @@ class User implements UserInterface, \Serializable
         $groupRoles = array_merge(...$groupRoles);
 
         return array_unique(array_merge($roles, $groupRoles));
-    }
-
-    public function getRolesUser(): ?array
-    {
-        return $this->roles;
     }
 
     public function setRoles(array $roles): UserInterface
@@ -332,27 +306,25 @@ class User implements UserInterface, \Serializable
         return \in_array(mb_strtoupper($role), $this->getRoles(), true);
     }
 
-    public function getGroups()
+    public function getGroups(): null|PersistentCollection|ArrayCollection
     {
         return $this->groups;
     }
 
-    public function setGroups(ArrayCollection $groups): UserInterface
+    public function setGroups($groups): UserInterface
     {
         $this->groups = $groups;
-        
+
         return $this;
     }
 
     public function getGroupNames(): ?array
     {
-        $names = [];
-
-        foreach ($this->getGroups() as $group) {
-            $names[] = $group->getName();
-        }
-
-        return $names;
+        return $this->getGroups()
+            ->map(function (Group $group) {
+                return $group->getName();
+            })
+            ->toArray();
     }
 
     public function hasGroup(string $name): bool
@@ -378,31 +350,89 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(?string $firstname): UserInterface
+    {
+        $this->firstName = $firstname;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(?string $lastname): UserInterface
+    {
+        $this->lastName = $lastname;
+
+        return $this;
+    }
+
+    public function getFullName(): ?string
+    {
+        return trim($this->firstName.' '.$this->lastName);
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): UserInterface
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getLanguage(): ?string
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(?string $language): UserInterface
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
     public function eraseCredentials()
     {
     }
 
-    public function serialize()
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function serialize(): ?string
     {
         return serialize([
             $this->id,
             $this->password,
-            $this->email,
+            $this->getUsername(),
             $this->active,
             $this->lastLogin,
             $this->createdAt,
         ]);
     }
 
-    public function unserialize($serialized)
+    public function unserialize($data)
     {
-        [
-            $this->id,
-            $this->password,
-            $this->email,
-            $this->active,
-            $this->lastLogin,
-            $this->createdAt
-        ] = unserialize($serialized);
+        $data = unserialize($data);
+
+        $this->id = $data[0];
+        $this->password = $data[1];
+        $this->setUsername($data[2]);
+        $this->active = $data[3];
+        $this->lastLogin = $data[4];
+        $this->createdAt = $data[5];
     }
 }

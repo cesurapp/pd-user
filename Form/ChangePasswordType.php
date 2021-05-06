@@ -42,7 +42,7 @@ class ChangePasswordType extends AbstractType
                 'second_options' => ['label' => 'security.password_confirmation'],
                 'constraints' => [
                     new Length([
-                        'min' => 3,
+                        'min' => 6,
                         'max' => 4096,
                     ]),
                 ],
@@ -61,5 +61,10 @@ class ChangePasswordType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired('disable_current_password');
+    }
+
+    public function getBlockPrefix(): string
+    {
+        return '';
     }
 }

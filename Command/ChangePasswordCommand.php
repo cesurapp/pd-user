@@ -26,27 +26,11 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class ChangePasswordCommand extends Command
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var string
-     */
-    private $userClass;
-
-    /**
-     * @var UserPasswordEncoderInterface
-     */
-    private $encoder;
-
-    public function __construct(EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder, string $userClass)
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private UserPasswordEncoderInterface $encoder,
+        private string $userClass)
     {
-        $this->em = $entityManager;
-        $this->encoder = $encoder;
-        $this->userClass = $userClass;
-
         parent::__construct();
     }
 
@@ -81,10 +65,12 @@ class ChangePasswordCommand extends Command
         }
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // Find User
-        $user = $this->em->getRepository($this->userClass)->findOneBy(['email' => $input->getArgument('email')]);
+        $user = $this->entityManager
+            ->getRepository($this->userClass)
+            ->findOneBy(['email' => $input->getArgument('email')]);
 
         if (null !== $user) {
             // Set Password
@@ -92,8 +78,8 @@ class ChangePasswordCommand extends Command
             $user->setPassword($password);
 
             // Save
-            $this->em->persist($user);
-            $this->em->flush();
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
 
             // Output
             $output->writeln('User Password Changed:');
@@ -103,6 +89,6 @@ class ChangePasswordCommand extends Command
             $output->writeln('User not found!');
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

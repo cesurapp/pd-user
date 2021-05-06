@@ -33,4 +33,9 @@ class GroupType extends AbstractType
                 'label' => 'save',
             ]);
     }
+
+    public function getBlockPrefix(): string
+    {
+        return '';
+    }
 }

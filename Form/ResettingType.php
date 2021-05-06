@@ -30,4 +30,9 @@ class ResettingType extends AbstractType
                 'label' => 'security.login_username',
             ]);
     }
+
+    public function getBlockPrefix(): string
+    {
+        return '';
+    }
 }

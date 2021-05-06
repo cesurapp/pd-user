@@ -40,11 +40,16 @@ class ResettingPasswordType extends AbstractType
                 ],
                 'constraints' => [
                     new Length([
-                        'min' => 3,
+                        'min' => 6,
                         'max' => 4096,
                     ]),
                 ],
                 'invalid_message' => 'password_dont_match',
             ]);
+    }
+
+    public function getBlockPrefix(): string
+    {
+        return '';
     }
 }

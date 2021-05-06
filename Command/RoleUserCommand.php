@@ -27,21 +27,10 @@ use Symfony\Component\Console\Question\Question;
  */
 class RoleUserCommand extends Command
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var string
-     */
-    private $userClass;
-
-    public function __construct(EntityManagerInterface $entityManager, string $userClass)
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private string $userClass)
     {
-        $this->em = $entityManager;
-        $this->userClass = $userClass;
-
         parent::__construct();
     }
 
@@ -70,25 +59,27 @@ class RoleUserCommand extends Command
         }
 
         if (!$input->getArgument('role')) {
-            $question = new ChoiceQuestion('Role: ', ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'], 2);
+            $question = new ChoiceQuestion('Role: ', ['ROLE_USER', 'ROLE_SUPER_ADMIN'], 1);
             $question->setMultiselect(true);
             $answer = $this->getHelper('question')->ask($input, $output, $question);
             $input->setArgument('role', $answer);
         }
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // Find User
-        $user = $this->em->getRepository($this->userClass)->findOneBy(['email' => $input->getArgument('email')]);
+        $user = $this->entityManager
+            ->getRepository($this->userClass)
+            ->findOneBy(['email' => $input->getArgument('email')]);
 
         if (null !== $user) {
             // Set Roles
             $user->setRoles($input->getArgument('role'));
 
             // Save
-            $this->em->persist($user);
-            $this->em->flush();
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
 
             // Output
             $output->writeln('User Roles Changed:');
@@ -98,6 +89,6 @@ class RoleUserCommand extends Command
             $output->writeln('User not found!');
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

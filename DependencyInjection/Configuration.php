@@ -19,7 +19,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('pd_user');
         $rootNode = $treeBuilder->getRootNode();
@@ -28,7 +28,6 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('user_class')->defaultValue('')->end()
-                ->scalarNode('profile_class')->defaultValue('')->end()
                 ->scalarNode('group_class')->defaultValue('')->end()
                 ->scalarNode('default_group')->defaultValue('')->end()
                 ->scalarNode('login_redirect')->defaultValue('/')->end()

@@ -9,7 +9,7 @@ security:
     login_btn: Giriş
     register_title: Kayıt Ol
     register_btn: Kayıt Ol
-    email: E-posta Adresi
+    email: E-posta
     password: Şifre
     password_confirmation: Şifre Tekrar
     password_current: Mevcut Şifre
@@ -27,3 +27,9 @@ security:
 The account has been suspended: Hesap askıya alınmış
 Account has not been activated: Hesap etkinleştirilmemiş, lütfen hesabınızı etkinleştirin
 Not registered?: Üye değil misiniz?
+
+email:
+    registration_complete: Kayıt Tamamlandı
+    account_confirmation: Hesabınızı Doğrulayın
+    account_password_resetting: Şifrenizi Sıfırlayın
+    password_resetting_completed: Şifreniz Değiştirildi

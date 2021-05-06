@@ -23,12 +23,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class SwitchUserVoter extends Voter
 {
-    protected function supports($attribute, $subject)
+    protected function supports($attribute, $subject): bool
     {
         return 'CAN_SWITCH_USER' === $attribute && $subject instanceof UserInterface;
     }
 
-    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
         if (!$user instanceof UserInterface || !$subject instanceof UserInterface) {
