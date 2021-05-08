@@ -51,7 +51,7 @@ class ProfileType extends AbstractType
             ])
             ->add('language', ChoiceType::class, [
                 'label' => 'language',
-                'choices' => $this->getLanguageList($options['parameter_bag']),
+                'choices' => array_flip(array_intersect_key(Languages::getNames(), array_flip($options['active_language']))),
                 'choice_translation_domain' => false,
             ])
             ->add('submit', SubmitType::class, [
@@ -64,17 +64,7 @@ class ProfileType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired('parameter_bag');
-    }
-
-    /**
-     * Return Active Language List.
-     *
-     * @return array|bool
-     */
-    public function getLanguageList(ParameterBagInterface $bag)
-    {
-        return array_flip(array_intersect_key(Languages::getNames(), array_flip($bag->get('active_language'))));
+        $resolver->setRequired('active_language');
     }
 
     public function getBlockPrefix(): string

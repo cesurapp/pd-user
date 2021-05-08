@@ -61,6 +61,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=180, unique=true, nullable=true)
+     * @Assert\Length(max=180)
      */
     protected $confirmationToken;
 
@@ -102,6 +103,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
+     * @Assert\Length(max=20)
      */
     protected $phone;
 
