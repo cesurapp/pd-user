@@ -139,11 +139,12 @@ Below is a minimal example of the configuration necessary to use the pdUser in y
 # config/packages/security.yaml
 
 security:
-    encoders:
+    enable_authenticator_manager: true
+    password_hashers:
         App\Entity\User:
-            algorithm: argon2i
+            algorithm: auto
     role_hierarchy:
-        ROLE_ADMIN:       [ROLE_USER]
+        ROLE_ADMIN: [ROLE_USER]
     providers:
         pdadmin_auth:
             entity:
@@ -157,16 +158,16 @@ security:
         main:
             pattern:    ^/
             provider: pdadmin_auth
+            lazy: true
             user_checker: Pd\UserBundle\Security\UserChecker
-            anonymous: true
             switch_user: true
             http_basic: ~
+            entry_point: form_login
             form_login:
                 use_referer: true
                 login_path: security_login
                 check_path: security_login
                 #default_target_path: 'dashboard' # Login Redirect Path
-                csrf_token_generator: security.csrf.token_manager
             logout:
                 path: security_logout
                 #target: 'home' # Logout Redirect Path
@@ -175,9 +176,9 @@ security:
                 #lifetime: 604800
                 path:     /
     access_control:
-        - { path: ^/auth/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/auth/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/auth/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/auth/login$, role: PUBLIC_ACCESS }
+        - { path: ^/auth/register, role: PUBLIC_ACCESS }
+        - { path: ^/auth/resetting, role: PUBLIC_ACCESS }
         #- { path: '^/', role: ROLE_ADMIN }
 ```
 
