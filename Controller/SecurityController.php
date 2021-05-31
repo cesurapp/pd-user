@@ -23,8 +23,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -59,7 +59,7 @@ class SecurityController extends AbstractController
     /**
      * Registration.
      */
-    public function register(Request $request, UserPasswordEncoderInterface $encoder): Response
+    public function register(Request $request, UserPasswordHasherInterface $hasher): Response
     {
         // Check Auth
         if ($this->checkAuth()) {
@@ -96,7 +96,7 @@ class SecurityController extends AbstractController
             $em = $this->getDoctrine()->getManager();
 
             // Encode Password
-            $password = $encoder->encodePassword($user, $form->get('plainPassword')->getData());
+            $password = $hasher->hashPassword($user, $form->get('plainPassword')->getData());
             $user->setPassword($password);
 
             // User Confirmation

@@ -19,7 +19,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * Create New User.
@@ -30,7 +30,7 @@ class CreateUserCommand extends Command
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private UserPasswordEncoderInterface $encoder,
+        private UserPasswordHasherInterface $hasher,
         private string $userClass)
     {
         parent::__construct();
@@ -78,7 +78,7 @@ class CreateUserCommand extends Command
             ->setLastname('Account');
 
         // Set Password
-        $password = $this->encoder->encodePassword($user, $input->getArgument('password') ?? '123123');
+        $password = $this->hasher->hashPassword($user, $input->getArgument('password') ?? '123123');
         $user->setPassword($password);
 
         // Save
@@ -87,7 +87,7 @@ class CreateUserCommand extends Command
 
         // Output
         $output->writeln('Created User:');
-        $output->writeln(sprintf('Email: <comment>%s</comment>', $user->getUsername()));
+        $output->writeln(sprintf('Email: <comment>%s</comment>', $user->getUserIdentifier()));
         $output->writeln(sprintf('Password: <comment>%s</comment>', $input->getArgument('password')));
         $output->writeln(sprintf('Role: <comment>%s</comment>', $input->getArgument('role')));
 

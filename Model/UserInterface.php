@@ -24,7 +24,7 @@ interface UserInterface extends BaseUserInterface
 {
     public function getId(): int;
 
-    public function setUsername(?string $username): self;
+    public function setUserIdentifier(?string $username): self;
     public function setPassword(string $password): self;
 
     public function getEmail(): ?string;

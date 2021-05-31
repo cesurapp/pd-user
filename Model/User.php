@@ -13,6 +13,7 @@ namespace Pd\UserBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -21,7 +22,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @author Ramazan APAYDIN <apaydin541@gmail.com>
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serializable
 {
     public const ROLE_DEFAULT = 'ROLE_USER';
     public const ROLE_ALL_ACCESS = 'ROLE_SUPER_ADMIN';
@@ -127,12 +128,12 @@ class User implements UserInterface, \Serializable
         return $this->id;
     }
 
-    public function getUsername(): ?string
+    public function getUserIdentifier(): ?string
     {
         return $this->email;
     }
 
-    public function setUsername(?string $username): UserInterface
+    public function setUserIdentifier(?string $username): UserInterface
     {
         $this->email = $username;
 
@@ -407,6 +408,7 @@ class User implements UserInterface, \Serializable
 
     public function eraseCredentials()
     {
+        // TODO: Implement eraseCredentials() method.
     }
 
     public function getSalt()
@@ -419,7 +421,7 @@ class User implements UserInterface, \Serializable
         return serialize([
             $this->id,
             $this->password,
-            $this->getUsername(),
+            $this->getUserIdentifier(),
             $this->active,
             $this->lastLogin,
             $this->createdAt,
@@ -432,7 +434,7 @@ class User implements UserInterface, \Serializable
 
         $this->id = $data[0];
         $this->password = $data[1];
-        $this->setUsername($data[2]);
+        $this->setUserIdentifier($data[2]);
         $this->active = $data[3];
         $this->lastLogin = $data[4];
         $this->createdAt = $data[5];
